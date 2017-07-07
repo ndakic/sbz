@@ -1,10 +1,489 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title" ng-model="aplikacija.title"> User Details </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://s28.postimg.org/yxng1jpgd/settings_1.png" class="img-circle img-responsive"> </div>
+
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td> Username:</td>
+                                    <td>{{ account.username }}</td>
+                                </tr>
+                                <tr>
+                                    <td> Role: </td>
+                                    <td>{{ account.role}}</td>
+                                </tr>
+                                <tr>
+                                    <td> Empty: </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> Empty: </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> Empty: </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="submit"ui-sref="{{ vm.previousState }}"class="btn btn-info">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    .well{
+        background-color: inherit;
+    }
+
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .button {
+        position: relative;
+        margin: 0 auto 15px;
+        display: block;
+        width: 880px;
+        height: 82px;
+        text-decoration: none;
+        background-color: #fafafa;
+        color: #131313;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        -moz-box-shadow: 0 4px #e7e7e7, 0 6px 1px #d0d0d2;
+        -webkit-box-shadow: 0 4px #e7e7e7, 0 6px 1px #d0d0d2;
+        box-shadow: 0 4px #e7e7e7, 0 6px 1px #d0d0d2;
+    }
+    .button * {
+        -moz-transition: all 0.15s linear;
+        -o-transition: all 0.15s linear;
+        -webkit-transition: all 0.15s linear;
+        transition: all 0.15s linear;
+    }
+    .button .title {
+        display: block;
+        padding: 20px 0 0 20px;
+        font-size: 1.25em;
+    }
+    .button .details {
+        display: block;
+        clear: both;
+        padding: 5px 0 20px 23px;
+        font-size: 0.85em;
+        color: #9a9ca2;
+    }
+    .button .price {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-family: 'Quattrocento Sans', sans-serif;
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #9a9ca2;
+    }
+    .button .price strong {
+        display: inline-block;
+        height: 100%;
+        width: 36px;
+        line-height: 82px;
+        font-size: 1.25em;
+        text-align: center;
+        background-color: #eee;
+        color: #ddd;
+        -moz-border-radius: 0 10px 10px 0;
+        -webkit-border-radius: 0;
+        border-radius: 0 10px 10px 0;
+        text-shadow: 0 -1px #8d8f96;
+        -moz-box-shadow: 0 4px #d7d4d4;
+        -webkit-box-shadow: 0 4px #d7d4d4;
+        box-shadow: 0 4px #d7d4d4;
+    }
+    .button:before {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 6px;
+        height: 100%;
+        -moz-border-radius: 10px 0 0 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px 0 0 10px;
+        -moz-transition: all 0.075s linear;
+        -o-transition: all 0.075s linear;
+        -webkit-transition: all 0.075s linear;
+        transition: all 0.075s linear;
+    }
+    .button.blue:before {
+        background-color: #7daee9;
+        -moz-box-shadow: 0 4px #719dd2;
+        -webkit-box-shadow: 0 4px #719dd2;
+        box-shadow: 0 4px #71sation done in HTML/CSS and a bit of J9dd2;
+    }
+    .button.blue:hover:before {
+        background-color: #719dd2;
+        -moz-box-shadow: 0 4px #6085b3;
+        -webkit-box-shadow: 0 4px #6085b3;
+        box-shadow: 0 4px #6085b3;
+    }
+    .button.blue:active:before {
+        -moz-box-shadow: 0 2px #6085b3;
+        -webkit-box-shadow: 0 2px #6085b3;
+        box-shadow: 0 2px #6085b3;
+    }
+    .button.magenta:before {
+        background-color: #de7cb9;
+        -moz-box-shadow: 0 4px #c870a7;
+        -webkit-box-shadow: 0 4px #c870a7;
+        box-shadow: 0 4px #c870a7;
+    }
+    .button.magenta:hover:before {
+        background-color: #c870a7;
+        -moz-box-shadow: 0 4px #aa5f8e;
+        -webkit-box-shadow: 0 4px #aa5f8e;
+        box-shadow: 0 4px #aa5f8e;
+    }
+    .button.magenta:active:before {
+        -moz-box-shadow: 0 2px #aa5f8e;
+        -webkit-box-shadow: 0 2px #aa5f8e;
+        box-shadow: 0 2px #aa5f8e;
+    }
+    .button.green:before {
+        background-color: #7fd373;
+        -moz-box-shadow: 0 4px #72be68;
+        -webkit-box-shadow: 0 4px #72be68;
+        box-shadow: 0 4px #72be68;
+    }
+    .button.green:hover:before {
+        background-color: #72be68;
+        -moz-box-shadow: 0 4px #61a258;
+        -webkit-box-shadow: 0 4px #61a258;
+        box-shadow: 0 4px #61a258;
+    }
+    .button.green:active:before {
+        -moz-box-shadow: 0 2px #61a258;
+        -webkit-box-shadow: 0 2px #61a258;
+        box-shadow: 0 2px #61a258;
+    }
+    .button.red:before {
+        background-color: #f66d64;
+        -moz-box-shadow: 0 4px #dd625a;
+        -webkit-box-shadow: 0 4px #dd625a;
+        box-shadow: 0 4px #dd625a;
+    }
+    .button.red:hover:before {
+        background-color: #dd625a;
+        -moz-box-shadow: 0 4px #bc534d;
+        -webkit-box-shadow: 0 4px #bc534d;
+        box-shadow: 0 4px #bc534d;
+    }
+    .button.red:active:before {
+        -moz-box-shadow: 0 2px #bc534d;
+        -webkit-box-shadow: 0 2px #bc534d;
+        box-shadow: 0 2px #bc534d;
+    }
+    .button:hover {
+        -moz-box-shadow: 0 4px #e2e2e2, 0 6px 1px #ccccce;
+        -webkit-box-shadow: 0 4px #e2e2e2, 0 6px 1px #ccccce;
+        box-shadow: 0 4px #e2e2e2, 0 6px 1px #ccccce;
+    }
+    .button:hover .price strong {
+        background-color: #e9e9e9;
+        -moz-box-shadow: 0 4px #d3d0d0;
+        -webkit-box-shadow: 0 4px #d3d0d0;
+        box-shadow: 0 4px #d3d0d0;
+    }
+    .button:active {
+        top: 1px;
+        -moz-box-shadow: 0 2px #e2e2e2, 0 4px 1px #ccccce;
+        -webkit-box-shadow: 0 2px #e2e2e2, 0 4px 1px #ccccce;
+        box-shadow: 0 2px #e2e2e2, 0 4px 1px #ccccce;
+    }
+    .button:active .price strong {
+        background-color: #e9e9e9;
+        -moz-box-shadow: 0 2px #d3d0d0;
+        -webkit-box-shadow: 0 2px #d3d0d0;
+        box-shadow: 0 2px #d3d0d0;
+    }
+
+    .user-row {
+        margin-bottom: 14px;
+    }
+
+    .user-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .dropdown-user {
+        margin: 13px 0;
+        padding: 5px;
+        height: 100%;
+    }
+
+    .dropdown-user:hover {
+        cursor: pointer;
+    }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+    .table-user-information > tbody > tr:first-child {
+        border-top: 0;
+    }
+
+
+    .table-user-information > tbody > tr > td {
+        border-top: 0;
+    }
+    .toppad
+    {margin-top:20px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    /*body{*/
+    /*background-color: #dee1e3;*/
+    /*!*font-family: "Roboto", "Tahoma", "Arial", sans-serif;,*!*/
+    /*}*/
+
+
+
+    .text-right{ text-align: right; }
+
+    .comments-app{
+        margin: 50px auto;
+        max-width: 680px;
+        padding: 0 50px;
+        width: 100%;
+    }
+
+    .comments-app h1{
+        color: #191919;
+        margin-bottom: 1.5em;
+        text-align: center;
+        text-shadow: 0 0 2px rgba(152, 152, 152, 1);
+    }
+
+    .comment-form{  }
+    .comment-form .comment-avatar{  }
+
+    .comment-form .form{ margin-left: 100px; }
+
+    .comment-form .form .form-row{ margin-bottom: 10px; }
+    .comment-form .form .form-row:last-child{ margin-bottom: 0; }
+
+    .comment-form .form .input{
+        background-color: #fcfcfc;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+        color: #555f77;
+        font-family: inherit;
+        font-size: 14px;
+        padding: 5px 10px;
+        outline: none;
+        width: 100%;
+
+        -webkit-transition: 350ms box-shadow;
+        -moz-transition: 350ms box-shadow;
+        -ms-transition: 350ms box-shadow;
+        -o-transition: 350ms box-shadow;
+        transition: 350ms box-shadow;
+    }
+
+    .comment-form .form textarea.input{
+        height: 100px;
+        padding: 15px;
+    }
+
+    .comment-form .form label{
+        color: #555f77;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .comment-form .form input[type=submit]{
+        background-color: #555f77;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        margin-left: auto;
+        outline: none;
+        padding: 6px 15px;
+
+        -webkit-transition: 350ms box-shadow;
+        -moz-transition: 350ms box-shadow;
+        -ms-transition: 350ms box-shadow;
+        -o-transition: 350ms box-shadow;
+        transition: 350ms box-shadow;
+    }
+
+    .comment-form .form .input:focus,
+    .comment-form .form input[type=submit]:focus,
+    .comment-form .form input[type=submit]:hover{
+        box-shadow: 0 2px 6px rgba(121, 137, 148, .55);
+    }
+
+    .comment-form .form.ng-submitted .input.ng-invalid,
+    .comment-form .form .input.ng-dirty.ng-invalid{
+        box-shadow: 0 2px 6px rgba(212, 47, 47, .55) !important;
+    }
+
+    .comment-form .form .input.disabled {
+        background-color: #E8E8E8;
+    }
+
+
+    .comments{  }
+
+    .comment-form,
+    .comment{
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .comment-form .comment-avatar,
+    .comment .comment-avatar{
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+        height: 80px;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 80px;
+    }
+
+    .comment-form .comment-avatar img,
+    .comment .comment-avatar img{
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+
+    .comment .comment-box{
+        background-color: #fcfcfc;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+        margin-left: 100px;
+        min-height: 60px;
+        position: relative;
+        padding: 15px;
+    }
+
+    .comment .comment-box:before,
+    .comment .comment-box:after{
+        border-width: 10px 10px 10px 0;
+        border-style: solid;
+        border-color: transparent #FCFCFC;
+        content: "";
+        left: -10px;
+        position: absolute;
+        top: 20px;
+    }
+
+    .comment .comment-box:before{
+        border-color: transparent rgba(0, 0, 0, .05);
+        top: 22px;
+    }
+
+    .comment .comment-text{
+        color: #555f77;
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .comment .comment-footer{
+        color: #acb4c2;
+        font-size: 13px;
+    }
+
+    .comment .comment-footer:after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .comment .comment-footer a{
+        color: #acb4c2;
+        text-decoration: none;
+
+        -webkit-transition: 350ms color;
+        -moz-transition: 350ms color;
+        -ms-transition: 350ms color;
+        -o-transition: 350ms color;
+        transition: 350ms color;
+    }
+
+    .comment .comment-footer a:hover{
+        color: #555f77;
+        text-decoration: underline;
+    }
+
+    .comment .comment-info{
+        float: left;
+        width: 85%;
+    }
+
+    .comment .comment-author{ }
+    .comment .comment-date{ }
+
+    .comment .comment-date:before{
+        content: "|";
+        margin: 0 10px;
+    }
+
+    .comment-actions{
+        float: left;
+        text-align: right;
+        width: 15%;
+    }
+
+    .rating{
+        text-align: right;
+    }
+
+    #delete{
+        text-align: right;
+        float: right;
+    }
+
+</style>

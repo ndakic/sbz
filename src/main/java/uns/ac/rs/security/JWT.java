@@ -1,10 +1,10 @@
-package utils;
+package uns.ac.rs.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,24 +14,23 @@ public class JWT {
     private static String signature = "srb123";
 
     //Sample method to construct a JWT
-    public static String createJWT(String id,  String role, String status, String image) {
+    public static String createJWT(String username,  String role) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        Claims claims = Jwts.claims().setSubject(id);
+        Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
-        claims.put("status", status);
-        claims.put("image", image);
 
         //Let's set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(id)
+        JwtBuilder builder = Jwts.builder().setId(username)
                 .setClaims(claims)
                 .signWith(signatureAlgorithm, signature);
 
         //Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
     }
+
 
     //Sample method to validate and read the JWT
     public static JSONObject parseJWT(String jwt) {
@@ -41,13 +40,10 @@ public class JWT {
                 .setSigningKey(signature)
                 .parseClaimsJws(jwt).getBody();
 
-
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("user", claims.getSubject());
         jsonObject.put("role", claims.get("role"));
-        jsonObject.put("status", claims.get("status"));
-        jsonObject.put("image", claims.get("image"));
 
         return jsonObject;
 

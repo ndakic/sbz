@@ -3,5 +3,8 @@ package uns.ac.rs.model.enums;
 /**
  * Created by Nikola Dakic on 7/6/17.
  */
-public class Role {
+public enum Role {
+    customer,
+    menager,
+    seller
 }
