@@ -1,2 +1,1 @@
-# sbz
-Knowledge-based systems
+# Knowledge-based systems
