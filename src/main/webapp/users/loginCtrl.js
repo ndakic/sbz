@@ -2,7 +2,7 @@
  * Created by dakamadafaka on 3/1/17.
  */
 (function (angular) {
-    angular.module('login',['authentication'])
+    angular.module('SBZApp')
         .controller('loginCtrl', function($scope, $log, AuthenticationService, $http, Alertify){
             $scope.user={};
             $scope.login=function () {

@@ -3,7 +3,7 @@
  */
 
 (function (angular) {
-    angular.module('registration',['authentication'])
+    angular.module('SBZApp')
         .controller('registrationCtrl', function($scope, $log, AuthenticationService, $http, $state, Alertify){
 
             $scope.new_user={};

@@ -10,11 +10,7 @@
         'ngStorage',
         'ui.bootstrap',
         'Alertify',
-        'login',
-        'registration',
-        'account',
-
-
+        'authentication'
     ]);
 
     app.config(['$qProvider', function ($qProvider) {

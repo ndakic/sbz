@@ -3,7 +3,7 @@
  */
 
 (function (angular) {
-    angular.module('account',['authentication'])
+    angular.module('SBZApp')
         .controller('accountCtrl', function($scope, $log, AuthenticationService, $http, $state, previousState){
 
             var vm = this;

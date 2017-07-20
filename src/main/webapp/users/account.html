@@ -42,17 +42,17 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit"ui-sref="{{ vm.previousState }}"class="btn btn-info">
-                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-                    </button>
+                    <div ng-if="vm.previousState != 'login'">
+                        <button type="submit"ui-sref="{{ vm.previousState }}"class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                        </button>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
-
-
 
 <style>
     .well{

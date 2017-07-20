@@ -18,8 +18,9 @@
         vm.login = login;
         vm.registration = registration;
         vm.account = account;
-        //vm.$state = $state;
-
+        vm.articles = articles;
+        vm.articles_new = articles_new;
+        vm.$state = $state;
 
         function login() {
             $state.go('login');
@@ -31,6 +32,14 @@
 
         function account() {
             $state.go('account');
+        }
+
+        function articles() {
+            $state.go('articles');
+        }
+
+        function articles_new() {
+            $state.go('articleNew');
         }
 
     }

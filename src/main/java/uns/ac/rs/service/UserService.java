@@ -35,7 +35,6 @@ public class UserService {
 
         if(!(user == null)){
             user.setPassword("sensitive-data");
-            user.setToken("sensitive-data");
         }
 
         return user;
@@ -59,7 +58,7 @@ public class UserService {
         User user = userRepository.findOneByUsername(username);
 
         if((user == null)){
-            User newUser = new User(username, password, Role.customer, null);
+            User newUser = new User(username, password, Role.customer);
             userRepository.save(newUser);
 
             return "success";
