@@ -25,7 +25,7 @@ public class Article implements Serializable {
     private String title;
 
     @ManyToOne
-    private Category category;
+    private ArticleCategory articleCategory;
 
     @NotNull
     @Min(value = 0)
@@ -67,12 +67,12 @@ public class Article implements Serializable {
         this.title = title;
     }
 
-    public Category getCategory() {
-        return category;
+    public ArticleCategory getArticleCategory() {
+        return articleCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setArticleCategory(ArticleCategory articleCategory) {
+        this.articleCategory = articleCategory;
     }
 
     public Double getPrice() {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uns.ac.rs.model.Category;
+import uns.ac.rs.model.ArticleCategory;
 import uns.ac.rs.repository.CategoryRepository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class CategoryController {
 
 
     @GetMapping("/all")
-    public List<Category> getAllCategories(){
+    public List<ArticleCategory> getAllCategories(){
         return categoryRepository.findAll();
     }
 

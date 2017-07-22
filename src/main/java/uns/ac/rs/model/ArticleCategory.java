@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "article_category")
-public class Category implements Serializable {
+public class ArticleCategory implements Serializable {
 
 
     private static final long serialVersionUID = 4312635525209859882L;
@@ -22,7 +22,7 @@ public class Category implements Serializable {
     private String title;
 
     @ManyToOne
-    private Category category;
+    private ArticleCategory articleCategory;
 
     private Double discount;
 
@@ -48,12 +48,12 @@ public class Category implements Serializable {
         this.title = title;
     }
 
-    public Category getCategory() {
-        return category;
+    public ArticleCategory getArticleCategory() {
+        return articleCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setArticleCategory(ArticleCategory articleCategory) {
+        this.articleCategory = articleCategory;
     }
 
     public Double getDiscount() {
