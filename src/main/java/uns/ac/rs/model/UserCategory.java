@@ -1,6 +1,7 @@
 package uns.ac.rs.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user_category")
-public class UserCategory {
+public class UserCategory implements Serializable {
 
     private static final long serialVersionUID = 5065800290418172364L;
 

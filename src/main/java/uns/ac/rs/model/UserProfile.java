@@ -1,6 +1,7 @@
 package uns.ac.rs.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Nikola Dakic on 7/22/17.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_profile")
-public class UserProfile {
+public class UserProfile implements Serializable {
 
     private static final long serialVersionUID = -6657778871516103498L;
 
