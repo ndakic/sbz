@@ -20,7 +20,8 @@
             views: {
                 'content@': {
                     templateUrl: 'articles/article.html',
-                    controller: 'articleCtrl'
+                    controller: 'articleCtrl',
+                    controllerAs: 'vm'
                 }
             }
         }).state('articleNew', {

@@ -1,4 +1,40 @@
 
+
+<div class="container">
+    <h1>Responsive Cart</h1>
+    <table class="table table-xs">
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Total</th>
+        </tr>
+
+
+
+        <tr class="item-row" ng-repeat="item in shoppingCart.items">
+
+            <td> <img src="http://placehold.it/50x50"/></td>
+            <td>
+                <p> <strong>{{item.article.title}}</strong></p>
+                <p> {{item.article.articleCategory.title}}</p>
+            </td>
+            <td class="text-right" title="Amount"><input type="number" ng-model="item.quantity" min="1" ></td>
+            <td class="text-right" title="Price">{{item.price}}</td>
+            <td class="text-right" title="Total">{{item.price * item.quantity}}</td>
+        </tr>
+
+        <tr class="total-row info">
+            <td class="text-right" colspan="4">Total</td>
+            <td class="text-right">{{total}}</td>
+        </tr>
+    </table>
+</div>
+
+
+
+
 <div class="container">
     <div class="col-lg-12">
         <div class="well well-sm"> Filter articles by: &nbsp; &nbsp;
@@ -22,7 +58,7 @@
                             <h3 class="download-card__content-box__title"> Title: {{article.title}}</h3>
                             <!--<h5>version:  </h5>-->
                             <p class="download-card__content-box__description">Price: {{article.price}} $</p>
-                            <a href="" class="btn btn-info" ng-click="details(snippet)"><i class="fa fa-share"></i> Buy</a>
+                            <a href="" class="btn btn-info" ng-click="vm.addToShoppingCart(article)"><i class="fa fa-share"></i> Buy</a>
                         </div>
                     </div>
                 </article>
@@ -30,4 +66,65 @@
         </div>
     </div>
 </div>
+
+
+<style>
+
+    @media (max-width: 414px) {
+        .table-xs tr,
+        .table-xs td,
+        .table-xs tbody,
+        .table-xs thead,
+        .table-xs tfoot,
+        .table-xs th {
+            display: table;
+            width: 100%;
+            border-collapse: separate;
+        }
+        .table-xs > tbody tr:first-child {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        .table-xs td[title]:before {
+            content: attr(title) ": ";
+        }
+        .table-xs td:before {
+            white-space: nowrap;
+            width: 50%;
+            display: table-cell;
+            text-align: left;
+            font-weight: bold;
+        }
+        .table-xs .item-row td:first-child,
+        .table-xs .item-row td:nth-child(2) {
+            border: 0 none;
+        }
+        .table-xs .item-row td:first-child {
+            border: 0 none;
+        }
+        .table-xs .item-row td:last-child {
+            background: #eee;
+            border-bottom: 2px solid #a2a2a2;
+            font-weight: bold;
+        }
+        .table-xs .item-row img {
+            margin-bottom: 1em;
+        }
+        .table-xs .total-row td {
+            display: table-cell;
+            width: 1%;
+            border-top: 0 none;
+            border-bottom: 3px double #a2a2a2;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+        .table-xs .total-row td:first-child {
+            width: 99%;
+        }
+    }
+
+
+</style>
+
 

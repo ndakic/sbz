@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "bill_item")
+@Table(name = "item")
 public class Item implements Serializable{
 
     private static final long serialVersionUID = -6445461894676726593L;
@@ -26,7 +26,7 @@ public class Item implements Serializable{
     @ManyToOne
     private Bill bill;
 
-    private Integer order;
+    private Integer itemOrder;
 
     @OneToOne
     private Article article;
@@ -45,10 +45,10 @@ public class Item implements Serializable{
     @OneToMany
     private List<ItemDiscount> itemDiscounts = new ArrayList<ItemDiscount>();
 
+
     private void addPopust(ItemDiscount d){
         itemDiscounts.add(d);
     }
-
 
 
     //getters and setters
@@ -74,11 +74,11 @@ public class Item implements Serializable{
     }
 
     public Integer getOrder() {
-        return order;
+        return itemOrder;
     }
 
     public void setOrder(Integer order) {
-        this.order = order;
+        this.itemOrder = order;
     }
 
     public Article getArticle() {
