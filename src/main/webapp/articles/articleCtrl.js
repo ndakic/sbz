@@ -9,6 +9,8 @@
             var vm = this;
             vm.addToShoppingCart = addToShoppingCart;
             vm.countTotal = countTotal;
+            vm.bill = bill;
+            vm.user = AuthenticationService.getCurrentUser();
 
             $scope.articles = [];
 
@@ -44,10 +46,6 @@
 
 
             function addToShoppingCart(art) {
-                console.log("Try to add..");
-
-                console.log($scope.shoppingCart);
-
                 for (var i = 0; i < $scope.shoppingCart.items.length; i++) {
                     if ($scope.shoppingCart.items[i].article.id == art.id) {
                         alertify.log("Article " + art.title + " is already added!");
@@ -66,6 +64,18 @@
                 $scope.shoppingCart.items.push(item);
 
             };
+
+            function bill() {
+
+                $scope.shoppingCart.buyer = {username: vm.user.username};
+
+                var promise = $http.post("/api/article/bill", $scope.shoppingCart);
+                promise.then(function (response) {
+                    console.log("Done!");
+                    $scope.shoppingCart = response.data;
+                    console.log($scope.shoppingCart);
+                });
+            }
 
 
         });

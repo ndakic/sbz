@@ -58,6 +58,11 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-ci</artifactId>
+			<version>6.5.0.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>

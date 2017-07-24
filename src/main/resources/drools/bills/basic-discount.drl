@@ -1,0 +1,17 @@
+import uns.ac.rs.model.Bill;
+import uns.ac.rs.model.BillDiscount;
+import uns.ac.rs.model.Item;
+import uns.ac.rs.model.ItemDiscount;
+
+
+
+rule "more then 20"
+    lock-on-active true
+    salience 12
+
+    when
+        $bill : Bill($items : items)
+        $item : Item(article.articleCategory != null, article.articleCategory.title.equals("ROBA_SIROKE_POTROSNJE") == false, quantity > 20) from $items
+    then
+        System.out.println("test drools");
+end

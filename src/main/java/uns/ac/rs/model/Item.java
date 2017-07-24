@@ -136,4 +136,20 @@ public class Item implements Serializable{
     public void setItemDiscounts(List<ItemDiscount> itemDiscounts) {
         this.itemDiscounts = itemDiscounts;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", bill=" + bill +
+                ", itemOrder=" + itemOrder +
+                ", article=" + article +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", currentPrice=" + currentPrice +
+                ", discount=" + discount +
+                ", finalPrice=" + finalPrice +
+                ", itemDiscounts=" + itemDiscounts +
+                '}';
+    }
 }
