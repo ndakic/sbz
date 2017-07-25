@@ -8,8 +8,10 @@
 
             var vm = this;
             vm.addToShoppingCart = addToShoppingCart;
+            vm.removeItem = removeItem;
             vm.countTotal = countTotal;
             vm.bill = bill;
+            vm.confirmBill = confirmBill;
             vm.user = AuthenticationService.getCurrentUser();
             $scope.confirmBill = false;
 
@@ -66,6 +68,11 @@
 
             };
 
+            function removeItem(art) {
+                var index = $scope.shoppingCart.items.indexOf(art);
+                $scope.shoppingCart.items.splice(index, 1);
+            };
+
             function bill() {
 
                 $scope.shoppingCart.buyer = {username: vm.user.username};
@@ -74,11 +81,16 @@
                 promise.then(function (response) {
                     console.log("Done!");
                     $scope.shoppingCart = response.data;
-                    console.log($scope.shoppingCart);
-                });
 
-                $scope.confirmBill = true;
-            }
+                    $scope.confirmBill = true;
+                    $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;
+                    $scope.shoppingCart.receivedPoints -= $scope.shoppingCart.spentPoints;
+                });
+            };
+
+            function confirmBill() {
+                console.log($scope.shoppingCart);
+            };
 
 
         });

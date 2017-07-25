@@ -62,6 +62,13 @@ public class User implements Serializable{
         this.role = role;
     }
 
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 
     @Override
     public String toString() {

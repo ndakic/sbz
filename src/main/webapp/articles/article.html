@@ -12,6 +12,7 @@
                 <th class="text-right">Discount</th>
                 <th class="text-right">Max Discount</th>
                 <th class="text-right">FinalPrice</th>
+                <th class="text-right"></th>
             </tr>
 
             <tr class="item-row" ng-repeat="item in shoppingCart.items">
@@ -27,18 +28,25 @@
                 <td class="text-right" title="Discount">{{item.discount}}</td>
                 <td class="text-right" title="Max Discount">{{item.article.articleCategory.discount}}</td>
 
-                <td class="text-right" title="Total">{{item.finalPrice}}</td>
+                <td class="text-right" title="finalPrice">{{item.finalPrice}}</td>
+                <td class="text-right" title="rm"><a href="" class="btn btn-danger" ng-click="vm.removeItem(item)"><i class="fa fa-share"></i>delete </a></td>
+
             </tr>
 
+            <!--<tr class="item-row">-->
+                <!--<td class="text-right" title="finalPrice">asd</td>-->
+            <!--</tr>-->
+
             <tr class="total-row info">
-                <td class="text-right" colspan="7">Total</td>
+                <td class="text-right" colspan="2">Bonus points: ({{shoppingCart.receivedPoints}}) &nbsp;<input type="number" ng-model="shoppingCart.spentPoints" min="0" ></td>
+                <td class="text-right" colspan="6">Total</td>
                 <td class="text-right">{{shoppingCart.finalPrice}}</td>
             </tr>
         </table>
 
     </div>
     <span ng-if="confirmBill == true">
-        <a href="" class="btn btn-info" ng-click=""><i class="fa fa-share"></i>Confirm Bill </a>
+        <a href="" class="btn btn-info" ng-click="vm.confirmBill()"><i class="fa fa-share"></i>Confirm Bill </a>
     </span>
 
     <a href="" class="btn btn-info pull-right" ng-click="vm.bill()"><i class="fa fa-share"></i>Make Bill </a> <br> <br>

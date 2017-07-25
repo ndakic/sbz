@@ -11,6 +11,7 @@ import uns.ac.rs.model.Bill;
 import uns.ac.rs.model.Item;
 import uns.ac.rs.model.ItemDiscount;
 import uns.ac.rs.repository.ArticleRepository;
+import uns.ac.rs.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private KieContainer kieContainer;
@@ -48,6 +52,9 @@ public class ArticleController {
 
         KieSession kieSession = kieContainer.newKieSession("bills");
         List<Item> items = bill.getItems();
+
+        bill.setBuyer(userRepository.findOneByUsername(bill.getBuyer().getUsername()));
+        bill.setReceivedPoints(bill.getBuyer().getUserProfile().getPoints());
 
         double currentPrice = 0;
         for(Item item: items){
