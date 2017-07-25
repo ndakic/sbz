@@ -11,6 +11,7 @@
             vm.countTotal = countTotal;
             vm.bill = bill;
             vm.user = AuthenticationService.getCurrentUser();
+            $scope.confirmBill = false;
 
             $scope.articles = [];
 
@@ -75,6 +76,8 @@
                     $scope.shoppingCart = response.data;
                     console.log($scope.shoppingCart);
                 });
+
+                $scope.confirmBill = true;
             }
 
 

@@ -46,7 +46,7 @@ public class Item implements Serializable{
     private List<ItemDiscount> itemDiscounts = new ArrayList<ItemDiscount>();
 
 
-    private void addPopust(ItemDiscount d){
+    private void addDiscount(ItemDiscount d){
         itemDiscounts.add(d);
     }
 
@@ -117,7 +117,7 @@ public class Item implements Serializable{
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void set_discount(Double discount) {
         this.discount = discount;
     }
 

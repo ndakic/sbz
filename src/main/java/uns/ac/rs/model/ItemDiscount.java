@@ -33,6 +33,15 @@ public class ItemDiscount implements Serializable {
     @Enumerated(EnumType.STRING)
     private DiscountType type;
 
+    public ItemDiscount() {
+    }
+
+    public ItemDiscount(Bill account, Item item, Double discount, DiscountType type) {
+        this.account = account;
+        this.item = item;
+        this.discount = discount;
+        this.type = type;
+    }
 
     // getters and setters
 
@@ -78,5 +87,16 @@ public class ItemDiscount implements Serializable {
 
     public void setType(DiscountType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDiscount{" +
+                "id=" + id +
+                ", account=" + account +
+                ", item=" + item +
+                ", discount=" + discount +
+                ", type=" + type +
+                '}';
     }
 }

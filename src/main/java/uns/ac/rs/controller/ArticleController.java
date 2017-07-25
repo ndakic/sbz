@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
 import uns.ac.rs.model.Item;
+import uns.ac.rs.model.ItemDiscount;
 import uns.ac.rs.repository.ArticleRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,25 +46,52 @@ public class ArticleController {
     @PostMapping(value = "/bill")
     public ResponseEntity<Bill> bill(@RequestBody Bill bill) throws Exception{
 
-        System.out.println(bill.toString());
-
         KieSession kieSession = kieContainer.newKieSession("bills");
         List<Item> items = bill.getItems();
 
-        double total = 0;
+        double currentPrice = 0;
         for(Item item: items){
-            double sum = item.getPrice() * item.getQuantity();
-            total += sum;
-        }
+            item.setBill(bill);
+            double itemPrice = item.getPrice() * item.getQuantity();
+            currentPrice += itemPrice;
+            item.setCurrentPrice(itemPrice);
+            item.setItemDiscounts(new ArrayList<ItemDiscount>());
 
-        bill.setCurrentPrice(total);
-        System.out.println("Total: " + total);
+            kieSession.insert(item);
+        }
+        bill.setCurrentPrice(currentPrice);
+        System.out.println("Total: " + currentPrice);
 
         kieSession.insert(bill);
 
         kieSession.fireAllRules();
         kieSession.dispose();
 
+        double final_price = 0.0;
+        for (Item item: bill.getItems()) {
+            double item_price = item.getCurrentPrice();
+            List<ItemDiscount> discounts = item.getItemDiscounts();
+
+            // ako nema popusta
+            if(discounts.size() == 0){
+                final_price += item_price;
+                item.setFinalPrice(item_price);
+            }
+
+            double discount_sum = 0;
+            // ako ima popusta
+            for(ItemDiscount discount: discounts){
+                double item_price_final = item_price - (item_price * discount.getDiscount() / 100);
+                item.setFinalPrice(item_price_final);
+                final_price += item_price_final;
+
+                discount_sum += discount.getDiscount();
+            }
+
+            item.set_discount(discount_sum);
+        }
+
+        bill.setFinalPrice(final_price);
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
