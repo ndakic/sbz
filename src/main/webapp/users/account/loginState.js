@@ -19,7 +19,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'users/login.html',
+                    templateUrl: 'users/account/login.html',
                     controller: 'loginCtrl'
                 }
             }
@@ -31,7 +31,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'users/registration.html',
+                    templateUrl: 'users/account/registration.html',
                     controller: 'registrationCtrl',
                     controllerAs: 'vm'
                 }
@@ -44,7 +44,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'users/account.html',
+                    templateUrl: 'users/account/account.html',
                     controller: 'accountCtrl',
                     controllerAs: 'vm'
                 }

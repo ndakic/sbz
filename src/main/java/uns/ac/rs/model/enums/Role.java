@@ -5,6 +5,6 @@ package uns.ac.rs.model.enums;
  */
 public enum Role {
     customer,
-    menager,
+    manager,
     seller
 }

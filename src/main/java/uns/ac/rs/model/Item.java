@@ -42,7 +42,7 @@ public class Item implements Serializable{
 
     private Double finalPrice;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ItemDiscount> itemDiscounts = new ArrayList<ItemDiscount>();
 
 

@@ -20,6 +20,7 @@
         vm.account = account;
         vm.articles = articles;
         vm.articles_new = articles_new;
+        vm.bills = bills;
         vm.$state = $state;
 
         function login() {
@@ -40,6 +41,10 @@
 
         function articles_new() {
             $state.go('articleNew');
+        }
+
+        function bills() {
+            $state.go('bills');
         }
 
     }

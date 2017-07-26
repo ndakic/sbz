@@ -1,0 +1,45 @@
+<div class="container" ng-repeat="bill in bills">
+    <h1>Bill {{bill.id}} <a href="" class="btn btn-info pull-right" ng-click="vm.confirmBill()"><i class="fa fa-share"></i>Confirm </a> </h1>
+    <table class="table table-xs">
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Item Price</th>
+            <th class="text-right">CurrentPrice</th>
+            <th class="text-right">Discount</th>
+            <th class="text-right">Max Discount</th>
+            <th class="text-right">FinalPrice</th>
+        </tr>
+
+        <tr class="item-row" ng-repeat="item in bill.items">
+            <td> <img src="https://s28.postimg.org/yxng1jpgd/settings_1.png/" height="50px" width="50px"></td>
+            <td>
+                <p> <strong>{{item.article.title}}</strong></p>
+                <p> {{item.article.articleCategory.title}}</p>
+            </td>
+            <td class="text-right" title="Amount">{{item.quantity }}</td>
+            <td class="text-right" title="Price">{{item.price}}</td>
+            <td class="text-right" title="Total">{{item.price * item.quantity}}</td>
+
+            <td class="text-right" title="Discount">{{item.discount}}</td>
+            <td class="text-right" title="Max Discount">{{item.article.articleCategory.discount}}</td>
+
+            <td class="text-right" title="finalPrice">{{item.finalPrice}}</td>
+
+        </tr>
+
+        <!--<tr class="item-row">-->
+        <!--<td class="text-right" title="finalPrice">asd</td>-->
+        <!--</tr>-->
+
+        <tr class="total-row info">
+            <td class="text-right" colspan="2">Bonus points used: ({{bill.spentPoints}})</td>
+            <td class="text-right" colspan="5">Total</td>
+            <td class="text-right">{{bill.finalPrice}}</td>
+        </tr>
+    </table>
+
+</div>
+
+

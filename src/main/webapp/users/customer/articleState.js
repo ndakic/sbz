@@ -19,7 +19,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'articles/article.html',
+                    templateUrl: 'users/customer/article.html',
                     controller: 'articleCtrl',
                     controllerAs: 'vm'
                 }
@@ -32,7 +32,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'articles/articleNew.html',
+                    templateUrl: 'users/customer/articleNew.html',
                     controller: 'articleNewCtrl',
                     controllerAs: 'vm'
                 }

@@ -17,8 +17,16 @@
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="" ng-click="vm.articles()">Articles</a></li>
-                        <li><a href="" ng-click="vm.articles_new()">New Article</a></li>
                         <li><a href="" ng-click="">Shopping History</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown" ng-if="getCurrentUserRole() == 'seller'">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="" ng-click="vm.bills()">Bills</a></li>
+                        <li><a href="" ng-click="vm.articles_new()">Add Article</a></li>
+                        <li><a href="" ng-click="">Supplies</a></li>
                     </ul>
                 </li>
 

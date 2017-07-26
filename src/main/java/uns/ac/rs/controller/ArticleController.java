@@ -10,10 +10,13 @@ import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
 import uns.ac.rs.model.Item;
 import uns.ac.rs.model.ItemDiscount;
+import uns.ac.rs.model.enums.BillStatus;
 import uns.ac.rs.repository.ArticleRepository;
+import uns.ac.rs.repository.BillRepository;
 import uns.ac.rs.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +33,9 @@ public class ArticleController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BillRepository billRepository;
 
     @Autowired
     private KieContainer kieContainer;
@@ -85,8 +91,8 @@ public class ArticleController {
                 item.setFinalPrice(item_price);
             }
 
-            double discount_sum = 0;
             // ako ima popusta
+            double discount_sum = 0;
             for(ItemDiscount discount: discounts){
                 double item_price_final = item_price - (item_price * discount.getDiscount() / 100);
                 item.setFinalPrice(item_price_final);
@@ -95,10 +101,33 @@ public class ArticleController {
                 discount_sum += discount.getDiscount();
             }
 
+            // proveriti da li je visina popusta manja od maksimalno dozvoljene
+            // ako jeste, postaviti je
+            // ako je veca, postaviti maksimalno dozvoljenu
+
             item.set_discount(discount_sum);
         }
 
         bill.setFinalPrice(final_price);
+
+        // dodati popuste za racun (drool rools)
+
+        return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/confirm_bill")
+    public ResponseEntity<Bill> confirm_bill(@RequestBody Bill bill) throws Exception{
+
+        // postavi ostale podatke racuna > vreme, status itd.
+        // izracunati koliko poena korisnik treba da dobije, sacuvati ih
+        // skinuti iskoriscenje poene
+        // sacuvati racun
+
+        bill.setDate(new Date());
+        bill.setStatus(BillStatus.INPROCESS);
+
+        billRepository.save(bill);
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }

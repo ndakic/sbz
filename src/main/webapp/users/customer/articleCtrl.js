@@ -79,7 +79,7 @@
 
                 var promise = $http.post("/api/article/bill", $scope.shoppingCart);
                 promise.then(function (response) {
-                    console.log("Done!");
+                    console.log("Done bill!");
                     $scope.shoppingCart = response.data;
 
                     $scope.confirmBill = true;
@@ -90,8 +90,14 @@
 
             function confirmBill() {
                 console.log($scope.shoppingCart);
-            };
 
+                var promise = $http.post("/api/article/confirm_bill", $scope.shoppingCart);
+                promise.then(function (response) {
+                    console.log("Done! confirm bill");
+                    $scope.shoppingCart = response.data;
+                });
+
+            };
 
         });
 }(angular));

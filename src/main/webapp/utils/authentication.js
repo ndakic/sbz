@@ -41,7 +41,14 @@
                         // callback za uspesan login
                         callback(true);
 
-                        $state.go('account');
+                        console.log(currentUser.role);
+
+                        if(currentUser.role == "customer"){
+                            $state.go('account');
+                        }else if(currentUser.role="seller"){
+                            $state.go('bills');
+                        }
+
                     } else {
                         // callback za neuspesan login
                         callback(false);
