@@ -53,12 +53,12 @@ public class UserService {
         return response;
     }
 
-    public String registration(String username, String password){
+    public String registration(String username, String password, Role role){
 
         User user = userRepository.findOneByUsername(username);
 
         if((user == null)){
-            User newUser = new User(username, password, Role.customer);
+            User newUser = new User(username, password, role);
             userRepository.save(newUser);
 
             return "success";

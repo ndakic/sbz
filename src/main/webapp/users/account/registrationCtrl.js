@@ -7,6 +7,7 @@
         .controller('registrationCtrl', function($scope, $log, AuthenticationService, $http, $state, Alertify){
 
             $scope.new_user={};
+            $scope.roles = ["customer", "seller", "manager"];
 
             $scope.registration = function() {
                 var promise = $http.post("/api/user/registration", $scope.new_user);

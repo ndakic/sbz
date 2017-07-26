@@ -20,7 +20,7 @@ public class BillController {
     @Autowired
     private BillRepository billRepository;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/all", produces = "application/json")
     public List<Bill> getAll(){
         return billRepository.findAll();
     }

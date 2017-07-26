@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping(value = "/registration", consumes = "application/json", produces = "text/plain")
     public String registration(@RequestBody User user) throws Exception{
-        return userService.registration(user.getUsername(), user.getPassword());
+        return userService.registration(user.getUsername(), user.getPassword(), user.getRole());
     }
 
 

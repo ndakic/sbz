@@ -7,6 +7,16 @@
             <form method="post">
                 <input type="text" name="u" placeholder="Username" ng-model="new_user.username" required="required"/>
                 <input type="password" name="p" placeholder="Password" ng-model="new_user.password" required="required" />
+
+                <div class="form-group">
+                    <label class="control-label">Role</label>
+                    <div class="selectContainer">
+                        <select class="form-control" ng-model = "new_user.role" name="size" ng-options="role for role in roles">
+
+                        </select>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block btn-large">Confirm.</button>
             </form>
         </div>

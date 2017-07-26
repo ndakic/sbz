@@ -45,8 +45,10 @@
 
                         if(currentUser.role == "customer"){
                             $state.go('account');
-                        }else if(currentUser.role="seller"){
+                        }else if(currentUser.role =="seller"){
                             $state.go('bills');
+                        }else if(currentUser.role == "manager"){
+                            console.log("manager view");
                         }
 
                     } else {
