@@ -15,6 +15,9 @@
             vm.user = AuthenticationService.getCurrentUser();
             $scope.confirmBill = false;
 
+            // $scope.min = 4000;
+            // $scope.max = 1000000000;
+
             $scope.articles = [];
 
             $scope.shoppingCart = {

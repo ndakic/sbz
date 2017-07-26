@@ -41,25 +41,13 @@ public class BillController {
     @PostMapping(value = "/check_bill")
     public ResponseEntity<Bill> check_bill(@RequestBody Bill bill) throws Exception{
 
-        // postavi ostale podatke racuna > vreme, status itd.
-        // izracunati koliko poena korisnik treba da dobije, sacuvati ih
-        // sacuvati racun
-
         bill.setDate(new Date());
         bill.setStatus(BillStatus.INPROCESS);
-
-        // proveriti stanja artikala
-        // izmeniti brojno stanje artikala
-        // promeniti status u uspesno realizovan
-        // azuriranje naloga kupca
-
-        List<Article> articles = articleRepository.findAll();
 
         // check article supplies
         for(Item item: bill.getItems()){
             if(item.getArticle().getAmount() < item.getQuantity()){
-                System.out.println("Not Enough");
-                //return new ResponseEntity<Bill>(bill, HttpStatus.NOT_ACCEPTABLE);
+                System.out.println("Not Enough Articles!");
                 return new ResponseEntity<Bill>(bill, HttpStatus.NO_CONTENT);
             }
         }
@@ -71,8 +59,10 @@ public class BillController {
             articleRepository.save(art);
         }
 
+        // update bill status
         bill.setStatus(BillStatus.SUCCESSFUL);
 
+        // update user points
         User user = userRepository.findOneByUsername(bill.getBuyer().getUsername());
         user.getUserProfile().setPoints(user.getUserProfile().getPoints() - bill.getSpentPoints());
         userRepository.save(user);

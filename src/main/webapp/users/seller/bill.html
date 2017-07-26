@@ -1,4 +1,11 @@
-<div class="container" ng-repeat="bill in bills">
+<div class="well well-sm"> Filter articles by: &nbsp; &nbsp;
+    <strong>status:</strong>
+    <div class="btn-group">
+        <span> <input type="text" ng-model="bill.status"></span>
+    </div>
+</div>
+
+<div class="container" ng-repeat="bill in bills | filter:bill">
     <h1 style="display: inline">Bill {{bill.id}}</h1> &nbsp; &nbsp; &nbsp;
     <h4 style="display: inline"> User: {{bill.buyer.username }} </h4> &nbsp; &nbsp; <h4 style="display: inline"> Status: {{bill.status}}</h4>
     <span class="pull-right" ng-if="bill.status == 'INPROCESS'">

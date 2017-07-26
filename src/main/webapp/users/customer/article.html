@@ -63,8 +63,10 @@
                 <span> <input type="text" ng-model="article.articleCategory.title"></span>
             </div> &nbsp;
         </div>
+        min<input type="number" ng-model="min"></span>
+        max <input type="number" ng-model="max"></span>
 
-        <div ng-repeat="article in articles | filter:article ">
+        <div ng-repeat="article in articles | filter:article">
             <div data-view="list-view" class="download-cards">
                 <article class="download-card">
                     <div class="download-card__icon-box"><img src="https://s28.postimg.org/yxng1jpgd/settings_1.png" /></div>
