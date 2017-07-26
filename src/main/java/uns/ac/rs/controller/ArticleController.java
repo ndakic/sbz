@@ -116,8 +116,8 @@ public class ArticleController {
     }
 
 
-    @PostMapping(value = "/confirm_bill")
-    public ResponseEntity<Bill> confirm_bill(@RequestBody Bill bill) throws Exception{
+    @PostMapping(value = "/submit_bill")
+    public ResponseEntity<Bill> submit_bill(@RequestBody Bill bill) throws Exception{
 
         // postavi ostale podatke racuna > vreme, status itd.
         // izracunati koliko poena korisnik treba da dobije, sacuvati ih

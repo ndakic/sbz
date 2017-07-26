@@ -44,9 +44,6 @@ public class Article implements Serializable {
     private Integer min;
 
 
-
-
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -113,5 +110,19 @@ public class Article implements Serializable {
 
     public void setMin(Integer min) {
         this.min = min;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", articleCategory=" + articleCategory +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", status=" + status +
+                ", min=" + min +
+                '}';
     }
 }

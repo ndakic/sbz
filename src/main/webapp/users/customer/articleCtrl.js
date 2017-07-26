@@ -91,9 +91,9 @@
             function confirmBill() {
                 console.log($scope.shoppingCart);
 
-                var promise = $http.post("/api/article/confirm_bill", $scope.shoppingCart);
+                var promise = $http.post("/api/article/submit_bill", $scope.shoppingCart);
                 promise.then(function (response) {
-                    console.log("Done! confirm bill");
+                    console.log("Done! submit bill");
                     $scope.shoppingCart = response.data;
                 });
 

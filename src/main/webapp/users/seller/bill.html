@@ -1,5 +1,11 @@
 <div class="container" ng-repeat="bill in bills">
-    <h1>Bill {{bill.id}} <a href="" class="btn btn-info pull-right" ng-click="vm.confirmBill()"><i class="fa fa-share"></i>Confirm </a> </h1>
+    <h1 style="display: inline">Bill {{bill.id}}</h1> &nbsp; &nbsp; &nbsp;
+    <h4 style="display: inline"> User: {{bill.buyer.username }} </h4> &nbsp; &nbsp; <h4 style="display: inline"> Status: {{bill.status}}</h4>
+    <span class="pull-right" ng-if="bill.status == 'INPROCESS'">
+        <a href="" class="btn btn-info" ng-click="vm.checkBill(bill)"><i class="fa fa-share"></i>Accept </a>
+        <a href="" class="btn btn-danger " ng-click="vm.rejectBill(bill)"><i class="fa fa-share"></i>Reject </a>
+    </span>
+
     <table class="table table-xs">
         <tr>
             <th></th>
@@ -39,7 +45,7 @@
             <td class="text-right">{{bill.finalPrice}}</td>
         </tr>
     </table>
-
+    <hr>
 </div>
 
 
