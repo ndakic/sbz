@@ -2,10 +2,7 @@ package uns.ac.rs.model;
 
 import uns.ac.rs.model.enums.Role;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -26,7 +23,7 @@ public class User implements Serializable{
     @NotNull
     private Role role;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private UserProfile userProfile ;
 
     public User() {
@@ -76,6 +73,7 @@ public class User implements Serializable{
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", userProfile=" + userProfile +
                 '}';
     }
 }

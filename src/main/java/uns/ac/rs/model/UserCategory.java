@@ -25,6 +25,8 @@ public class UserCategory implements Serializable {
     @ManyToMany
     private List<SpendingLimit> limits = new ArrayList<SpendingLimit>();
 
+    public UserCategory() {
+    }
 
     // getters and setters
 
@@ -54,5 +56,14 @@ public class UserCategory implements Serializable {
 
     public void setLimits(List<SpendingLimit> limits) {
         this.limits = limits;
+    }
+
+    @Override
+    public String toString() {
+        return "UserCategory{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", limits=" + limits +
+                '}';
     }
 }

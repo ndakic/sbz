@@ -11,7 +11,7 @@ rule "more then 20"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("ROBA_SIROKE_POTROSNJE") == false, quantity > 20) from $items
+        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == false, quantity > 20) from $items
     then
         System.out.println("Drools role more then 20");
         $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 10.0, DiscountType.BASIC));
@@ -24,7 +24,7 @@ rule "more then 5 pc, lap top or tv"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory != null, article.articleCategory.title in ("TELEVIZORI","RACUNARI","LAPTOPOVI"), quantity > 5) from $items
+        $item : Item(article.articleCategory != null, article.articleCategory.title in ("tvs","computers","laptops"), quantity > 5) from $items
     then
         System.out.println("Drools role more then 5 Tech");
         $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 5.0, DiscountType.BASIC));
@@ -37,7 +37,7 @@ rule "more than 5000din and broad consumption category"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("ROBA_SIROKE_POTROSNJE") == true, currentPrice > 5000) from $items
+        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true, currentPrice > 5000) from $items
     then
        System.out.println("Drools role more than 5000din of broad consumption products");
        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 7.0, DiscountType.BASIC));
@@ -50,7 +50,7 @@ rule "max discount for category"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory != null, article.articleCategory.title in ("TELEVIZORI","RACUNARI","LAPTOPOVI")) from $items
+        $item : Item(article.articleCategory != null, article.articleCategory.title in ("tvs","computers","laptops")) from $items
     then
         System.out.println("Drools role max discount for category");
         $item.getArticle().getArticleCategory().setDiscount(20.0);
@@ -63,7 +63,7 @@ rule "max discount for broad consumption category"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("ROBA_SIROKE_POTROSNJE") == true) from $items
+        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true) from $items
     then
         System.out.println("Drools role for broad consumption category");
         $item.getArticle().getArticleCategory().setDiscount(10.0);

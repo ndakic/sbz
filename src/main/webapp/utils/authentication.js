@@ -44,7 +44,7 @@
                         console.log(currentUser.role);
 
                         if(currentUser.role == "customer"){
-                            $state.go('account');
+                            $state.go('articles');
                         }else if(currentUser.role =="seller"){
                             $state.go('bills');
                         }else if(currentUser.role == "manager"){

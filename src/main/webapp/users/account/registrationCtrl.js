@@ -8,6 +8,7 @@
 
             $scope.new_user={};
             $scope.roles = ["customer", "seller", "manager"];
+            $scope.categories = [];
 
             $scope.registration = function() {
                 var promise = $http.post("/api/user/registration", $scope.new_user);
@@ -24,6 +25,15 @@
 
                 });
             };
+
+            var loadCategories = function () {
+                var promise = $http.get("/api/user/categories");
+                promise.then(function (response) {
+                    $scope.categories = response.data;
+                });
+            };
+
+            loadCategories();
 
         });
 }(angular));

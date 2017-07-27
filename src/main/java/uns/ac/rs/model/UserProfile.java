@@ -24,6 +24,8 @@ public class UserProfile implements Serializable {
     @ManyToOne
     private UserCategory userCategory;
 
+    public UserProfile() {
+    }
 
     public void addPoints(Double p){
         this.points = this.points + p;

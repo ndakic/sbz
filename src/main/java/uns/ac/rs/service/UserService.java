@@ -59,7 +59,7 @@ public class UserService {
 
         if((user == null)){
             User newUser = new User(username, password, role);
-            userRepository.save(newUser);
+           // userRepository.save(newUser);
 
             return "success";
         }

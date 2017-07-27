@@ -17,6 +17,15 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label">Category</label>
+                    <div class="selectContainer">
+                        <select class="form-control" ng-model = "new_user.userProfile.userCategory" name="size" ng-options="cat.title for cat in categories">
+
+                        </select>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block btn-large">Confirm.</button>
             </form>
         </div>
@@ -171,25 +180,25 @@
     input {
         width: 100%;
         margin-bottom: 10px;
-        background: rgba(0, 0, 0, 0.3);
+        /*background: rgba(0, 0, 0, 0.3);*/
         border: none;
         outline: none;
         padding: 10px;
-        font-size: 13px;
-        color: #fff;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        /*font-size: 13px;*/
+        /*color: #fff;*/
+        /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);*/
         border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: 4px;
-        box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
-        -webkit-transition: box-shadow .5s ease;
-        -moz-transition: box-shadow .5s ease;
-        -o-transition: box-shadow .5s ease;
-        -ms-transition: box-shadow .5s ease;
-        transition: box-shadow .5s ease;
+        /*box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);*/
+        /*-webkit-transition: box-shadow .5s ease;*/
+        /*-moz-transition: box-shadow .5s ease;*/
+        /*-o-transition: box-shadow .5s ease;*/
+        /*-ms-transition: box-shadow .5s ease;*/
+        /*transition: box-shadow .5s ease;*/
     }
 
-    input:focus {
-        box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
-    }
+    /*input:focus {*/
+        /*box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);*/
+    /*}*/
 
 </style>
