@@ -14,6 +14,7 @@
                 var promise = $http.get("/api/user/" + vm.user.username);
                 promise.then(function (response) {
                     $scope.account = response.data;
+                    console.log($scope.account);
                 });
             };
 

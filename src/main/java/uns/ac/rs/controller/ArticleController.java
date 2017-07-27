@@ -60,7 +60,6 @@ public class ArticleController {
         List<Item> items = bill.getItems();
 
         bill.setBuyer(userRepository.findOneByUsername(bill.getBuyer().getUsername()));
-        bill.setReceivedPoints(bill.getBuyer().getUserProfile().getPoints());
 
         double currentPrice = 0;
         for(Item item: items){
@@ -73,7 +72,6 @@ public class ArticleController {
             kieSession.insert(item);
         }
         bill.setCurrentPrice(currentPrice);
-        System.out.println("Total: " + currentPrice);
 
         kieSession.insert(bill);
 
@@ -104,6 +102,8 @@ public class ArticleController {
             // proveriti da li je visina popusta manja od maksimalno dozvoljene
             // ako jeste, postaviti je
             // ako je veca, postaviti maksimalno dozvoljenu
+            // ispraviti racunanje popusta kad budem dodatne radio, sabrati ih sve prvo pa tek onda primeniti popust
+
 
             item.set_discount(discount_sum);
         }

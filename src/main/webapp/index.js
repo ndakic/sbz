@@ -17,10 +17,6 @@
         $qProvider.errorOnUnhandledRejections(false);
     }]);
 
-    // app.filter('filterByRange', function(article, min, max){
-    //     return (article.price > min && article.price < max);
-    // });
-
     app
         .config(config)
         .run(run);
@@ -54,7 +50,7 @@
             if(restrictedState && !AuthenticationService.getCurrentUser()){
                 $state.go('login');
             }
-            console.log(toState.name);
+            // console.log(toState.name);
             //provera ako je ulogovan
             if($localStorage.currentUser && toState.name === "login"){
                 $state.go('account');

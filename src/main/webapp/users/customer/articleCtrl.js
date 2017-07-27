@@ -15,9 +15,6 @@
             vm.user = AuthenticationService.getCurrentUser();
             $scope.confirmBill = false;
 
-            // $scope.min = 4000;
-            // $scope.max = 1000000000;
-
             $scope.articles = [];
 
             $scope.shoppingCart = {
@@ -25,6 +22,8 @@
                 receivedPoints: 0.0,
                 spentPoints:0.0
             };
+
+            console.log($scope.shoppingCart);
 
             var loadArticles = function () {
                 var promise = $http.get("/api/article/all");
@@ -84,10 +83,11 @@
                 promise.then(function (response) {
                     console.log("Done bill!");
                     $scope.shoppingCart = response.data;
+                    console.log($scope.shoppingCart);
 
                     $scope.confirmBill = true;
                     $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;
-                    $scope.shoppingCart.receivedPoints -= $scope.shoppingCart.spentPoints;
+                    $scope.shoppingCart.buyer.userProfile.points -= $scope.shoppingCart.spentPoints;
                 });
             };
 

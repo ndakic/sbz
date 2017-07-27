@@ -24,6 +24,19 @@
                     controllerAs: 'vm'
                 }
             }
+        }).state('billHistory', {
+            parent: 'app',
+            url: '/bill/history',
+            data: {
+                authorities: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'users/seller/billHistory.html',
+                    controller: 'billHistoryCtrl',
+                    controllerAs: 'vm'
+                }
+            }
         });
     }
 })();

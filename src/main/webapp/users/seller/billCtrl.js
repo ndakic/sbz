@@ -25,7 +25,7 @@
                 var promise = $http.post("/api/bill/check_bill", bill);
                 promise.then(function (response) {
                     if(response.status == '200'){
-                        Alertify.success("Bill Accepted!");
+                        Alertify.success("Bill Accepted! " + response.data.receivedPoints + "points gained  to User: " + response.data.buyer.username);
                         loadBills();
                     }else{
                         Alertify.success("No enough articles!")

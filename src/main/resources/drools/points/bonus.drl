@@ -1,0 +1,22 @@
+import uns.ac.rs.model.Bill;
+import uns.ac.rs.model.BillDiscount;
+import uns.ac.rs.model.Item;
+import uns.ac.rs.model.User
+import uns.ac.rs.model.UserProfile
+import uns.ac.rs.model.UserCategory
+import uns.ac.rs.model.SpendingLimit
+
+
+rule "bonus"
+    lock-on-active true
+    salience 12
+
+    when
+        $bill : Bill($prags : buyer.userProfile.userCategory.limits)
+        $p : SpendingLimit(lowerRange < $bill.finalPrice, $bill.finalPrice < upperRange) from $prags
+    then
+        System.out.println("BONUS!");
+        modify($bill){
+            setReceivedPoints($bill.getFinalPrice() * $p.getPercent()/100)
+        }
+end

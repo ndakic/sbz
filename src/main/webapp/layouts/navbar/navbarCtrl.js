@@ -21,6 +21,7 @@
         vm.articles = articles;
         vm.articles_new = articles_new;
         vm.bills = bills;
+        vm.billsHistory = billsHistory;
         vm.$state = $state;
 
         function login() {
@@ -45,6 +46,10 @@
 
         function bills() {
             $state.go('bills');
+        }
+
+        function billsHistory() {
+            $state.go('billHistory');
         }
 
     }

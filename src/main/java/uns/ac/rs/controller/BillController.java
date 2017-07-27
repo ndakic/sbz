@@ -1,5 +1,7 @@
 package uns.ac.rs.controller;
 
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +35,17 @@ public class BillController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private KieContainer kieContainer;
+
     @GetMapping(value = "/all", produces = "application/json")
     public List<Bill> getAll(){
         return billRepository.findAll();
+    }
+
+    @GetMapping(value = "/history/{username}", produces = "application/json")
+    public List<Bill> getHistory(@PathVariable String username){
+        return billRepository.findOneByBuyerUsername(username);
     }
 
     @PostMapping(value = "/check_bill")
@@ -62,10 +72,21 @@ public class BillController {
         // update bill status
         bill.setStatus(BillStatus.SUCCESSFUL);
 
+
+        KieSession kieSession = kieContainer.newKieSession("bonus");
+
+        kieSession.insert(bill);
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        System.out.println("Gained points: " + bill.getReceivedPoints());
+
         // update user points
         User user = userRepository.findOneByUsername(bill.getBuyer().getUsername());
-        user.getUserProfile().setPoints(user.getUserProfile().getPoints() - bill.getSpentPoints());
+        user.getUserProfile().setPoints(user.getUserProfile().getPoints() + bill.getReceivedPoints());
         userRepository.save(user);
+
 
         billRepository.save(bill);
 
@@ -80,5 +101,7 @@ public class BillController {
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
+
+
 
     }

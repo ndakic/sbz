@@ -6,6 +6,10 @@
         <ksession name="bills" />
     </kbase>
 
+    <kbase name="bonus-points" packages="drools.points">
+        <ksession name="bonus" />
+    </kbase>
+
 
 
 </kmodule>
