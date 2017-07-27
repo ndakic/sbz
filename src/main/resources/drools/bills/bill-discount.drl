@@ -1,0 +1,44 @@
+import uns.ac.rs.model.Bill;
+import uns.ac.rs.model.BillDiscount;
+import uns.ac.rs.model.Item;
+import uns.ac.rs.model.ItemDiscount
+import uns.ac.rs.model.enums.DiscountType;
+
+
+rule "more then 200 000din"
+    lock-on-active true
+    salience 12
+
+    when
+        $bill : Bill(currentPrice > 200000)
+    then
+        System.out.println("Drools role: more then 200 000 din");
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 5.0, DiscountType.ADVANCED));
+        update($bill);
+end
+
+rule "user is golden or silver category"
+    lock-on-active true
+    salience 11
+
+    when
+        $bill : Bill(buyer.userProfile.userCategory.title in ("golden","silver"))
+    then
+        System.out.println("Drools role: user is golden or silver category");
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED));
+        update($bill);
+end
+
+rule "more then 50 000 and 10 articles has 50%"
+    lock-on-active true
+    salience 10
+
+    when
+        $bill : Bill(currentPrice > 50000, $items: items, $currentPr: currentPrice)
+        $it : Item(quantity >= 10, finalPrice > $currentPr * 0.5) from $items
+    then
+        System.out.println("Drools role: more then 50 000 and 10 articles has 50% of price");
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 3.0, DiscountType.ADVANCED));
+        update($bill);
+end
+

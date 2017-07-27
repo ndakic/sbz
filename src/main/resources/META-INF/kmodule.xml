@@ -2,12 +2,16 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <kbase name="bill-rules" packages="drools.bills">
-        <ksession name="bills" />
+    <kbase name="article-rules" packages="drools.articles">
+        <ksession name="articles" />
     </kbase>
 
     <kbase name="bonus-points" packages="drools.points">
         <ksession name="bonus" />
+    </kbase>
+
+    <kbase name="bill-points" packages="drools.bills">
+        <ksession name="bills" />
     </kbase>
 
 

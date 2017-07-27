@@ -41,7 +41,7 @@ public class Bill implements Serializable{
 
     private Double spentPoints;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<BillDiscount> billDiscounts = new ArrayList<BillDiscount>();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -137,8 +137,6 @@ public class Bill implements Serializable{
     public List<Item> getItems() {
         return items;
     }
-
-
 
     public void setItems(List<Item> items) {
         this.items = items;

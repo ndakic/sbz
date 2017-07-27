@@ -4,7 +4,7 @@
 
 (function (angular) {
     angular.module('SBZApp')
-        .controller('articleCtrl', function($scope, $log, AuthenticationService, $http, Alertify){
+        .controller('articleCtrl', function($scope, $log, AuthenticationService, $http, Alertify, $state){
 
             var vm = this;
             vm.addToShoppingCart = addToShoppingCart;
@@ -97,7 +97,9 @@
                 var promise = $http.post("/api/article/submit_bill", $scope.shoppingCart);
                 promise.then(function (response) {
                     console.log("Done! submit bill");
+                    Alertify.success("Bill successfully created!");
                     $scope.shoppingCart = response.data;
+                    $state.go("billHistory");
                 });
 
             };

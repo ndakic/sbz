@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uns.ac.rs.model.Article;
-import uns.ac.rs.model.Bill;
-import uns.ac.rs.model.Item;
-import uns.ac.rs.model.ItemDiscount;
+import uns.ac.rs.model.*;
 import uns.ac.rs.model.enums.BillStatus;
 import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
@@ -56,8 +53,11 @@ public class ArticleController {
     @PostMapping(value = "/bill")
     public ResponseEntity<Bill> bill(@RequestBody Bill bill) throws Exception{
 
-        KieSession kieSession = kieContainer.newKieSession("bills");
+        KieSession kieSession = kieContainer.newKieSession("articles");
         List<Item> items = bill.getItems();
+
+        bill.setBillDiscounts(new ArrayList<BillDiscount>());
+
 
         bill.setBuyer(userRepository.findOneByUsername(bill.getBuyer().getUsername()));
 
@@ -78,18 +78,19 @@ public class ArticleController {
         kieSession.fireAllRules();
         kieSession.dispose();
 
+        // items discounts
         double final_price = 0.0;
         for (Item item: bill.getItems()) {
             double item_price = item.getCurrentPrice();
             List<ItemDiscount> discounts = item.getItemDiscounts();
 
-            // ako nema popusta
+            // if doesn't exist
             if(discounts.size() == 0){
                 final_price += item_price;
                 item.setFinalPrice(item_price);
             }
 
-            // ako ima popusta
+            // if exist
             double discount_sum = 0;
             for(ItemDiscount discount: discounts){
                 double item_price_final = item_price - (item_price * discount.getDiscount() / 100);
@@ -108,9 +109,28 @@ public class ArticleController {
             item.set_discount(discount_sum);
         }
 
-        bill.setFinalPrice(final_price);
 
-        // dodati popuste za racun (drool rools)
+        KieSession kieSession2 = kieContainer.newKieSession("bills");
+
+        kieSession2.insert(bill);
+
+        kieSession2.fireAllRules();
+        kieSession2.dispose();
+
+        List<BillDiscount> billDiscounts = bill.getBillDiscounts();
+
+        // bill discount
+        double bill_discount = 0.0;
+        for(BillDiscount billDiscount: billDiscounts){
+            bill_discount += billDiscount.getDiscount();
+        }
+
+        System.out.println("Bill Discount " + bill_discount);
+
+        final_price -= final_price * bill_discount / 100;
+
+        bill.setDiscount(bill_discount);
+        bill.setFinalPrice(final_price);
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
