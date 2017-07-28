@@ -47,6 +47,13 @@ public class UserController {
 
     @PostMapping(value = "/registration", consumes = "application/json")
     public ResponseEntity registration(@RequestBody User user) throws Exception{
+
+        User u = userRepository.findOneByUsername(user.getUsername());
+
+        if(!u.getUsername().isEmpty()){
+            return new ResponseEntity<User>(u, HttpStatus.NO_CONTENT);
+        }
+
         user.getUserProfile().setPoints(0.0);
         User new_user = userRepository.save(user);
         new_user.setPassword("null");
@@ -65,13 +72,10 @@ public class UserController {
 
     }
 
-
     @GetMapping(value = "/categories", produces = "application/json")
     public List<UserCategory> allCategories(){
         return userCategoriesRepository.findAll();
     }
-
-
 
 
 

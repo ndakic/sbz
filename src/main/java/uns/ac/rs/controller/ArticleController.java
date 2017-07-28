@@ -12,10 +12,7 @@ import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
 import uns.ac.rs.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Nikola Dakic on 7/20/17.
@@ -54,11 +51,16 @@ public class ArticleController {
     public ResponseEntity<Bill> bill(@RequestBody Bill bill) throws Exception{
 
         KieSession kieSession = kieContainer.newKieSession("articles");
+
+        bill.setDate(new Date());
+
         List<Item> items = bill.getItems();
+        List<Bill> bills = billRepository.findAll();
+
+        AllBills allBills = new AllBills(bills);
+        kieSession.insert(allBills);
 
         bill.setBillDiscounts(new ArrayList<BillDiscount>());
-
-
         bill.setBuyer(userRepository.findOneByUsername(bill.getBuyer().getUsername()));
 
         double currentPrice = 0;
@@ -68,10 +70,16 @@ public class ArticleController {
             currentPrice += itemPrice;
             item.setCurrentPrice(itemPrice);
             item.setItemDiscounts(new ArrayList<ItemDiscount>());
-
+            System.out.println(item.getBill().getId());
             kieSession.insert(item);
         }
         bill.setCurrentPrice(currentPrice);
+
+        System.out.println(bill.getDate());
+
+        for(Item item: items){
+            System.out.println(item.getOrder());
+        }
 
         kieSession.insert(bill);
 
@@ -90,14 +98,24 @@ public class ArticleController {
                 item.setFinalPrice(item_price);
             }
 
-            // if exist
+            HashSet<Double> dis = new HashSet<>();
+
+            for(ItemDiscount itemDiscount: discounts){
+                dis.add(itemDiscount.getDiscount());
+            }
+
             double discount_sum = 0;
+
+            for (Double d : dis) {
+                discount_sum += d;
+            }
+
+            // if exist
+
             for(ItemDiscount discount: discounts){
-                double item_price_final = item_price - (item_price * discount.getDiscount() / 100);
+                double item_price_final = item_price - (item_price * discount_sum / 100);
                 item.setFinalPrice(item_price_final);
                 final_price += item_price_final;
-
-                discount_sum += discount.getDiscount();
             }
 
             // proveriti da li je visina popusta manja od maksimalno dozvoljene

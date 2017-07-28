@@ -13,13 +13,13 @@
             $scope.registration = function() {
                 var promise = $http.post("/api/user/registration", $scope.new_user);
                 promise.then(function (response) {
-
-                    if(response.data == "success"){
+                    //console.log(response.da);
+                    if(response.status == "200"){
                         Alertify.success('User created!');
                         $state.go('login');
                     }
 
-                    if(response.data == "fail"){
+                    else{
                         Alertify.error('Username already exist!');
                     }
 

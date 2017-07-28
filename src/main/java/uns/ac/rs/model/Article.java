@@ -43,6 +43,18 @@ public class Article implements Serializable {
     @Min(value = 0)
     private Integer min;
 
+    public Article() {
+    }
+
+    public Article(String title, ArticleCategory articleCategory, Double price, Integer amount, Date date, StatusOfArticle status, Integer min) {
+        this.title = title;
+        this.articleCategory = articleCategory;
+        this.price = price;
+        this.amount = amount;
+        this.date = date;
+        this.status = status;
+        this.min = min;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
