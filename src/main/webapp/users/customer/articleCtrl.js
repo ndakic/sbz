@@ -86,8 +86,13 @@
                     console.log($scope.shoppingCart);
 
                     $scope.confirmBill = true;
-                    $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;
-                    $scope.shoppingCart.buyer.userProfile.points -= $scope.shoppingCart.spentPoints;
+
+                    if($scope.shoppingCart.buyer.userProfile.points >= $scope.shoppingCart.spentPoints){
+                        $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;
+                        $scope.shoppingCart.buyer.userProfile.points -= $scope.shoppingCart.spentPoints;
+                    }else{
+                        $scope.shoppingCart.spentPoints = 0.0;
+                    }
                 });
             };
 

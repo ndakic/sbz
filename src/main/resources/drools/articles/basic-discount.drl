@@ -41,7 +41,7 @@ rule "more than 5000din and broad consumption category"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true, currentPrice > 5000) from $items
+        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true || article.articleCategory.title.equals("broad_consumption") == true, currentPrice > 5000) from $items
     then
        System.out.println("Drools role more than 5000din of broad consumption products");
        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 7.0, DiscountType.BASIC));
@@ -67,33 +67,33 @@ rule "max discount for broad consumption category"
 
     when
         $bill : Bill($items : items)
-        $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true) from $items
+        $item : Item(article.articleCategory.articleCategory.title.equals("broad_consumption") == true || article.articleCategory.title.equals("broad_consumption") == true) from $items
     then
         System.out.println("Drools role for broad consumption category");
         $item.getArticle().getArticleCategory().setDiscount(10.0);
         update($item);
 end
 
-rule "article purchased 15 days ago"
-    lock-on-active true
-    salience 7
-
-    when
-        $bill : Bill($items : items)
-        AllBills($b: bills)
-        $bills: Bill(($bill.date.getTime() - date.getTime()) / (1000*60*60*24) < 15, $old: items) from $b
-        $oldItems: Item($article: article) from $old
-        $buyedArt: Article() from $article
-
-        $it: Item(article.id == $buyedArt.id, order == null) from $items
-
-    then
-        System.out.println("Drools role: article purchased 15 days ago!");
-        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 2.0, DiscountType.ADVANCED));
-
-        modify($it){
-             setOrder(1)
-        }
-
-
-end
+//rule "article purchased 15 days ago"
+//    lock-on-active true
+//    salience 7
+//
+//    when
+//        $bill : Bill($items : items)
+//        AllBills($b: bills)
+//        $bills: Bill(($bill.date.getTime() - date.getTime()) / (1000*60*60*24) < 15, $old: items) from $b
+//        $oldItems: Item($article: article) from $old
+//        $buyedArt: Article() from $article
+//
+//        $it: Item(article.id == $buyedArt.id, order == null) from $items
+//
+//    then
+//        System.out.println("Drools role: article purchased 15 days ago!");
+//        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 2.0, DiscountType.ADVANCED));
+//
+//        modify($it){
+//             setOrder(1)
+//        }
+//
+//
+//end
