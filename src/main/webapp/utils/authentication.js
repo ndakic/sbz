@@ -48,7 +48,7 @@
                         }else if(currentUser.role =="seller"){
                             $state.go('bills');
                         }else if(currentUser.role == "manager"){
-                            console.log("manager view");
+                            $state.go('article_category');
                         }
 
                     } else {

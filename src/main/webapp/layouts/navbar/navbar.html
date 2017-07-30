@@ -30,6 +30,14 @@
                     </ul>
                 </li>
 
+                <li class="dropdown" ng-if="getCurrentUserRole() == 'manager'">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="" ng-click="vm.userCategory()">User Category</a></li>
+                        <li><a href="" ng-click="vm.articleCategory()">Article Category</a></li>
+                    </ul>
+                </li>
+
 
                 <li><a href="" ng-if="isLoggedIn()" ng-click="vm.account()">Account</a></li>
 

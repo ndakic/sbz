@@ -22,6 +22,8 @@
         vm.articles_new = articles_new;
         vm.bills = bills;
         vm.billsHistory = billsHistory;
+        vm.userCategory = userCategory;
+        vm.articleCategory = articleCategory;
         vm.$state = $state;
 
         function login() {
@@ -50,6 +52,14 @@
 
         function billsHistory() {
             $state.go('billHistory');
+        }
+
+        function userCategory() {
+            $state.go('user_category');
+        }
+
+        function articleCategory() {
+            $state.go('article_category');
         }
 
     }

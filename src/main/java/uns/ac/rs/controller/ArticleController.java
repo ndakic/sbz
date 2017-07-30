@@ -13,7 +13,10 @@ import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
 import uns.ac.rs.repository.UserRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Nikola Dakic on 7/20/17.
@@ -97,37 +100,47 @@ public class ArticleController {
 
             List<ItemDiscount> discounts = item.getItemDiscounts();
 
+            System.out.println("size: " + discounts.size());
+
             // if there is no discounts
             if(discounts.size() == 0){
                 bill_final_price += item.getCurrentPrice();
                 item.setFinalPrice(item.getCurrentPrice());
-                break;
-            }
+                item.set_discount(0.0);
+            }else{
+                // count discounts
+                double basicDiscount = 0;
+                double additionDiscount = 0;
 
-            // count discounts
-            double basicDiscount = 0;
-            double additionDiscount = 0;
-
-            for(ItemDiscount itemDiscount: discounts){
-                if(itemDiscount.getType().equals(DiscountType.BASIC) && itemDiscount.getDiscount() > basicDiscount){
-                    basicDiscount = itemDiscount.getDiscount();
+                for(ItemDiscount itemDiscount: discounts){
+                    if(itemDiscount.getType().equals(DiscountType.BASIC) && itemDiscount.getDiscount() > basicDiscount){
+                        basicDiscount = itemDiscount.getDiscount();
+                        System.out.println("basic: " + basicDiscount);
+                    }
+                    if(itemDiscount.getType().equals(DiscountType.ADVANCED)){
+                        additionDiscount += itemDiscount.getDiscount();
+                    }
                 }
-                if(itemDiscount.getType().equals(DiscountType.ADVANCED)){
-                    additionDiscount += itemDiscount.getDiscount();
+
+                double finalItemDiscount = basicDiscount + additionDiscount;
+
+                System.out.println("finalDiscount: " + finalItemDiscount);
+
+                if(finalItemDiscount > item.getArticle().getArticleCategory().getDiscount()){
+                    finalItemDiscount = item.getArticle().getArticleCategory().getDiscount();
                 }
+
+                item.set_discount(finalItemDiscount);
+
+                item.setFinalPrice(item.getCurrentPrice() - (item.getCurrentPrice() * finalItemDiscount / 100));
+
+                bill_final_price += item.getFinalPrice();
+
+                System.out.println("dis " + item.getDiscount());
+                System.out.println("final Price: " + item.getFinalPrice());
             }
 
-            double finalItemDiscount = basicDiscount + additionDiscount;
 
-            if(finalItemDiscount > item.getArticle().getArticleCategory().getDiscount()){
-                finalItemDiscount = item.getArticle().getArticleCategory().getDiscount();
-            }
-
-            item.set_discount(finalItemDiscount);
-
-            item.setFinalPrice(item.getCurrentPrice() - (item.getCurrentPrice() * finalItemDiscount / 100));
-
-            bill_final_price += item.getFinalPrice();
         }
 
 
@@ -146,8 +159,6 @@ public class ArticleController {
             bill_discount += billDiscount.getDiscount();
         }
 
-        System.out.println("Bill Discount " + bill_discount);
-
         bill_final_price -= bill_final_price * bill_discount / 100;
 
         bill.setDiscount(bill_discount);
@@ -159,11 +170,6 @@ public class ArticleController {
 
     @PostMapping(value = "/submit_bill")
     public ResponseEntity<Bill> submit_bill(@RequestBody Bill bill) throws Exception{
-
-        // postavi ostale podatke racuna > vreme, status itd.
-        // izracunati koliko poena korisnik treba da dobije, sacuvati ih
-        // skinuti iskoriscenje poene
-        // sacuvati racun
 
         bill.setDate(new Date());
         bill.setStatus(BillStatus.INPROCESS);

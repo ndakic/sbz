@@ -8,5 +8,6 @@ import uns.ac.rs.model.ArticleCategory;
  */
 public interface CategoryRepository extends JpaRepository<ArticleCategory, Long> {
 
+    ArticleCategory findOneByTitle(String title);
 
 }

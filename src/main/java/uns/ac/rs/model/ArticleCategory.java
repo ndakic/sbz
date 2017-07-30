@@ -63,4 +63,14 @@ public class ArticleCategory implements Serializable {
     public void setDiscount(Double discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleCategory{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", articleCategory=" + articleCategory +
+                ", discount=" + discount +
+                '}';
+    }
 }
