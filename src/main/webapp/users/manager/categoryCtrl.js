@@ -82,6 +82,8 @@
                 var indexCat = $scope.userCategories.indexOf(category);
                 var indexLim = $scope.userCategories[indexCat].limits.indexOf(limit);
                 $scope.userCategories[indexCat].limits.splice(indexLim, 1);
+
+                console.log("limit index " + indexLim);
             };
 
             function updateCategory(category){

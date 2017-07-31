@@ -13,9 +13,9 @@
             vm.newArticle = newArticle;
 
             var loadCategories = function () {
-                var promise = $http.get("/api/category/all");
+                var promise = $http.get("/api/category/articles");
                 promise.then(function (response) {
-                    $scope.categories = response.data;
+                    $scope.categories = response.data.slice(1,response.data.length);;;
                 });
             };
 
