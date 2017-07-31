@@ -55,6 +55,7 @@ public class ArticleController {
     public ResponseEntity<Bill> bill(@RequestBody Bill bill) throws Exception{
 
         bill.setDate(new Date());
+        bill.setFactVariable(0);
 
         KieSession kieSession = kieContainer.newKieSession("articles");
 

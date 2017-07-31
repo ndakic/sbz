@@ -41,6 +41,8 @@ public class Bill implements Serializable{
 
     private Double spentPoints;
 
+    private Integer factVariable;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<BillDiscount> billDiscounts = new ArrayList<BillDiscount>();
 
@@ -140,6 +142,14 @@ public class Bill implements Serializable{
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public Integer getFactVariable() {
+        return factVariable;
+    }
+
+    public void setFactVariable(Integer factVariable) {
+        this.factVariable = factVariable;
     }
 
     @Override
