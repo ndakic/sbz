@@ -66,4 +66,14 @@ public class CategoryController {
         return new ResponseEntity<>(art, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/user/update")
+    public ResponseEntity<UserCategory> update(@RequestBody UserCategory userCategory) throws Exception{
+
+        UserCategory userCat = userCategoriesRepository.save(userCategory);
+
+        return Optional.ofNullable(userCat)
+                .map(result -> new ResponseEntity<>(userCat, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }

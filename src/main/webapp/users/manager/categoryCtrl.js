@@ -8,8 +8,14 @@
             var vm = this;
             vm.newArtCategory = newArtCategory;
             vm.deleteArtCat = deleteArtCat;
+            vm.addUserLimit = addUserLimit;
+            vm.deleteLimit = deleteLimit;
+            vm.updateCategory = updateCategory;
 
             $scope.artCategory = {};
+
+            $scope.limit = {};
+            $scope.userCategory = {};
 
             var loadArticleCategories = function () {
                 var promise = $http.get("/api/category/articles");
@@ -19,6 +25,24 @@
             };
 
             loadArticleCategories();
+
+            var loadArticles = function () {
+                var promise = $http.get("/api/article/all");
+                promise.then(function (response) {
+                    $scope.articles = response.data;
+                });
+            };
+
+            loadArticles();
+
+            var loadUserCategories = function () {
+                var promise = $http.get("/api/category/users");
+                promise.then(function (response) {
+                    $scope.userCategories = response.data.slice(1,response.data.length);;
+                });
+            };
+
+            loadUserCategories();
 
 
             function newArtCategory() {
@@ -32,17 +56,68 @@
                 });
             };
 
-            function deleteArtCat(category){
-              console.log(category);
-                var promise = $http.post("/api/category/article/delete/" + category.id);
+            function addUserLimit() {
+
+                var limit = {
+                    lowerRange: "",
+                    upperRange: "",
+                    percent: ""
+                };
+
+                limit.lowerRange = $scope.limit.lowerRange;
+                limit.upperRange = $scope.limit.upperRange;
+                limit.percent = $scope.limit.percent;
+
+                var category = $scope.userCategory;
+
+                for(var c in $scope.userCategories){
+                    if($scope.userCategories[c].id == category.id){
+                        $scope.userCategories[c].limits.push(limit);
+                    }
+                }
+
+            };
+
+            function deleteLimit(category, limit){
+                var indexCat = $scope.userCategories.indexOf(category);
+                var indexLim = $scope.userCategories[indexCat].limits.indexOf(limit);
+                $scope.userCategories[indexCat].limits.splice(indexLim, 1);
+            };
+
+            function updateCategory(category){
+                console.log(category);
+
+                var promise = $http.post("/api/category/user/update", category);
                 promise.then(function (response) {
-                    console.log(response);
                     if(response.status == '200'){
                         loadArticleCategories();
-                        Alertify.success("Category successfully deleted.");
+                        Alertify.success("Category successfully updated!");
                     };
                 });
 
+            };
+
+            function deleteArtCat(category){
+
+                var status = true;
+
+                for(var art in $scope.articles){
+                    if($scope.articles[art].articleCategory.title == category.title){
+                        Alertify.error("This category can't be deleted!");
+                        status = false;
+                    }
+                }
+
+                if(status){
+                    var promise = $http.post("/api/category/article/delete/" + category.id);
+                    promise.then(function (response) {
+                        console.log(response);
+                        if(response.status == '200'){
+                            loadArticleCategories();
+                            Alertify.success("Category successfully deleted.");
+                        };
+                    });
+                };
             };
 
         });

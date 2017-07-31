@@ -22,7 +22,7 @@ public class UserCategory implements Serializable {
     @Column(unique = true)
     private String title;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<SpendingLimit> limits = new ArrayList<SpendingLimit>();
 
     public UserCategory() {
