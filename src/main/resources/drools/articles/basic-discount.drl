@@ -71,7 +71,7 @@ end
 
 rule "article purchased from category in last 30 days"
     lock-on-active true
-    salience 2
+    salience 7
 
     when
         $bill : Bill($items : items)

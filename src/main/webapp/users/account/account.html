@@ -20,7 +20,7 @@
 
                                 <tr>
                                     <td> Address:  </td>
-                                    <td> <input type="text" name="u" placeholder="Address" ng-model="account.userProfile.address" /></td>
+                                    <td> {{ account.userProfile.address}}</td>
                                 </tr>
                                 <tr>
                                     <td> Role: </td>
@@ -41,7 +41,7 @@
                             </table>
                         </div>
                     </div>
-                    <a href="" class="btn btn-warning pull-right" ng-click="vm.update()"><i class="fa fa-share"></i>Update </a>
+                    <!--<a href="" class="btn btn-warning pull-right" ng-click="vm.update()"><i class="fa fa-share"></i>Update </a>-->
                 </div>
                 <div class="panel-footer">
                     <div ng-if="vm.previousState != 'login'">
