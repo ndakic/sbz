@@ -1,0 +1,41 @@
+import uns.ac.rs.model.Bill;
+import uns.ac.rs.model.BillDiscount;
+import uns.ac.rs.model.Item;
+import uns.ac.rs.model.ItemDiscount
+import uns.ac.rs.model.enums.DiscountType;
+import uns.ac.rs.model.AllBills;
+import uns.ac.rs.model.Article
+import java.util.List
+import uns.ac.rs.model.enums.StatusOfArticle;
+import uns.ac.rs.model.enums.BillStatus;
+
+rule "check quantity of articles"
+    lock-on-active true
+    salience 12
+
+    when
+       $art : Article(amount < min)
+    then
+        System.out.println("Check quantity of articles");
+        modify($art){
+            setOrderStatus(true),
+            setOrderMessage("Article quantity is less then minimum! ")
+        }
+end
+
+rule "update articles"
+    lock-on-active true
+    salience 12
+
+    when
+        $bill: Bill(status == BillStatus.INPROCESS, $items: items)
+        $it: Item(article.amount < quantity, $art: article) from $items
+    then
+        System.out.println("Update Article: " + $art.getTitle());
+        modify($art){
+            setOrderStatus(true),
+            setOrderMessage("We need "  + ($it.getQuantity() - $art.getAmount())+ " more articles to proccess bill аnd " + $art.getMin() + " more for min."),
+            setOrderQuantity($it.getQuantity())
+        }
+
+end

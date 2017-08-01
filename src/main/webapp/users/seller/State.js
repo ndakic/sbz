@@ -37,6 +37,19 @@
                     controllerAs: 'vm'
                 }
             }
-        });
+        }).state('orders', {
+            parent: 'app',
+            url: '/orders',
+            data: {
+                authorities: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'users/seller/order.html',
+                    controller: 'orderCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        });;
     }
 })();

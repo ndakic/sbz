@@ -14,6 +14,10 @@
         <ksession name="bills" />
     </kbase>
 
+    <kbase name="orders" packages="drools.orders">
+        <ksession name="order" />
+    </kbase>
+
 
 
 </kmodule>

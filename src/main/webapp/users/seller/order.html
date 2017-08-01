@@ -1,0 +1,31 @@
+<div class="container">
+    <h1>Articles</h1>
+    <table class="table table-xs">
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th class="text-right">Min Amount</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Price</th>
+            <th class="text-center">Message</th>
+            <th class="text-right">Ordered</th>
+            <th class="text-right">For Order</th>
+            <th class="text-right"></th>
+        </tr>
+
+        <tr class="item-row" ng-repeat="article in articles | filter:{ orderStatus: true }">
+            <td> <img src="https://s28.postimg.org/yxng1jpgd/settings_1.png/" height="50px" width="50px"></td>
+            <td><p> <strong>{{article.title}}</strong></p></td>
+            <td class="text-right" title="Min Amount">{{article.min}}</td>
+            <td class="text-right" title="Amount">{{article.amount}}</td>
+            <td class="text-right" title="Price">{{article.price}}</td>
+            <td class="text-right" colspan="1" title="Message">{{article.orderMessage}}</td>
+            <td class="text-right" title="Ordered">{{article.orderQuantity}}</td>
+            <td class="text-right" title="For Order">{{article.orderQuantity + article.min - article.amount}}</td>
+
+            <td class="text-right" title="rm"><a href="" class="btn btn-danger" ng-click="vm.orderMore(article)"><i class="fa fa-share"></i>order</a></td>
+
+        </tr>
+    </table>
+
+</div>

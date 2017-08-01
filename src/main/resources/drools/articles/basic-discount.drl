@@ -8,6 +8,7 @@ import uns.ac.rs.model.Article
 import java.util.List
 import uns.ac.rs.model.enums.StatusOfArticle;
 
+
 rule "more then 20"
     lock-on-active true
     salience 12

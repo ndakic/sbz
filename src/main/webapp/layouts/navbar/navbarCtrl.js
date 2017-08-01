@@ -24,6 +24,7 @@
         vm.billsHistory = billsHistory;
         vm.userCategory = userCategory;
         vm.articleCategory = articleCategory;
+        vm.orders = orders;
         vm.$state = $state;
 
         function login() {
@@ -60,6 +61,10 @@
 
         function articleCategory() {
             $state.go('article_category');
+        }
+
+        function orders() {
+            $state.go("orders");
         }
 
     }

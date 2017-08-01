@@ -40,6 +40,7 @@ public class ArticleController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<Article> add(@RequestBody Article article) throws Exception{
+        article.setOrderStatus(false);
         Article art = articleRepository.save(article);
         return Optional.ofNullable(art)
                 .map(result -> new ResponseEntity<>(art, HttpStatus.OK))
@@ -178,6 +179,51 @@ public class ArticleController {
         billRepository.save(bill);
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/orders")
+    public List<Article> orders() throws Exception{
+
+        List<Article> articles = articleRepository.findAll();
+        List<Bill> bills = billRepository.findAll();
+
+        KieSession kieSession = kieContainer.newKieSession("order");
+
+        for(Article article: articles){
+            kieSession.insert(article);
+        }
+
+        for(Bill bill: bills){
+            kieSession.insert(bill);
+        }
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        return articles;
+    }
+
+    @PostMapping(value = "/order_more")
+    public ResponseEntity<Article> order_more(@RequestBody Article article){
+
+        Integer quantity = article.getOrderQuantity();
+
+        if(quantity == null){
+            quantity = 0;
+        }
+
+        article.setOrderStatus(false);
+        article.setOrderMessage(null);
+        article.setOrderQuantity(null);
+
+
+        article.setAmount(article.getAmount() + (quantity + article.getMin() - article.getAmount()));
+
+        Article art = articleRepository.save(article);
+        return Optional.ofNullable(art)
+                .map(result -> new ResponseEntity<>(art, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
     }
 
 }

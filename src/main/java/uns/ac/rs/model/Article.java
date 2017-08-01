@@ -43,10 +43,16 @@ public class Article implements Serializable {
     @Min(value = 0)
     private Integer min;
 
+    private Boolean orderStatus = false;
+
+    private String orderMessage;
+
+    private Integer orderQuantity;
+
     public Article() {
     }
 
-    public Article(String title, ArticleCategory articleCategory, Double price, Integer amount, Date date, StatusOfArticle status, Integer min) {
+    public Article(String title, ArticleCategory articleCategory, Double price, Integer amount, Date date, StatusOfArticle status, Integer min, Boolean orderStatus, String orderMessage, Integer orderQuantity) {
         this.title = title;
         this.articleCategory = articleCategory;
         this.price = price;
@@ -54,6 +60,9 @@ public class Article implements Serializable {
         this.date = date;
         this.status = status;
         this.min = min;
+        this.orderStatus = orderStatus;
+        this.orderMessage = orderMessage;
+        this.orderQuantity = orderQuantity;
     }
 
     public static long getSerialVersionUID() {
@@ -124,6 +133,30 @@ public class Article implements Serializable {
         this.min = min;
     }
 
+    public Boolean getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(Boolean orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getOrderMessage() {
+        return orderMessage;
+    }
+
+    public void setOrderMessage(String orderMessage) {
+        this.orderMessage = orderMessage;
+    }
+
+    public Integer getOrderQuantity() {
+        return orderQuantity;
+    }
+
+    public void setOrderQuantity(Integer orderQuantity) {
+        this.orderQuantity = orderQuantity;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
@@ -135,6 +168,9 @@ public class Article implements Serializable {
                 ", date=" + date +
                 ", status=" + status +
                 ", min=" + min +
+                ", orderStatus=" + orderStatus +
+                ", orderMessage='" + orderMessage + '\'' +
+                ", orderQuantity=" + orderQuantity +
                 '}';
     }
 }
