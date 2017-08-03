@@ -5,6 +5,7 @@ import uns.ac.rs.model.enums.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Nikola Dakic on 7/5/17.
@@ -26,6 +27,13 @@ public class User implements Serializable{
 
     @OneToOne(cascade = {CascadeType.ALL})
     private UserProfile userProfile ;
+
+    private String firstName;
+
+    private String lastName;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
     public User() {
     }
@@ -68,13 +76,27 @@ public class User implements Serializable{
         this.userProfile = userProfile;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", userProfile=" + userProfile +
-                '}';
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

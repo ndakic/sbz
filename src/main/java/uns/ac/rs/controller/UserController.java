@@ -10,6 +10,7 @@ import uns.ac.rs.repository.UserCategoriesRepository;
 import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.service.UserService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,10 +51,9 @@ public class UserController {
 
         User u = userRepository.findOneByUsername(user.getUsername());
 
-        if(!u.getUsername().isEmpty()){
-            return new ResponseEntity<User>(u, HttpStatus.NO_CONTENT);
-        }
+        if(u != null){ return new ResponseEntity<User>(u, HttpStatus.NO_CONTENT); }
 
+        user.setDate(new Date());
         user.getUserProfile().setPoints(0.0);
         User new_user = userRepository.save(user);
         new_user.setPassword("null");
@@ -65,7 +65,12 @@ public class UserController {
     @PostMapping(value = "/update", consumes = "application/json")
     public ResponseEntity updateUser(@RequestBody User user) throws Exception{
 
-        User new_user = userRepository.save(user);
+        User new_user = userRepository.findOneByUsername(user.getUsername());
+        new_user.setFirstName(user.getFirstName());
+        new_user.setLastName(user.getLastName());
+        new_user.getUserProfile().setAddress(user.getUserProfile().getAddress());
+        userRepository.save(new_user);
+
         new_user.setPassword("sensitive-data");
 
         return new ResponseEntity<User>(new_user, HttpStatus.OK);
