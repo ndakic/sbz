@@ -10,7 +10,8 @@
         'ngStorage',
         'ui.bootstrap',
         'Alertify',
-        'authentication'
+        'authentication',
+        // 'ngMaterial'
     ]);
 
     app.config(['$qProvider', function ($qProvider) {

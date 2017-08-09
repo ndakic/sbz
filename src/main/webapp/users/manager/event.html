@@ -1,0 +1,214 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <span>Events:</span>
+            <div ng-repeat="e in events">
+                <p> Event: {{e.title }} </p>
+                <p> starts: {{e.starts }} </p>
+                <p> ends: {{e.ends }} </p>
+                <p> discount: {{e.discount }} </p>
+
+                <span> Categories: </span>
+                <div ng-repeat="cat in e.categories">
+                    <p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                        category: {{cat.title}} </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+
+            <p> Event: {{event.title }} </p>
+            <p> starts: {{event.starts }} </p>
+            <p> ends: {{event.ends }} </p>
+            <p> discount: {{event.discount }} </p>
+
+            <span> Categories: </span>
+            <div ng-repeat="cat in event.categories">
+                <p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                    category: {{cat.title}} <button class="btn btn-danger" ng-click="vm.deleteCat(cat)">delete</button> </p>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="wrapper">
+                    <h2 class="form-signin-heading">Add Event</h2>
+
+                    <input type="text" class="form-control" ng-model="event.title" name="title" placeholder="title" required="" autofocus="" />
+                    <input type="number" class="form-control" ng-model="event.discount" name="discount" placeholder="discount" required=""/>
+
+                    <input type="text" class="form-control" ng-model="event.starts" name="starts" placeholder="starts" required=""/>
+                    <input type="text" class="form-control" ng-model="event.ends" name="ends" placeholder="ends" required=""/>
+
+                    <br>
+
+                    <br>
+                    <div class="form-group">
+                        <label class="control-label">Add Categories</label>
+                        <div class="selectContainer">
+                            <select class="form-control" ng-model = "category" name="size" ng-options="cat.title for cat in articleCategories">
+
+                            </select> <br>
+                            <button class="btn btn-primary " ng-click="vm.addCategory(category)">Add</button>
+                        </div>
+
+                    </div>
+
+                    <br> <br>
+
+                <button class="btn btn-lg btn-primary btn-block" ng-click="vm.addEvent(event)" >Add</button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<style>
+
+    body {
+        background: #eee !important;
+    }
+
+    .wrapper {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+
+    .form-signin {
+        max-width: 380px;
+        padding: 15px 35px 45px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 30px;
+    }
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+    .form-signin .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .form-signin .form-control:focus {
+        z-index: 2;
+    }
+    .form-signin input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .form-signin input[type="password"] {
+        margin-bottom: 20px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+
+</style>
+
+
+<style>
+
+
+    @import url(https://fonts.googleapis.com/css?family=Patua+One|Open+Sans);
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body {
+        /*background: #353a40;*/
+    }
+
+    table {
+        border-collapse: separate;
+        background: #fff;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        margin: 50px auto;
+        -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    thead {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    thead th {
+        font-family: 'Patua One', cursive;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+        text-align: left;
+        padding: 20px;
+        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY0NmY3ZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRhNTU2NCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+        background-size: 100%;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #646f7f), color-stop(100%, #4a5564));
+        background-image: -moz-linear-gradient(#646f7f, #4a5564);
+        background-image: -webkit-linear-gradient(#646f7f, #4a5564);
+        background-image: linear-gradient(#646f7f, #4a5564);
+        border-top: 1px solid #858d99;
+    }
+    thead th:first-child {
+        -moz-border-radius-topleft: 5px;
+        -webkit-border-top-left-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+    thead th:last-child {
+        -moz-border-radius-topright: 5px;
+        -webkit-border-top-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    tbody tr td {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        color: #5f6062;
+        font-size: 13px;
+        padding: 20px 20px 20px 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(2n) {
+        background: #f0f3f5;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+    tbody tr:last-child td:first-child {
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    tbody tr:last-child td:last-child {
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+
+</style>

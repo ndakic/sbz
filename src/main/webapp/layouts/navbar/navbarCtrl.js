@@ -25,6 +25,7 @@
         vm.userCategory = userCategory;
         vm.articleCategory = articleCategory;
         vm.orders = orders;
+        vm.events = events;
         vm.$state = $state;
 
         function login() {
@@ -65,6 +66,10 @@
 
         function orders() {
             $state.go("orders");
+        }
+
+        function events() {
+            $state.go("events");
         }
 
     }

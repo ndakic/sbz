@@ -80,12 +80,15 @@ public class BillController {
         kieSession.fireAllRules();
         kieSession.dispose();
 
-        System.out.println("Gained points: " + bill.getReceivedPoints());
+        double received = round(bill.getReceivedPoints(), 2);
+        System.out.println("Gained points: " + received);
 
         // update user points
         User user = userRepository.findOneByUsername(bill.getBuyer().getUsername());
-        user.getUserProfile().setPoints(user.getUserProfile().getPoints() + bill.getReceivedPoints());
+        user.getUserProfile().setPoints(user.getUserProfile().getPoints() + received);
         userRepository.save(user);
+
+
 
 
         billRepository.save(bill);
@@ -103,5 +106,13 @@ public class BillController {
     }
 
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
     }

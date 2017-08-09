@@ -37,6 +37,19 @@
                     controllerAs: 'vm'
                 }
             }
-        })
+        }).state('events', {
+            parent: 'app',
+            url: '/events',
+            data: {
+                authorities: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'users/manager/event.html',
+                    controller: 'eventCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        });
     }
 })();
