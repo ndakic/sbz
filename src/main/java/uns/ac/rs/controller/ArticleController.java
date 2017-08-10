@@ -11,6 +11,7 @@ import uns.ac.rs.model.enums.BillStatus;
 import uns.ac.rs.model.enums.DiscountType;
 import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
+import uns.ac.rs.repository.EventRepository;
 import uns.ac.rs.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -36,7 +37,11 @@ public class ArticleController {
     private BillRepository billRepository;
 
     @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
     private KieContainer kieContainer;
+
 
     @PostMapping(value = "/add")
     public ResponseEntity<Article> add(@RequestBody Article article) throws Exception{
@@ -64,6 +69,13 @@ public class ArticleController {
         List<Bill> bills = billRepository.findAll();
         AllBills allBills = new AllBills(bills);
         kieSession.insert(allBills);
+
+        // insert All Events
+        List<Event> events = eventRepository.findAll();
+        for(Event event: events){
+            kieSession.insert(event);
+        }
+
 
         // init BillDiscounts and Set User
         bill.setBillDiscounts(new ArrayList<BillDiscount>());
@@ -102,8 +114,6 @@ public class ArticleController {
 
             List<ItemDiscount> discounts = item.getItemDiscounts();
 
-            System.out.println("size: " + discounts.size());
-
             // if there is no discounts
             if(discounts.size() == 0){
                 bill_final_price += item.getCurrentPrice();
@@ -117,7 +127,6 @@ public class ArticleController {
                 for(ItemDiscount itemDiscount: discounts){
                     if(itemDiscount.getType().equals(DiscountType.BASIC) && itemDiscount.getDiscount() > basicDiscount){
                         basicDiscount = itemDiscount.getDiscount();
-                        System.out.println("basic: " + basicDiscount);
                     }
                     if(itemDiscount.getType().equals(DiscountType.ADVANCED)){
                         additionDiscount += itemDiscount.getDiscount();
@@ -125,8 +134,6 @@ public class ArticleController {
                 }
 
                 double finalItemDiscount = basicDiscount + additionDiscount;
-
-                System.out.println("finalDiscount: " + finalItemDiscount);
 
                 if(finalItemDiscount > item.getArticle().getArticleCategory().getDiscount()){
                     finalItemDiscount = item.getArticle().getArticleCategory().getDiscount();
@@ -138,8 +145,6 @@ public class ArticleController {
 
                 bill_final_price += item.getFinalPrice();
 
-                System.out.println("dis " + item.getDiscount());
-                System.out.println("final Price: " + item.getFinalPrice());
             }
 
 

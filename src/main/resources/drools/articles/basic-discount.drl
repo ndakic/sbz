@@ -5,7 +5,9 @@ import uns.ac.rs.model.ItemDiscount
 import uns.ac.rs.model.enums.DiscountType;
 import uns.ac.rs.model.AllBills;
 import uns.ac.rs.model.Article
+import uns.ac.rs.model.ArticleCategory;
 import uns.ac.rs.model.User;
+import uns.ac.rs.model.Event;
 import java.util.List
 import uns.ac.rs.model.enums.StatusOfArticle;
 
@@ -90,6 +92,21 @@ rule "article purchased from category in last 30 days"
         modify($bill){
             setFactVariable(2)
         }
+end
+
+rule "events"
+    lock-on-active true
+    salience 4
+
+    when
+        $bill : Bill($items: items, $date : date)
+        $event : Event(starts < $date, $date < ends, $categories: categories)
+        $category: ArticleCategory() from $categories
+        $item: Item(article.articleCategory.id == $category.id) from $items
+    then
+        System.out.println("Drools role: Events!");
+        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, $event.getDiscount(), DiscountType.ADVANCED));
+
 end
 
 
