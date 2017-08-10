@@ -1,18 +1,17 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-            <span>Events:</span>
+            <h3>Events:</h3> <br>
             <div ng-repeat="e in events">
-                <p> Event: {{e.title }} </p>
+                <p> title: {{e.title }} <button class="btn btn-danger" ng-click="vm.deleteEvent(e)">delete</button> Check!</p>
                 <p> starts: {{e.starts }} </p>
                 <p> ends: {{e.ends }} </p>
-                <p> discount: {{e.discount }} </p>
+                <p> discount: {{e.discount }} %</p>
 
-                <span> Categories: </span>
+                <h5> Categories: </h5>
                 <div ng-repeat="cat in e.categories">
-                    <p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                        category: {{cat.title}} </p>
-                </div>
+                    <p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; {{cat.title}} </p>
+                </div> <br>
             </div>
         </div>
         <div class="col-lg-4">
@@ -20,48 +19,42 @@
             <p> Event: {{event.title }} </p>
             <p> starts: {{event.starts }} </p>
             <p> ends: {{event.ends }} </p>
-            <p> discount: {{event.discount }} </p>
+            <p> discount: {{event.discount }} %</p>
 
             <span> Categories: </span>
             <div ng-repeat="cat in event.categories">
                 <p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                    category: {{cat.title}} <button class="btn btn-danger" ng-click="vm.deleteCat(cat)">delete</button> </p>
+                    {{cat.title}} <button class="btn btn-danger" ng-click="vm.deleteCat(cat)">delete</button> </p>
             </div>
 
         </div>
-
 
         <div class="col-lg-4">
             <div class="wrapper">
                     <h2 class="form-signin-heading">Add Event</h2>
 
-                    <input type="text" class="form-control" ng-model="event.title" name="title" placeholder="title" required="" autofocus="" />
+                    <input type="text" class="form-control" ng-model="event.title" name="title" placeholder="title" required autofocus="" />
                     <input type="number" class="form-control" ng-model="event.discount" name="discount" placeholder="discount" required=""/>
 
-                    <input type="text" class="form-control" ng-model="event.starts" name="starts" placeholder="starts" required=""/>
-                    <input type="text" class="form-control" ng-model="event.ends" name="ends" placeholder="ends" required=""/>
-
+                    <input class="form-control" type="text" ng-model="event.starts" placeholder="starts" id="datepicker1">
+                    <input class="form-control" type="text" ng-model="event.ends" placeholder="ends" id="datepicker2">
                     <br>
 
                     <br>
                     <div class="form-group">
                         <label class="control-label">Add Categories</label>
                         <div class="selectContainer">
-                            <select class="form-control" ng-model = "category" name="size" ng-options="cat.title for cat in articleCategories">
+                            <select class="form-control" ng-model="category" name="size" ng-options="cat.title for cat in articleCategories">
 
                             </select> <br>
                             <button class="btn btn-primary " ng-click="vm.addCategory(category)">Add</button>
                         </div>
-
                     </div>
 
                     <br> <br>
 
                 <button class="btn btn-lg btn-primary btn-block" ng-click="vm.addEvent(event)" >Add</button>
-
-
             </div>
-
         </div>
 
     </div>
@@ -69,7 +62,17 @@
 </div>
 
 
+<script type="text/javascript">
+    $( function() {
+        $( "#datepicker1" ).datepicker();
+    } );
+</script>
 
+<script type="text/javascript">
+    $( function() {
+        $( "#datepicker2" ).datepicker();
+    } );
+</script>
 
 
 <style>

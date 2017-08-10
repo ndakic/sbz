@@ -9,8 +9,8 @@
             var vm = this;
             vm.addCategory = addCategory;
             vm.addEvent = addEvent;
-            vm.makeEvent = makeEvent;
             vm.deleteCat = deleteCat;
+            vm.deleteEvent = deleteEvent;
 
             $scope.category = {};
 
@@ -42,6 +42,9 @@
 
             function addEvent(event) {
 
+                if($scope.event.title == "" || $scope.event.discount == "" || $scope.event.starts == "" || $scope.event.ends == "")
+                    return;
+
                 for (var i = 0; i < $scope.events.length; i++) {
                     if ($scope.events[i].title == event.title) {
                         Alertify.log("Category already added!");
@@ -64,13 +67,16 @@
                     title: "",
                     categories: [],
                     discount : "",
-                    starts : new Date(),
-                    ends: new Date()
+                    starts : "",
+                    ends: ""
                 };
 
             };
 
             function addCategory(category) {
+
+                if($scope.event.title == "" || $scope.event.discount == "" || $scope.event.starts == "" || $scope.event.ends == "")
+                    return;
 
                 for (var i = 0; i < $scope.event.categories.length; i++) {
                     if ($scope.event.categories[i].title == category.title) {
@@ -83,16 +89,23 @@
 
             };
 
-            function makeEvent(event) {
-                console.log(event);
-            }
 
             function deleteCat(cat) {
-                console.log(cat);
 
                 var indexCat = $scope.event.categories.indexOf(cat);
-
                 $scope.event.categories.splice(indexCat, 1);
+
+            }
+
+            function deleteEvent(event) {
+
+                var promise = $http.post("/api/event/delete/" + event.id);
+                promise.then(function (response) {
+                    if(response.status == '200'){
+                        loadEvents();
+                        Alertify.success("Event successfully deleted.");
+                    };
+                });
 
             }
 
