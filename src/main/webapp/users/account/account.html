@@ -40,6 +40,10 @@
                                     <td>{{ account.role}}</td>
                                 </tr>
                                 <tr>
+                                    <td> Registration Date: </td>
+                                    <td>{{ account.date | date : format : timezone}}</td>
+                                </tr>
+                                <tr>
                                     <td> Bonus Points: </td>
                                     <td>{{account.userProfile.points}}  </td>
                                 </tr>

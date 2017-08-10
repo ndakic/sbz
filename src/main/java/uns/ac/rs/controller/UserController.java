@@ -69,6 +69,11 @@ public class UserController {
         new_user.setFirstName(user.getFirstName());
         new_user.setLastName(user.getLastName());
         new_user.getUserProfile().setAddress(user.getUserProfile().getAddress());
+
+        if(new_user.getDate() == null){
+            new_user.setDate(new Date());
+        }
+
         userRepository.save(new_user);
 
         new_user.setPassword("sensitive-data");

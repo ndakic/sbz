@@ -152,6 +152,8 @@ public class Bill implements Serializable{
         this.factVariable = factVariable;
     }
 
+
+
     @Override
     public String toString() {
         return "Bill{" +

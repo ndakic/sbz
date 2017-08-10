@@ -5,6 +5,7 @@ import uns.ac.rs.model.ItemDiscount
 import uns.ac.rs.model.enums.DiscountType;
 import uns.ac.rs.model.AllBills;
 import uns.ac.rs.model.Article
+import uns.ac.rs.model.User;
 import java.util.List
 import uns.ac.rs.model.enums.StatusOfArticle;
 
@@ -90,4 +91,5 @@ rule "article purchased from category in last 30 days"
             setFactVariable(2)
         }
 end
+
 

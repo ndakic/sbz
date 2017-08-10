@@ -42,3 +42,17 @@ rule "more then 50 000 and 10 articles has 50%"
         update($bill);
 end
 
+
+rule "user is active more than 2 years"
+    lock-on-active true
+    salience 5
+
+    when
+        $bill : Bill( (date.getTime() - buyer.date.getDate()) / (1000*60*60*24*365) > 2)
+    then
+        System.out.println("Old School");
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED));
+        update($bill);
+
+end
+
