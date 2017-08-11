@@ -16,6 +16,13 @@
                 promise.then(function (response) {
                     $scope.bills = response.data;
                     console.log("Bills Loaded");
+
+                    var bill = $scope.bills[10];
+
+                    console.log(bill);
+
+
+                    console.log("Done!");
                 });
             };
 
