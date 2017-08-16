@@ -4,7 +4,8 @@ services:
   - mysql
 
 before_install:
+  - mysql -e 'CREATE DATABASE sbz;'
   - npm install bower -g
-  
+
 sudo: false
 script: mvn clean verify
