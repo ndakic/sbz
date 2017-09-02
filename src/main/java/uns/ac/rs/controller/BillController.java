@@ -54,8 +54,12 @@ public class BillController {
         bill.setDate(new Date());
         bill.setStatus(BillStatus.INPROCESS);
 
+
+
         // check article supplies
         for(Item item: bill.getItems()){
+            System.out.println("Amount:" +  item.getArticle().getAmount());
+            System.out.println("Quantity:" +  item.getQuantity());
             if(item.getArticle().getAmount() < item.getQuantity()){
                 System.out.println("Not Enough Articles!");
                 return new ResponseEntity<Bill>(bill, HttpStatus.NO_CONTENT);
@@ -87,8 +91,6 @@ public class BillController {
         User user = userRepository.findOneByUsername(bill.getBuyer().getUsername());
         user.getUserProfile().setPoints(user.getUserProfile().getPoints() + received);
         userRepository.save(user);
-
-
 
 
         billRepository.save(bill);

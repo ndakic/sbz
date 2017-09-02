@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,11 +27,6 @@ public class ServicesTests {
 	@Autowired
 	ArticleRepository articleRepository;
 
-	@Test
-	public void testFindAll(){
-		List<Article> articles  = articleRepository.findAll();
-		assertThat(articles).isNotNull();
-	}
 
 	@Test
 	@Transactional
@@ -53,5 +49,14 @@ public class ServicesTests {
 		List<Article> articles = articleRepository.findAll();
 
 		assertThat(articles).hasSize(dbSizeBeforeAdd + 1);
+	}
+
+	// negative tests
+
+	@Test(expected = EmptyResultDataAccessException.class)
+	@Transactional
+	@Rollback(true)
+	public void testRemoveNonExistArticle(){
+		articleRepository.delete(12345l);
 	}
 }
