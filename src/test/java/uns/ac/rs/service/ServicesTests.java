@@ -2,6 +2,7 @@ package uns.ac.rs.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -26,6 +27,19 @@ public class ServicesTests {
 
 	@Autowired
 	ArticleRepository articleRepository;
+
+	@Test
+	public void testFindOne() throws Exception{
+
+		Article article = Mockito.mock(Article.class);
+
+		Mockito.when(article.getId()).thenReturn(3L);
+
+		Article art = articleRepository.findOne(article.getId());
+
+		assertThat(art).isNotNull();
+
+	}
 
 
 	@Test

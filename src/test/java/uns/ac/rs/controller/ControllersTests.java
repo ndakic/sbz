@@ -80,10 +80,10 @@ public class ControllersTests {
         bill.setItems(items);
 
         Gson gson = new Gson();
-        String json = gson.toJson(bill);
+        String data = gson.toJson(bill);
 
         mockMvc.perform(post(url_prefix + "/check_bill")
-                .content(json)
+                .content(data)
                 .contentType(contentType))
                 .andExpect(status().isNoContent());
     }
