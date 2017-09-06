@@ -77,7 +77,15 @@
                         <div class="content">
                             <h2 class="download-card__content-box__catagory">articleCategory: {{article.articleCategory.title}}</h2>
                             <h3 class="download-card__content-box__title"> Title: {{article.title}}</h3>
-                            <!--<h5>version:  </h5>-->
+                            <div ng-repeat="event in events">
+                                <div ng-repeat="cat in event.categories">
+                                    <div ng-if="cat.title == article.articleCategory.title">
+                                        <h5>event discount:  {{event.title }} - {{event.discount }} %</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <p class="download-card__content-box__description">Price: {{article.price}} $</p>
                             <a href="" class="btn btn-info" ng-click="vm.addToShoppingCart(article)"><i class="fa fa-share"></i> Buy</a>
                         </div>

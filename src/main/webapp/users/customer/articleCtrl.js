@@ -16,6 +16,7 @@
             $scope.confirmBill = false;
 
             $scope.articles = [];
+            $scope.events = [];
 
             $scope.shoppingCart = {
                 items:[],
@@ -33,6 +34,19 @@
             };
 
             loadArticles();
+
+
+            var loadEvents = function () {
+                var promise = $http.get("/api/event/all");
+                promise.then(function (response) {
+                    $scope.events = response.data;
+                    console.log($scope.events);
+                });
+            };
+
+            loadEvents();
+
+
 
             $scope.$watch('shoppingCart', function() {
                 countTotal();
