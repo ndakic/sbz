@@ -14,6 +14,7 @@ import uns.ac.rs.model.enums.BillStatus;
 import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
 import uns.ac.rs.repository.UserRepository;
+import uns.ac.rs.service.BillService;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,10 @@ import java.util.List;
 public class BillController {
 
     @Autowired
-    private BillRepository billRepository;
+    private BillRepository billRepository; //izbrisati
+
+    @Autowired
+    private BillService billService;
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -44,8 +48,8 @@ public class BillController {
     }
 
     @GetMapping(value = "/history/{username}", produces = "application/json")
-    public List<Bill> getHistory(@PathVariable String username){
-        return billRepository.findOneByBuyerUsername(username);
+    public List<Bill> getHistory(@PathVariable String username) throws Exception{
+        return billService.userHistory(username);
     }
 
     @PostMapping(value = "/check_bill")

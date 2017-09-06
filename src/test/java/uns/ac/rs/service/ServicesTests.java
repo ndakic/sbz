@@ -55,7 +55,6 @@ public class ServicesTests {
 
 	}
 
-
 	@Test
 	@Transactional
 	@Rollback(true)
@@ -87,4 +86,6 @@ public class ServicesTests {
 	public void testRemoveNonExistArticle(){
 		articleRepository.delete(12345l);
 	}
+
+
 }

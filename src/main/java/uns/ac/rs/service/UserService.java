@@ -7,6 +7,7 @@ import uns.ac.rs.model.enums.Role;
 import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.security.JWT;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,6 +66,23 @@ public class UserService {
         }
 
         return "fail";
+    }
+
+    public User updateUser(User user) throws Exception{
+
+        User new_user = userRepository.findOneByUsername(user.getUsername());
+        new_user.setFirstName(user.getFirstName());
+        new_user.setLastName(user.getLastName());
+        new_user.getUserProfile().setAddress(user.getUserProfile().getAddress());
+
+        if(new_user.getDate() == null){ new_user.setDate(new Date());}
+
+        userRepository.save(new_user);
+
+        new_user.setPassword("sensitive-data");
+
+        return new_user;
+
     }
 
 

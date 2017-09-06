@@ -65,18 +65,7 @@ public class UserController {
     @PostMapping(value = "/update", consumes = "application/json")
     public ResponseEntity updateUser(@RequestBody User user) throws Exception{
 
-        User new_user = userRepository.findOneByUsername(user.getUsername());
-        new_user.setFirstName(user.getFirstName());
-        new_user.setLastName(user.getLastName());
-        new_user.getUserProfile().setAddress(user.getUserProfile().getAddress());
-
-        if(new_user.getDate() == null){
-            new_user.setDate(new Date());
-        }
-
-        userRepository.save(new_user);
-
-        new_user.setPassword("sensitive-data");
+        User new_user = userService.updateUser(user);
 
         return new ResponseEntity<User>(new_user, HttpStatus.OK);
 

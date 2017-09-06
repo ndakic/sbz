@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
-    List<Bill> findOneByBuyerUsername(String username);
+    List<Bill> findAllByBuyerUsername(String username);
 }
