@@ -29,13 +29,27 @@ public class ServicesTests {
 	ArticleRepository articleRepository;
 
 	@Test
-	public void testFindOne() throws Exception{
+	public void testArticle() throws Exception{
 
 		Article article = Mockito.mock(Article.class);
 
 		Mockito.when(article.getId()).thenReturn(3L);
 
 		Article art = articleRepository.findOne(article.getId());
+
+		assertThat(art).isNotNull();
+
+	}
+
+	@Test
+	public void testRepo() throws Exception{
+
+		ArticleRepository articleRepository = Mockito.mock(ArticleRepository.class);
+		Article article = new Article();
+
+		Mockito.when(articleRepository.save(article)).thenReturn(new Article());
+
+		Article art = articleRepository.save(article);
 
 		assertThat(art).isNotNull();
 
