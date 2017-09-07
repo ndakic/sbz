@@ -99,4 +99,17 @@ public class User implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", userProfile=" + userProfile +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

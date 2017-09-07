@@ -6,11 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.User;
 import uns.ac.rs.model.UserCategory;
-import uns.ac.rs.repository.UserCategoriesRepository;
-import uns.ac.rs.repository.UserRepository;
+import uns.ac.rs.service.CategoryService;
 import uns.ac.rs.service.UserService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,10 +23,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private UserCategoriesRepository userCategoriesRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private CategoryService categoryService;
 
 
     @GetMapping(value = "/all", produces = "application/json")
@@ -46,19 +41,14 @@ public class UserController {
         return userService.login(user.getUsername(), user.getPassword());
     }
 
-    @PostMapping(value = "/registration", consumes = "application/json")
+    @PostMapping(value = "/registration", consumes = "application/json", produces = "application/json")
     public ResponseEntity registration(@RequestBody User user) throws Exception{
 
-        User u = userRepository.findOneByUsername(user.getUsername());
+        User checkUser = userService.registration(user);
 
-        if(u != null){ return new ResponseEntity<User>(u, HttpStatus.NO_CONTENT); }
+        if(checkUser == null){ return new ResponseEntity<User>(new User(), HttpStatus.NO_CONTENT); }
 
-        user.setDate(new Date());
-        user.getUserProfile().setPoints(0.0);
-        User new_user = userRepository.save(user);
-        new_user.setPassword("null");
-
-        return new ResponseEntity<User>(new_user, HttpStatus.OK);
+        return new ResponseEntity<User>(checkUser, HttpStatus.OK);
 
     }
 
@@ -73,7 +63,7 @@ public class UserController {
 
     @GetMapping(value = "/categories", produces = "application/json")
     public List<UserCategory> allCategories(){
-        return userCategoriesRepository.findAll();
+        return categoryService.getUserCategories();
     }
 
 

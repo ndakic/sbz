@@ -3,6 +3,7 @@ package uns.ac.rs.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uns.ac.rs.model.User;
+import uns.ac.rs.model.UserProfile;
 import uns.ac.rs.model.enums.Role;
 import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.security.JWT;
@@ -19,6 +20,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
 
     public List<User> findAll(){
@@ -54,18 +58,27 @@ public class UserService {
         return response;
     }
 
-    public String registration(String username, String password, Role role){
+    public User registration(User user) throws Exception{
 
-        User user = userRepository.findOneByUsername(username);
+        User alreadyExist = userRepository.findOneByUsername(user.getUsername());
 
-        if((user == null)){
-            User newUser = new User(username, password, role);
-           // userRepository.save(newUser);
+        if(alreadyExist != null){ return null;}
 
-            return "success";
+        if(user.getRole() == Role.customer){
+            if(user.getUserProfile() == null){
+                user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatById(1L)));
+            }else{
+                user.getUserProfile().setPoints(0.0);
+            }
         }
 
-        return "fail";
+        user.setDate(new Date());
+
+        User new_user = userRepository.save(user);
+        new_user.setPassword("sensitive-data");
+
+        return user;
+
     }
 
     public User updateUser(User user) throws Exception{
@@ -85,5 +98,12 @@ public class UserService {
 
     }
 
+    public User findByUsername(String username)throws Exception{
+       return userRepository.findOneByUsername(username);
+    }
+
+    public User saveUser(User user) throws Exception{
+        return userRepository.save(user);
+    }
 
 }

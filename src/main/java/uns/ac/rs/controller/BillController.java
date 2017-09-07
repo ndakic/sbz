@@ -1,22 +1,12 @@
 package uns.ac.rs.controller;
 
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
-import uns.ac.rs.model.Item;
-import uns.ac.rs.model.User;
-import uns.ac.rs.model.enums.BillStatus;
-import uns.ac.rs.repository.ArticleRepository;
-import uns.ac.rs.repository.BillRepository;
-import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.service.BillService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,23 +18,12 @@ import java.util.List;
 public class BillController {
 
     @Autowired
-    private BillRepository billRepository; //izbrisati
+    BillService billService;
 
-    @Autowired
-    private BillService billService;
-
-    @Autowired
-    private ArticleRepository articleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private KieContainer kieContainer;
 
     @GetMapping(value = "/all", produces = "application/json")
     public List<Bill> getAll(){
-        return billRepository.findAll();
+        return billService.getAllBills();
     }
 
     @GetMapping(value = "/history/{username}", produces = "application/json")
@@ -53,72 +32,22 @@ public class BillController {
     }
 
     @PostMapping(value = "/check_bill")
-    public ResponseEntity<Bill> check_bill(@RequestBody Bill bill) throws Exception{
+    public ResponseEntity<Bill> check_bill(@RequestBody Bill b) throws Exception{
 
-        bill.setDate(new Date());
-        bill.setStatus(BillStatus.INPROCESS);
+        Bill bill = billService.accept_bill(b);
 
-
-
-        // check article supplies
-        for(Item item: bill.getItems()){
-            System.out.println("Amount:" +  item.getArticle().getAmount());
-            System.out.println("Quantity:" +  item.getQuantity());
-            if(item.getArticle().getAmount() < item.getQuantity()){
-                System.out.println("Not Enough Articles!");
-                return new ResponseEntity<Bill>(bill, HttpStatus.NO_CONTENT);
-            }
-        }
-
-        // update supplies
-        for(Item item: bill.getItems()){
-            Article art = item.getArticle();
-            art.setAmount(art.getAmount() - item.getQuantity());
-            articleRepository.save(art);
-        }
-
-        // update bill status
-        bill.setStatus(BillStatus.SUCCESSFUL);
-
-
-        KieSession kieSession = kieContainer.newKieSession("bonus");
-
-        kieSession.insert(bill);
-
-        kieSession.fireAllRules();
-        kieSession.dispose();
-
-        double received = round(bill.getReceivedPoints(), 2);
-        System.out.println("Gained points: " + received);
-
-        // update user points
-        User user = userRepository.findOneByUsername(bill.getBuyer().getUsername());
-        user.getUserProfile().setPoints(user.getUserProfile().getPoints() + received);
-        userRepository.save(user);
-
-
-        billRepository.save(bill);
+        if(bill == null){ return new ResponseEntity<Bill>(bill, HttpStatus.NO_CONTENT);}
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
 
     @PostMapping(value = "/reject_bill")
-    public ResponseEntity<Bill> reject_bill(@RequestBody Bill bill) throws Exception {
+    public ResponseEntity<Bill> reject_bill(@RequestBody Bill b) throws Exception {
 
-        bill.setStatus(BillStatus.CANCELED);
-        billRepository.save(bill);
+        Bill bill = billService.reject_bill(b);
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
 
-
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
 
     }

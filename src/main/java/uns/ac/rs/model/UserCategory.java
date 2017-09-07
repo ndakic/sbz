@@ -28,6 +28,11 @@ public class UserCategory implements Serializable {
     public UserCategory() {
     }
 
+    public UserCategory(String title, List<SpendingLimit> limits) {
+        this.title = title;
+        this.limits = limits;
+    }
+
     // getters and setters
 
     public static long getSerialVersionUID() {

@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.ArticleCategory;
 import uns.ac.rs.model.UserCategory;
-import uns.ac.rs.repository.CategoryRepository;
-import uns.ac.rs.repository.UserCategoriesRepository;
+import uns.ac.rs.service.CategoryService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,21 +19,19 @@ import java.util.Optional;
 @RequestMapping("/api/category")
 public class CategoryController {
 
-    @Autowired
-    private CategoryRepository articleCategoryRepository;
 
     @Autowired
-    private UserCategoriesRepository userCategoriesRepository;
+    private CategoryService categoryService;
 
 
     @GetMapping("/articles")
     public List<ArticleCategory> getArticleCategories(){
-        return articleCategoryRepository.findAll();
+        return categoryService.getArticleCategories();
     }
 
     @GetMapping("/users")
     public List<UserCategory> getUserCategories(){
-        return userCategoriesRepository.findAll();
+        return categoryService.getUserCategories();
     }
 
     @PostMapping(value = "/article/add")
@@ -43,23 +40,22 @@ public class CategoryController {
         ArticleCategory superCat = null;
 
         if(articleCategory.getArticleCategory().getTitle().equals("true")){
-            superCat = articleCategoryRepository.findOneByTitle("broad_consumption");
+            superCat = categoryService.findByTitle("broad_consumption");
         }else{
             superCat = null;
         }
 
         articleCategory.setArticleCategory(superCat);
-        ArticleCategory artCat = articleCategoryRepository.save(articleCategory);
+        ArticleCategory artCat = categoryService.saveArticleCategory(articleCategory);
 
         return Optional.ofNullable(artCat)
                 .map(result -> new ResponseEntity<>(artCat, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
     @PostMapping(value = "/article/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) throws Exception{
-        articleCategoryRepository.delete(id);
+        categoryService.deleteArticleCategory(id);
 
         ArticleCategory art = null;
 
@@ -69,7 +65,7 @@ public class CategoryController {
     @PostMapping(value = "/user/update")
     public ResponseEntity<UserCategory> update(@RequestBody UserCategory userCategory) throws Exception{
 
-        UserCategory userCat = userCategoriesRepository.save(userCategory);
+        UserCategory userCat = categoryService.updateUserCategory(userCategory);
 
         return Optional.ofNullable(userCat)
                 .map(result -> new ResponseEntity<>(userCat, HttpStatus.OK))

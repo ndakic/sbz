@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.Event;
-import uns.ac.rs.repository.EventRepository;
+import uns.ac.rs.service.EventService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,17 +19,17 @@ import java.util.Optional;
 public class EventController {
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     @GetMapping("/all")
     public List<Event> getAll() throws Exception {
-        return eventRepository.findAll();
+        return eventService.getAllActiveEvents();
     }
 
     @PostMapping("/add")
     public ResponseEntity<Event> add(@RequestBody Event event) throws Exception{
 
-        Event e = eventRepository.save(event);
+        Event e = eventService.addEvent(event);
 
         return Optional.ofNullable(e)
                 .map(result -> new ResponseEntity<>(e, HttpStatus.OK))
@@ -38,11 +38,10 @@ public class EventController {
 
     @PostMapping(value = "/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) throws Exception{
-        eventRepository.delete(id);
 
-        Event event = null;
+        eventService.deleteEvent(id);
 
-        return new ResponseEntity<>(event, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }

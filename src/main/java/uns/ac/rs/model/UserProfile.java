@@ -27,6 +27,12 @@ public class UserProfile implements Serializable {
     public UserProfile() {
     }
 
+    public UserProfile(String address, Double points, UserCategory userCategory) {
+        this.address = address;
+        this.points = points;
+        this.userCategory = userCategory;
+    }
+
     public void addPoints(Double p){
         this.points = this.points + p;
     }
@@ -71,5 +77,15 @@ public class UserProfile implements Serializable {
 
     public void setUserCategory(UserCategory userCategory) {
         this.userCategory = userCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", points=" + points +
+                ", userCategory=" + userCategory +
+                '}';
     }
 }
