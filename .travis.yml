@@ -1,13 +1,14 @@
 language: java
 jdk: oraclejdk8
+dist: trusty
 services:
   - mysql
 
 before_install:
-  - mysql -u root -e 'CREATE DATABASE sbz;'
-  - mysql -u root -e 'CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';'
-  - mysql -u root -e 'GRANT ALL ON sbz.* TO 'root'@'localhost';'
-  - npm install bower -g
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS sbz;'
+  - mysql -e 'GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;'
+  - npm install bower
+
 
 sudo: false
 script: mvn clean verify
