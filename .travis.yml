@@ -6,9 +6,13 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS sbz;'
-  - mysql -e 'GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;'
   - npm install bower
 
+test:
+  adapter: mysql2
+  database: sbz
+  username: root
+  encoding: utf8
 
 sudo: false
 script: mvn clean verify
