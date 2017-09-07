@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/nikoladakic/sbz.svg?branch=master)](https://travis-ci.org/nikoladakic/sbz)
+
 # Knowledge-based system for selling articles
 
 3 types of users:
