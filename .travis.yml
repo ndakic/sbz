@@ -4,6 +4,7 @@ services:
   - mysql
 
 before_install:
+  - mysql -u root -p -e 'QUERTY'
   - mysql -e 'CREATE DATABASE sbz;'
   - npm install bower -g
 
