@@ -98,7 +98,7 @@ public class UserService {
 
     }
 
-    public User findByUsername(String username)throws Exception{
+    public User findUserByUsername(String username)throws Exception{
        return userRepository.findOneByUsername(username);
     }
 
