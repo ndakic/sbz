@@ -1,19 +1,6 @@
 language: java
 jdk: oraclejdk8
 dist: trusty
-services:
-  - mysql
-
-before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS sbz;'
-  - npm install bower
-
-test:
-  adapter: mysql2
-  database: sbz
-  username: root
-  password: root
-  encoding: utf8
-
 sudo: false
 script: mvn clean verify
+
