@@ -9,6 +9,6 @@ import uns.ac.rs.model.UserCategory;
 
 public interface UserCategoriesRepository extends JpaRepository<UserCategory, Long> {
 
-
+    UserCategory findOneByTitle(String title);
 
 }

@@ -24,7 +24,7 @@ public class Article implements Serializable {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private ArticleCategory articleCategory;
 
     @NotNull

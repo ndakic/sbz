@@ -50,7 +50,6 @@ rule "user is active more than 2 years"
     when
         $bill : Bill( (date.getTime() - buyer.date.getDate()) / (1000*60*60*24*365) > 2)
     then
-        System.out.println("Old School");
         $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED));
         update($bill);
 

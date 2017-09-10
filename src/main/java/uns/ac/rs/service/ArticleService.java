@@ -141,7 +141,6 @@ public class ArticleService {
         KieSession kieSession2 = kieContainer.newKieSession("bills");
 
         kieSession2.insert(bill);
-
         kieSession2.fireAllRules();
         kieSession2.dispose();
 

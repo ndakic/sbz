@@ -23,6 +23,14 @@ public class SpendingLimit implements Serializable {
 
     private Double percent;
 
+    public SpendingLimit() {
+    }
+
+    public SpendingLimit(Double lowerRange, Double upperRange, Double percent) {
+        this.upperRange = upperRange;
+        this.lowerRange = lowerRange;
+        this.percent = percent;
+    }
 
     // getters and setters
 

@@ -34,6 +34,16 @@ public class Event implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE)
     private List<ArticleCategory> categories = new ArrayList<ArticleCategory>();
 
+    public Event() {
+    }
+
+    public Event(String title, Date starts, Date ends, Double discount, List<ArticleCategory> categories) {
+        this.title = title;
+        this.starts = starts;
+        this.ends = ends;
+        this.discount = discount;
+        this.categories = categories;
+    }
 
     public Long getId() {
         return id;

@@ -87,7 +87,7 @@ public class TestArticles {
 
         Bill bill = new Bill();
         bill.setItems(items);
-        bill.setBuyer(new User("daka", "123", Role.customer));
+        bill.setBuyer(new User("daka1", "123", Role.customer));
 
         Bill b = articleService.calculateDiscounts(bill);
 

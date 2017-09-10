@@ -21,12 +21,19 @@ public class ArticleCategory implements Serializable {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private ArticleCategory articleCategory;
 
     private Double discount;
 
+    public ArticleCategory() {
+    }
 
+    public ArticleCategory(String title, Double discount, ArticleCategory articleCategory) {
+        this.title = title;
+        this.articleCategory = articleCategory;
+        this.discount = discount;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -66,7 +66,7 @@ public class UserService {
 
         if(user.getRole() == Role.customer){
             if(user.getUserProfile() == null){
-                user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatById(1L)));
+                user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatByTitle("basic")));
             }else{
                 user.getUserProfile().setPoints(0.0);
             }

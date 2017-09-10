@@ -29,7 +29,7 @@ public class TestUsers {
     public void testLogin(){
 
         String test1 = userService.login("daka1", "1234");
-        String test2 = userService.login("daka", "123");
+        String test2 = userService.login("daka1", "123");
 
         assertThat(test1).isNull();
         assertThat(test2).isNotNull();
@@ -41,7 +41,7 @@ public class TestUsers {
     @Rollback(true)
     public void testRegistration() throws Exception{
 
-        User alreadyExist = userService.registration(new User("daka","bla", Role.customer));
+        User alreadyExist = userService.registration(new User("daka1","bla", Role.customer));
         User newUser = userService.registration(new User("test243","blabla", Role.customer));
 
         assertThat(alreadyExist).isNull();

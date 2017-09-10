@@ -50,8 +50,9 @@ public class CategoryService {
         return articleCategoryRepository.findOneByTitle(title);
     }
 
-    public UserCategory getUserCatById(Long id) throws Exception{
-        return userCategoriesRepository.getOne(id);
+    public UserCategory getUserCatByTitle(String title) throws Exception{
+        return userCategoriesRepository.findOneByTitle(title);
+
     }
 
 }
