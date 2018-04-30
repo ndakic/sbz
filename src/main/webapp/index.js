@@ -54,7 +54,7 @@
             // console.log(toState.name);
             //provera ako je ulogovan
             if($localStorage.currentUser && toState.name === "login"){
-                $state.go('account');
+                $state.go('articles');
             }
 
         });

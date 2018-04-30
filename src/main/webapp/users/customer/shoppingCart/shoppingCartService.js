@@ -21,8 +21,13 @@
             spentPoints:0.0
         };
 
+        var shoppingCartCount = 0;
+        var shoppingBillStatus = false;
+
 
         service.shoppingCart = shoppingCart;
+        service.shoppingCartCount = shoppingCartCount;
+        service.shoppingBillStatus = shoppingBillStatus;
 
         return service;
 

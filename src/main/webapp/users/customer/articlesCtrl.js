@@ -22,7 +22,8 @@
             vm.user = AuthenticationService.getCurrentUser();
             vm.search = search;
 
-            $scope.confirmBill = false;
+            $scope.ShoppingCartService = ShoppingCartService;
+            $scope.confirmBill = ShoppingCartService.shoppingBillStatus;
             $scope.articles = [];
             $scope.events = [];
             $scope.shoppingCart = ShoppingCartService.shoppingCart;
@@ -31,11 +32,16 @@
 
             function search() {
                 if($scope.searchedTerm != ''){
-                    Alertify.success("Searched!");
+                    var promise = $http.get("/api/article/search/" + $scope.searchedTerm);
+                    promise.then(function (response) {
+                        $scope.articles = response.data;
+                    });
                 };
             };
 
-
+            if($scope.confirmBill){
+                bill();
+            };
 
             var loadArticles = function () {
                 var promise = $http.get("/api/article/all");
@@ -56,7 +62,11 @@
 
             loadEvents();
 
-
+            $scope.$watch('searchedTerm', function() {
+                if($scope.searchedTerm == ''){
+                    loadArticles();
+                }
+            }, true);
 
             $scope.$watch('shoppingCart', function() {
                 countTotal();
@@ -75,8 +85,8 @@
 
 
             function addToShoppingCart(art) {
-                for (var i = 0; i < $scope.shoppingCart.items.length; i++) {
-                    if ($scope.shoppingCart.items[i].article.id == art.id) {
+                for (var i = 0; i < ShoppingCartService.shoppingCart.items.length; i++) {
+                    if (ShoppingCartService.shoppingCart.items[i].article.id == art.id) {
                         alertify.log("Article " + art.title + " is already added!");
 
                         return;
@@ -91,15 +101,16 @@
                 };
 
                 Alertify.success("Article " + art.title+ " is added to Shopping Cart!");
-                $scope.shoppingCart.items.push(item);
+                ShoppingCartService.shoppingCart.items.push(item);
 
-                //console.log("Article Ctrl ShoppingCart count:", ShoppingCartService.shoppingCart.items.length);
+                $scope.ShoppingCartService.shoppingCartCount++;
 
             };
 
             function removeItem(art) {
-                var index = $scope.shoppingCart.items.indexOf(art);
-                $scope.shoppingCart.items.splice(index, 1);
+                var index = ShoppingCartService.shoppingCart.items.indexOf(art);
+                ShoppingCartService.shoppingCart.items.splice(index, 1);
+                $scope.ShoppingCartService.shoppingCartCount--;
             };
 
             function bill() {
@@ -110,7 +121,7 @@
                 promise.then(function (response) {
                     $scope.shoppingCart = response.data;
 
-                    $scope.confirmBill = true;
+                    ShoppingCartService.shoppingBillStatus = true;
 
                     if($scope.shoppingCart.buyer.userProfile.points >= $scope.shoppingCart.spentPoints){
                         $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;

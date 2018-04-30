@@ -81,4 +81,8 @@ public class ArticleController {
 
     }
 
+    @GetMapping(value = "/search/{title}")
+    public List<Article> search_articles(@PathVariable String title) throws Exception{
+        return articleService.findAllbyTitle(title);
+    }
 }

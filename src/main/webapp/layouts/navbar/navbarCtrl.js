@@ -15,7 +15,11 @@
 
         var vm = this;
 
-        $scope.shoppingCartCount = ShoppingCartService.shoppingCart.items.length;
+        $scope.ShoppingCartService = ShoppingCartService;
+
+        // $scope.$watch('ShoppingCartService.shoppingCart.items.length', function() {
+        //     alert('hey, myVar has changed!');
+        // }, true);
 
         //console.log("Navbar shopping cart count:", $scope.shoppingCartCount);
 

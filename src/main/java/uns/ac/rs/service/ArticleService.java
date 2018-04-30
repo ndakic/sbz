@@ -38,6 +38,11 @@ public class ArticleService {
     private KieContainer kieContainer;
 
 
+    public List<Article> findAllbyTitle(String title) throws Exception{
+        return articleRepository.findAllByTitleIgnoreCaseContaining(title);
+    }
+
+
     public Article getArticle(Long id) throws Exception{
         return articleRepository.findOne(id);
     }
