@@ -28,6 +28,10 @@ public class ArticleController {
     @Autowired
     private BillService billService;
 
+    @GetMapping(value = "/{id}")
+    public Article getArticleByID(@PathVariable Long id) throws Exception{
+        return articleService.getArticle(id);
+    }
 
     @PostMapping(value = "/add")
     public ResponseEntity<Article> add(@RequestBody Article article) throws Exception{

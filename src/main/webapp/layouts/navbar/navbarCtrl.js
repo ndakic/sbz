@@ -9,11 +9,17 @@
         .module('SBZApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state'];
+    NavbarController.$inject = ['$state', '$scope', 'ShoppingCartService'];
 
-    function NavbarController ($state) {
+    function NavbarController ($state, $scope, ShoppingCartService) {
 
         var vm = this;
+
+        $scope.shoppingCartCount = ShoppingCartService.shoppingCart.items.length;
+
+        //console.log("Navbar shopping cart count:", $scope.shoppingCartCount);
+
+        //vm.$state = $state;
 
         vm.login = login;
         vm.registration = registration;
@@ -26,7 +32,8 @@
         vm.articleCategory = articleCategory;
         vm.orders = orders;
         vm.events = events;
-        vm.$state = $state;
+        vm.shoppingCart = shoppingCart;
+
 
         function login() {
             $state.go('login');
@@ -70,6 +77,10 @@
 
         function events() {
             $state.go("events");
+        }
+
+        function shoppingCart() {
+            $state.go("shoppingCart");
         }
 
     }

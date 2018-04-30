@@ -1,0 +1,167 @@
+
+
+
+<div class="container">
+
+
+
+
+
+    <div class="col-lg-12">
+        <div row>
+            <div class="col-lg-4">
+                    <form class="search">
+                        <input class="searchTerm" ng-model="searchedTerm" placeholder="Enter your search term ..." /><input class="searchButton" type="submit" ng-click="vm.search()"/>
+                    </form>
+            </div>
+            <div class="col-lg-8">
+                <div ng-if="searchedTerm != ''">
+                    <h4> Searched term: {{searchedTerm}} </h4>
+                </div>
+
+            </div>
+        </div>
+        <br> <br> <br>
+
+        <!--<div class="well well-sm"> Filter articles by: &nbsp; &nbsp;-->
+            <!--<strong>title:</strong>-->
+            <!--<div class="btn-group">-->
+                <!--<span> <input type="text" ng-model="article.title"></span>-->
+            <!--</div> &nbsp;-->
+            <!--<strong>articleCategory:</strong>-->
+            <!--<div class="btn-group">-->
+                <!--<span> <input type="text" ng-model="article.articleCategory.title"></span>-->
+            <!--</div> &nbsp;-->
+        <!--</div>-->
+
+        <div ng-repeat="article in articles | filter:article">
+            <div data-view="list-view" class="download-cards">
+                <article class="download-card">
+                    <div class="download-card__icon-box"><img src="../images/gear.png" /></div>
+                    <div class="download-card__content-box">
+                        <div class="content">
+                            <h2 class="download-card__content-box__catagory">articleCategory: {{article.articleCategory.title}}</h2>
+                            <h3 class="download-card__content-box__title"> Title: <a ui-sref="article-detail({id:article.id})"> {{article.title}}</a> </h3>
+                            <div ng-repeat="event in events">
+                                <div ng-repeat="cat in event.categories">
+                                    <div ng-if="cat.title == article.articleCategory.title">
+                                        <h5>event discount:  {{event.title }} - {{event.discount }} %</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="download-card__content-box__description">Price: {{article.price}} $</p>
+                            <a href="" class="btn btn-info" ng-click="vm.addToShoppingCart(article)"><i class="fa fa-share"></i> Buy</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+    @media (max-width: 414px) {
+        .table-xs tr,
+        .table-xs td,
+        .table-xs tbody,
+        .table-xs thead,
+        .table-xs tfoot,
+        .table-xs th {
+            display: table;
+            width: 100%;
+            border-collapse: separate;
+        }
+        .table-xs > tbody tr:first-child {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        .table-xs td[title]:before {
+            content: attr(title) ": ";
+        }
+        .table-xs td:before {
+            white-space: nowrap;
+            width: 50%;
+            display: table-cell;
+            text-align: left;
+            font-weight: bold;
+        }
+        .table-xs .item-row td:first-child,
+        .table-xs .item-row td:nth-child(2) {
+            border: 0 none;
+        }
+        .table-xs .item-row td:first-child {
+            border: 0 none;
+        }
+        .table-xs .item-row td:last-child {
+            background: #eee;
+            border-bottom: 2px solid #a2a2a2;
+            font-weight: bold;
+        }
+        .table-xs .item-row img {
+            margin-bottom: 1em;
+        }
+        .table-xs .total-row td {
+            display: table-cell;
+            width: 1%;
+            border-top: 0 none;
+            border-bottom: 3px double #a2a2a2;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+        .table-xs .total-row td:first-child {
+            width: 99%;
+        }
+    }
+
+    @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+    .search {
+        width: 100%;
+        position: relative;
+    }
+    .search:before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-family: 'FontAwesome';
+        content: '\f002';
+        background: #20a7c3;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px;
+        -webkit-font-smoothing: subpixel-antialiased;
+        font-smooth: always;
+    }
+
+    .searchTerm {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        border: 5px solid #20a7c3;
+        padding: 5px;
+        height: 40px;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .searchButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+
+
+</style>
+
+

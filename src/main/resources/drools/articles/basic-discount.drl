@@ -21,7 +21,7 @@ rule "more then 20"
         $item : Item(article.articleCategory.articleCategory == null || article.articleCategory.articleCategory.title.equals("broad_consumption") == false, quantity > 20) from $items
     then
         System.out.println("Drools role more then 20");
-        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 10.0, DiscountType.BASIC));
+        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 10.0, DiscountType.BASIC, "More then 20 articles"));
         update($item);
 end
 
@@ -34,7 +34,7 @@ rule "more then 5 pc, lap top or tv"
         $item : Item(article.articleCategory.title in ("tvs","computers","laptops"), quantity > 5) from $items
     then
         System.out.println("Drools role more then 5 Tech");
-        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 5.0, DiscountType.BASIC));
+        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 5.0, DiscountType.BASIC, "More then 5 PCs, Lap Tops or TVs"));
         update($item)
 end
 
@@ -47,7 +47,7 @@ rule "more than 5000din and broad consumption category"
         $item : Item(article.articleCategory.articleCategory != null, article.articleCategory.articleCategory.title.equals("broad_consumption") == true , currentPrice > 5000) from $items
     then
        System.out.println("Drools role more than 5000din of broad consumption products");
-       $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 7.0, DiscountType.BASIC));
+       $item.getItemDiscounts().add(new ItemDiscount($bill, $item, 7.0, DiscountType.BASIC, "More than 5000din of broad consumption products"));
        update($item)
 end
 
@@ -67,7 +67,7 @@ rule "article purchased 15 days ago"
 
     then
         System.out.println("Drools role: article purchased 15 days ago!");
-        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 2.0, DiscountType.ADVANCED));
+        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 2.0, DiscountType.ADVANCED, "Article purchased 15 days ago"));
         modify($bill){
             setFactVariable(1)
         }
@@ -88,7 +88,7 @@ rule "article purchased from category in last 30 days"
 
     then
         System.out.println("Drools role: article purchased from category in last 30 days!");
-        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 1.0, DiscountType.ADVANCED));
+        $it.getItemDiscounts().add(new ItemDiscount($bill, $it, 1.0, DiscountType.ADVANCED, "Article purchased from category in last 30 days" ));
         modify($bill){
             setFactVariable(2)
         }
@@ -105,7 +105,7 @@ rule "events"
         $item: Item(article.articleCategory.id == $category.id) from $items
     then
         System.out.println("Drools role: Events!");
-        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, $event.getDiscount(), DiscountType.ADVANCED));
+        $item.getItemDiscounts().add(new ItemDiscount($bill, $item, $event.getDiscount(), DiscountType.ADVANCED, "Active Events"));
 
 end
 

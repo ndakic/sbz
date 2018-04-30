@@ -4,7 +4,7 @@
 
 (function (angular) {
     angular.module('SBZApp')
-        .controller('billHistoryCtrl', function($scope, $log, AuthenticationService, $http, Alertify, $state){
+        .controller('billHistoryCtrl', function($scope, $log, AuthenticationService, $http){
             var vm = this;
             vm.user = AuthenticationService.getCurrentUser();
 

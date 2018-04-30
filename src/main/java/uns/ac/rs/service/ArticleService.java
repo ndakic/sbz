@@ -38,6 +38,10 @@ public class ArticleService {
     private KieContainer kieContainer;
 
 
+    public Article getArticle(Long id) throws Exception{
+        return articleRepository.findOne(id);
+    }
+
     public Article addArticle(Article article) throws Exception{
         article.setOrderStatus(false);
         return articleRepository.save(article);

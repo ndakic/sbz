@@ -37,7 +37,35 @@
                     controllerAs: 'vm'
                 }
             }
-        }).state('orders', {
+        }).state('bill-detail', {
+            parent: 'app',
+            url: '/bill/{id}',
+            data: {
+                authorities: [],
+                pageTitle: 'Article'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'users/seller/bill-details.html',
+                    controller: 'BillDetailsCtrl',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                entity: ['$stateParams', 'Bill', function($stateParams, Bill) {
+                    return Bill.get({id : $stateParams.id});
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'article',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
+                }]
+            }
+        })
+            .state('orders', {
             parent: 'app',
             url: '/orders',
             data: {

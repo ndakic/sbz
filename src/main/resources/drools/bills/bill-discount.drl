@@ -13,7 +13,7 @@ rule "more then 200 000din"
         $bill : Bill(currentPrice > 200000)
     then
         System.out.println("Drools role: more then 200 000 din");
-        $bill.getBillDiscounts().add(new BillDiscount($bill, 5.0, DiscountType.ADVANCED));
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 5.0, DiscountType.ADVANCED, "More then 200 000 din" ));
         update($bill);
 end
 
@@ -25,7 +25,7 @@ rule "user is golden or silver category"
         $bill : Bill(buyer.userProfile.userCategory.title in ("golden","silver"))
     then
         System.out.println("Drools role: user is golden or silver category");
-        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED));
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED, "User is golden or silver category"));
         update($bill);
 end
 
@@ -38,7 +38,7 @@ rule "more then 50 000 and 10 articles has 50%"
         $it : Item(quantity >= 10, finalPrice > $currentPr * 0.5) from $items
     then
         System.out.println("Drools role: more then 50 000 and 10 articles has 50% of price");
-        $bill.getBillDiscounts().add(new BillDiscount($bill, 3.0, DiscountType.ADVANCED));
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 3.0, DiscountType.ADVANCED, "More then 50 000 and 10 articles has 50% of price"));
         update($bill);
 end
 
@@ -50,7 +50,7 @@ rule "user is active more than 2 years"
     when
         $bill : Bill( (date.getTime() - buyer.date.getDate()) / (1000*60*60*24*365) > 2)
     then
-        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED));
+        $bill.getBillDiscounts().add(new BillDiscount($bill, 1.0, DiscountType.ADVANCED, "User is active more than 2 years"));
         update($bill);
 
 end

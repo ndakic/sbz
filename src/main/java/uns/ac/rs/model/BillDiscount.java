@@ -26,16 +26,19 @@ public class BillDiscount implements Serializable{
 
     private Double discount;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private DiscountType type;
 
     public BillDiscount() {
     }
 
-    public BillDiscount(Bill account, Double discount, DiscountType type) {
+    public BillDiscount(Bill account, Double discount, DiscountType type, String description) {
         this.account = account;
         this.discount = discount;
         this.type = type;
+        this.description = description;
     }
 
     // getters and setters
@@ -76,12 +79,21 @@ public class BillDiscount implements Serializable{
         this.type = type;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "BillDiscount{" +
                 "id=" + id +
                 ", account=" + account +
                 ", discount=" + discount +
+                ", description='" + description + '\'' +
                 ", type=" + type +
                 '}';
     }

@@ -30,17 +30,20 @@ public class ItemDiscount implements Serializable {
 
     private Double discount;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private DiscountType type;
 
     public ItemDiscount() {
     }
 
-    public ItemDiscount(Bill account, Item item, Double discount, DiscountType type) {
+    public ItemDiscount(Bill account, Item item, Double discount, DiscountType type, String description) {
         this.account = account;
         this.item = item;
         this.discount = discount;
         this.type = type;
+        this.description = description;
     }
 
     // getters and setters
@@ -89,6 +92,14 @@ public class ItemDiscount implements Serializable {
         this.type = type;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "ItemDiscount{" +
@@ -96,6 +107,7 @@ public class ItemDiscount implements Serializable {
                 ", account=" + account +
                 ", item=" + item +
                 ", discount=" + discount +
+                ", description='" + description + '\'' +
                 ", type=" + type +
                 '}';
     }

@@ -19,7 +19,9 @@
                         <li><a href="" ng-click="vm.articles()">Articles</a></li>
                         <li><a href="" ng-click="vm.billsHistory()">Shopping History</a></li>
                     </ul>
+
                 </li>
+                <li><a href="" ng-click="vm.shoppingCart()">Shopping Cart ({{shoppingCartCount}})</a></li>
 
                 <li class="dropdown" ng-if="getCurrentUserRole() == 'seller'">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View<span class="caret"></span></a>

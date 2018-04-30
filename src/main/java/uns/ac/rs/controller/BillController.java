@@ -49,5 +49,12 @@ public class BillController {
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public Bill getAll(@PathVariable Long id) throws Exception{
+        return billService.getBillById(id);
+    }
+
+
+
 
     }

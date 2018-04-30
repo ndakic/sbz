@@ -11,7 +11,7 @@
         'ui.bootstrap',
         'Alertify',
         'authentication',
-        // 'ngMaterial'
+        'shopService'
     ]);
 
     app.config(['$qProvider', function ($qProvider) {

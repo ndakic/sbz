@@ -2,10 +2,6 @@
  * Created by dakamadafaka on 7/7/17.
  */
 
-/**
- * Created by dakamadafaka on 3/1/17.
- */
-
 (function () {
     angular
         .module('authentication',['ngStorage', 'ui.router', 'angular-jwt'])

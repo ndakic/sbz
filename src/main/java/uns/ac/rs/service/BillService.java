@@ -101,6 +101,12 @@ public class BillService {
         return billRepository.save(bill);
     }
 
+    public Bill getBillById(Long id) throws Exception{
+
+        return billRepository.findOne(id);
+
+    }
+
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
