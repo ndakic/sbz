@@ -45,18 +45,18 @@ public class UserService {
         return user;
     }
 
-    public String login(String username, String password){
-
-        String response = null;
-        User user = userRepository.findOneByUsernameAndPassword(username, password);
-
-        if(!(user == null)){
-            String token = JWT.createJWT(user.getUsername(), user.getRole().toString());
-            response = token;
-        }
-
-        return response;
-    }
+//    public String login(String username, String password){
+//
+//        String response = null;
+//        User user = userRepository.findOneByUsernameAndPassword(username, password);
+//
+//        if(!(user == null)){
+//            String token = JWT.createJWT(user.getUsername(), user.getRole().toString());
+//            response = token;
+//        }
+//
+//        return response;
+//    }
 
     public User registration(User user) throws Exception{
 

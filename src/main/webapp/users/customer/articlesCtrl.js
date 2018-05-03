@@ -122,6 +122,7 @@
                     $scope.shoppingCart = response.data;
 
                     ShoppingCartService.shoppingBillStatus = true;
+                    $scope.confirmBill = ShoppingCartService.shoppingBillStatus;
 
                     if($scope.shoppingCart.buyer.userProfile.points >= $scope.shoppingCart.spentPoints){
                         $scope.shoppingCart.finalPrice -= $scope.shoppingCart.spentPoints;

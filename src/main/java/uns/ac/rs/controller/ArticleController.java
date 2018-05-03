@@ -1,6 +1,7 @@
 package uns.ac.rs.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,11 @@ import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.BillService;
 
 import java.util.Date;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Nikola Dakic on 7/20/17.
@@ -28,9 +32,21 @@ public class ArticleController {
     @Autowired
     private BillService billService;
 
+
     @GetMapping(value = "/{id}")
-    public Article getArticleByID(@PathVariable Long id) throws Exception{
-        return articleService.getArticle(id);
+    public ResponseEntity<Article> getArticleByID(@PathVariable Long id) throws Exception{
+        Article art =  articleService.getArticle(id);
+
+        if(art == null){
+
+            Article art_empty = new Article();
+            art_empty.setId(-1L);
+            return new ResponseEntity<Article>(art_empty, HttpStatus.FORBIDDEN);
+
+        }
+
+
+        return new ResponseEntity<Article>(art, HttpStatus.OK);
     }
 
     @PostMapping(value = "/add")
@@ -83,6 +99,15 @@ public class ArticleController {
 
     @GetMapping(value = "/search/{title}")
     public List<Article> search_articles(@PathVariable String title) throws Exception{
+
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+
+        Matcher matcher = pattern.matcher(title);
+
+        System.out.println(matcher.matches());
+        if(!matcher.matches())
+            throw new Exception("Not Allowed!");
+
         return articleService.findAllbyTitle(title);
     }
 }

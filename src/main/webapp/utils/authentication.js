@@ -19,11 +19,15 @@
         function login(username, password, callback) {
             $http.post('/api/user/login', { "username": username, "password": password})
                 .then(function successCallback(response) {
+                    console.log(response);
                     if (response.data) {
                         // korisnicko ime, token i rola (ako postoji) cuvaju se u lokalnom skladištu
 
                         var currentUser = { username: username, token: response.data };
                         var tokenPayload = jwtHelper.decodeToken(response.data);
+
+                        console.log("response data:", response.data);
+                        console.log("token:", tokenPayload);
 
                         if(tokenPayload.role){
                             currentUser.role = tokenPayload.role;
@@ -36,8 +40,6 @@
                         $http.defaults.headers.common.Authorization = response.data;
                         // callback za uspesan login
                         callback(true);
-
-                        console.log(currentUser.role);
 
                         if(currentUser.role == "customer"){
                             $state.go('articles');
@@ -52,7 +54,8 @@
                         callback(false);
                     }
                 }, function errorCallback(response) {
-                    console.log("Error")
+                    console.log(response);
+                    console.log("Error bree")
                 });
         }
 

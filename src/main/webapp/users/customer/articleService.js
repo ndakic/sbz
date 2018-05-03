@@ -8,9 +8,9 @@
         .module('SBZApp')
         .factory('Article', Article);
 
-    Article.$inject = ['$resource'];
+    Article.$inject = ['$resource', '$state'];
 
-    function Article ($resource) {
+    function Article ($resource, $state) {
         var resourceUrl =  'api/article/:id';
 
         return $resource(resourceUrl, {}, {
@@ -20,6 +20,10 @@
                 transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
+
+                        if(data["id"] == -1){
+                            $state.go("404");
+                        }
                     }
                     return data;
                 }

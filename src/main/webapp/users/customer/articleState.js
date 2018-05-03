@@ -53,7 +53,7 @@
             },
             resolve: {
                 entity: ['$stateParams', 'Article', function($stateParams, Article) {
-                    return Article.get({id : $stateParams.id});
+                    return Article.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
@@ -63,6 +63,19 @@
                     };
                     return currentStateData;
                 }]
+            }
+        }).state('404', {
+            parent: 'app',
+            url: '/404',
+            data: {
+                authorities: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'errors/404.html',
+                    controller: 'articleCtrl',
+                    controllerAs: 'vm'
+                }
             }
         })
     }

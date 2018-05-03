@@ -78,19 +78,19 @@ public class Data {
 
 
 
-        User user1 = new User("daka1", "123", Role.customer);
+        User user1 = new User("daka1", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq", Role.customer);
         user1.setDate(new Date());
         user1.setUserProfile(new UserProfile("", 0.0, userCategoryBasic));
 
-        User user2 = new User("daka2", "123", Role.seller);
+        User user2 = new User("daka2", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq", Role.seller);
         user2.setDate(new Date());
         user2.setUserProfile(new UserProfile("", 0.0, userCategorySilver));
 
-        User user3 = new User("daka3", "123",Role.manager);
+        User user3 = new User("daka3", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq",Role.manager);
         user3.setDate(new Date());
         user3.setUserProfile(new UserProfile("", 0.0, userCategoryGold));
 
-        User user4 = new User("daka4","123",Role.manager);
+        User user4 = new User("daka4","$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq",Role.manager);
         user4.setDate(new Date());
         user4.setUserProfile(new UserProfile("", 0.0, noCategory));
 

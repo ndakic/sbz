@@ -46,7 +46,7 @@
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             // lista javnih stanja
 
-            var publicStates = ['login','registration', /*'entry',*/''];
+            var publicStates = ['login','registration', '404', /*'entry',*/''];
             var restrictedState = publicStates.indexOf(toState.name) === -1;
             if(restrictedState && !AuthenticationService.getCurrentUser()){
                 $state.go('login');

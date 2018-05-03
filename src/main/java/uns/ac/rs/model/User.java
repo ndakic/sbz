@@ -1,11 +1,15 @@
 package uns.ac.rs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import uns.ac.rs.model.enums.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Nikola Dakic on 7/5/17.
@@ -34,6 +38,10 @@ public class User implements Serializable{
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
 
     public User() {
     }
@@ -99,6 +107,16 @@ public class User implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public Set<UserAuthority> getUserAuthorities() {
+        return userAuthorities;
+    }
+
+    public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
+        this.userAuthorities = userAuthorities;
+    }
+
+
 
     @Override
     public String toString() {

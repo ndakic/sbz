@@ -28,6 +28,8 @@ public class BillController {
 
     @GetMapping(value = "/history/{username}", produces = "application/json")
     public List<Bill> getHistory(@PathVariable String username) throws Exception{
+        System.out.println("SRBIJA!!");
+        System.out.println("username: " + username);
         return billService.userHistory(username);
     }
 
