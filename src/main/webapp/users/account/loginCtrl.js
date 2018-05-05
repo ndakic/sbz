@@ -9,12 +9,14 @@
                 AuthenticationService.login($scope.user.username, $scope.user.password, loginCbck);
             };
             function loginCbck(success) {
+                console.log("success", success);
                 if (success) {
                     $log.info('success!');
                     Alertify.success('User successfully logged!');
                 }
                 else{
                     $log.info('failure!');
+                    Alertify.error('Wrong username or password!');
                 }
             };
 

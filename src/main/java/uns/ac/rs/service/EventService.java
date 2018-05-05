@@ -28,8 +28,8 @@ public class EventService {
 
         for(Event event: events) {
             if (event.getEnds().before(date)) {
-                System.out.println("ends: " + event.getEnds());
-                System.out.println(date);
+                //System.out.println("ends: " + event.getEnds());
+                //System.out.println(date);
                 objToRemove.add(event);
             }
         }

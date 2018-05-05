@@ -37,8 +37,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	for (UserAuthority ua: user.getUserAuthorities()) {
     		grantedAuthorities.add(new SimpleGrantedAuthority(ua.getAuthority().getName()));
     	}
-    	
-    	//Java 1.8 way   	
+
+        //Java 1.8 way
     	/*List<GrantedAuthority> grantedAuthorities = user.getUserAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthority().getName()))
                 .collect(Collectors.toList());*/

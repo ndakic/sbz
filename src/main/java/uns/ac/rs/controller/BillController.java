@@ -3,6 +3,7 @@ package uns.ac.rs.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.Bill;
 import uns.ac.rs.service.BillService;
@@ -28,10 +29,9 @@ public class BillController {
 
     @GetMapping(value = "/history/{username}", produces = "application/json")
     public List<Bill> getHistory(@PathVariable String username) throws Exception{
-        System.out.println("SRBIJA!!");
-        System.out.println("username: " + username);
         return billService.userHistory(username);
     }
+
 
     @PostMapping(value = "/check_bill")
     public ResponseEntity<Bill> check_bill(@RequestBody Bill b) throws Exception{

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,10 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -25,12 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureAuthentication(
-			AuthenticationManagerBuilder authenticationManagerBuilder)
-			throws Exception {
+			AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		
-		authenticationManagerBuilder
-				.userDetailsService(this.userDetailsService).passwordEncoder(
-						passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -45,28 +45,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public AuthenticationTokenFilter authenticationTokenFilterBean()
-			throws Exception {
+	public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
 		AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
-		authenticationTokenFilter
-				.setAuthenticationManager(authenticationManagerBean());
+		authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
 		return authenticationTokenFilter;
 	}
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-			.csrf().disable()
+				.csrf()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/api/user/**").permitAll()
-				.antMatchers("/api/article/**", "/api/event/**", "/api/category/**", "/api/bill/**").permitAll()
-				.antMatchers("/bower_components/**", "/css/**", "/images/**", "/index.js", "/users/**", "/layouts/**",  "/utils/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_USER"); //only administrator can add and edit data
-				//.anyRequest().authenticated();
+				.antMatchers("/**").permitAll()
+//				.antMatchers("/api/user/**").permitAll()
+//				.antMatchers("/api/article/**", "/api/event/**", "/api/category/**", "/api/bill/**").permitAll()
+//				.antMatchers("/bower_components/**", "/css/**", "/images/**", "/index.js", "/users/**", "/layouts/**",  "/utils/**").permitAll()
+				//.antMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_USER") //only administrator can add and edit data
+				//.antMatchers("/api/article/bill").hasAuthority("manager")
+				.anyRequest().authenticated();
 
 
 		// Custom JWT based authentication

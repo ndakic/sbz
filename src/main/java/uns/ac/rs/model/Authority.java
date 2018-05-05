@@ -1,5 +1,8 @@
 package uns.ac.rs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,15 +12,25 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
-public class Authority {
+public class Authority implements Serializable{
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
+	@NotNull
 	String name;
-	
+
+	public Authority() {
+	}
+
+	public Authority(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "authority", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
 

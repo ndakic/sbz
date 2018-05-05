@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
@@ -62,6 +63,7 @@ public class ArticleController {
         return articleService.getArticles();
     }
 
+//    @PreAuthorize("hasAuthority('test')")
     @PostMapping(value = "/bill")
     public ResponseEntity<Bill> bill(@RequestBody Bill b) throws Exception{
 

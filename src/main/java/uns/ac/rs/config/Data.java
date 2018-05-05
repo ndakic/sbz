@@ -1,10 +1,13 @@
 package uns.ac.rs.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import uns.ac.rs.model.*;
 import uns.ac.rs.model.enums.Role;
 import uns.ac.rs.model.enums.StatusOfArticle;
+import uns.ac.rs.repository.AuthorityRepository;
+import uns.ac.rs.repository.UserAuthorityRepository;
 import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.EventService;
 import uns.ac.rs.service.UserService;
@@ -14,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nikola Dakic on 9/10/17.
@@ -30,6 +34,13 @@ public class Data {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private UserAuthorityRepository userAuthorityRepository;
+
 
     public void populateUserData() throws Exception{
 
@@ -77,28 +88,45 @@ public class Data {
         UserCategory noCategory = new UserCategory("-", null);
 
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+        String password = encoder.encode("123");
 
-        User user1 = new User("daka1", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq", Role.customer);
+
+        User user1 = new User("daka1", password, Role.customer);
         user1.setDate(new Date());
         user1.setUserProfile(new UserProfile("", 0.0, userCategoryBasic));
 
-        User user2 = new User("daka2", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq", Role.seller);
+        User user2 = new User("daka2", password, Role.seller);
         user2.setDate(new Date());
         user2.setUserProfile(new UserProfile("", 0.0, userCategorySilver));
 
-        User user3 = new User("daka3", "$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq",Role.manager);
+        User user3 = new User("daka3", password, Role.manager);
         user3.setDate(new Date());
         user3.setUserProfile(new UserProfile("", 0.0, userCategoryGold));
-
-        User user4 = new User("daka4","$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq",Role.manager);
-        user4.setDate(new Date());
-        user4.setUserProfile(new UserProfile("", 0.0, noCategory));
 
 
         userService.saveUser(user1);
         userService.saveUser(user2);
         userService.saveUser(user3);
-        userService.saveUser(user4);
+
+
+        Authority customer = new Authority("customer");
+        Authority seller = new Authority("seller");
+        Authority manager = new Authority("manager");
+
+        authorityRepository.save(customer);
+        authorityRepository.save(seller);
+        authorityRepository.save(manager);
+
+        UserAuthority userAuthority1 = new UserAuthority(user1, customer);
+        UserAuthority userAuthority2 = new UserAuthority(user2, seller);
+        UserAuthority userAuthority3 = new UserAuthority(user3, manager);
+
+
+        userAuthorityRepository.save(userAuthority1);
+        userAuthorityRepository.save(userAuthority2);
+        userAuthorityRepository.save(userAuthority3);
+
 
     }
 

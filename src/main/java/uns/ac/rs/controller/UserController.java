@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.config.Data;
 import uns.ac.rs.model.Article;
@@ -89,6 +90,13 @@ public class UserController {
     @PostMapping(value = "/registration", consumes = "application/json", produces = "application/json")
     public ResponseEntity registration(@RequestBody User user) throws Exception{
 
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+        String password = encoder.encode(user.getPassword());
+
+
+        user.setPassword(password);
+
         User checkUser = userService.registration(user);
 
         if(checkUser == null){ return new ResponseEntity<User>(new User(), HttpStatus.NO_CONTENT); }
@@ -129,16 +137,13 @@ public class UserController {
             System.out.println("Populate article data!");
         }
 
-
-
-        System.out.println(loginDTO.toString());
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     loginDTO.getUsername(), loginDTO.getPassword());
             Authentication authentication = authenticationManager.authenticate(token);
             CustomUserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 
-            System.out.println(details.toString());
+            //System.out.println(details.toString());
 
             return tokenUtils.generateToken(details).toString();
         } catch (Exception ex) {

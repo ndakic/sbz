@@ -16,11 +16,19 @@ public class UserAuthority {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
+	public UserAuthority() {
+	}
+
+	public UserAuthority(User user, Authority authority) {
+		this.user = user;
+		this.authority = authority;
+	}
+
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private User user;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Authority authority;
 
 	public Long getId() {
@@ -45,5 +53,14 @@ public class UserAuthority {
 
 	public void setAuthority(Authority authority) {
 		this.authority = authority;
+	}
+
+	@Override
+	public String toString() {
+		return "UserAuthority{" +
+				"id=" + id +
+				", user=" + user +
+				", authority=" + authority +
+				'}';
 	}
 }
