@@ -7,7 +7,7 @@
         .module('authentication',['ngStorage', 'ui.router', 'angular-jwt'])
         .factory('AuthenticationService', Service);
 
-    function Service($http, $localStorage, $log, $state, jwtHelper) {
+    function Service($http, $localStorage, $log, $state, jwtHelper, ShoppingCartService) {
         var service = {};
 
         service.login = login;
@@ -64,6 +64,15 @@
             // uklonimo korisnika iz lokalnog skladišta
             delete $localStorage.currentUser;
             $http.defaults.headers.common.Authorization = '';
+
+            ShoppingCartService.shoppingCartCount = 0;
+            ShoppingCartService.shoppingCart = {
+                items:[],
+                receivedPoints: 0.0,
+                spentPoints:0.0
+            };
+            ShoppingCartService.shoppingBillStatus = false;
+
             $state.go('login');
         }
 

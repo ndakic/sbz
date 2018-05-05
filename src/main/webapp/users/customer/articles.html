@@ -23,17 +23,6 @@
         </div>
         <br> <br> <br>
 
-        <!--<div class="well well-sm"> Filter articles by: &nbsp; &nbsp;-->
-            <!--<strong>title:</strong>-->
-            <!--<div class="btn-group">-->
-                <!--<span> <input type="text" ng-model="article.title"></span>-->
-            <!--</div> &nbsp;-->
-            <!--<strong>articleCategory:</strong>-->
-            <!--<div class="btn-group">-->
-                <!--<span> <input type="text" ng-model="article.articleCategory.title"></span>-->
-            <!--</div> &nbsp;-->
-        <!--</div>-->
-
         <div ng-repeat="article in articles | filter:article">
             <div data-view="list-view" class="download-cards">
                 <article class="download-card">
@@ -45,7 +34,7 @@
                             <div ng-repeat="event in events">
                                 <div ng-repeat="cat in event.categories">
                                     <div ng-if="cat.title == article.articleCategory.title">
-                                        <h5>event discount:  {{event.title }} - {{event.discount }} %</h5>
+                                        <h5 style="color: red;">event discount:  {{event.title }} - {{event.discount }} %</h5>
                                     </div>
                                 </div>
                             </div>

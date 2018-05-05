@@ -6,7 +6,7 @@
 </div>
 
 <div class="container" ng-repeat="bill in bills | filter:bill">
-    <h1 style="display: inline">Bill {{bill.id}}</h1> &nbsp; &nbsp; &nbsp;
+    <h1 style="display: inline"> <a ui-sref="bill-detail({id:bill.id})"> Bill {{bill.id}} </a></h1> &nbsp; &nbsp; &nbsp;
     <h4 style="display: inline"> User: {{bill.buyer.username }} </h4> &nbsp; &nbsp; <h4 style="display: inline"> Status: {{bill.status}}</h4>
     <span class="pull-right" ng-if="bill.status == 'INPROCESS'">
         <a href="" class="btn btn-info" ng-click="vm.checkBill(bill)"><i class="fa fa-share"></i>Accept </a>
@@ -26,9 +26,9 @@
         </tr>
 
         <tr class="item-row" ng-repeat="item in bill.items">
-            <td> <img src="https://s28.postimg.org/yxng1jpgd/settings_1.png/" height="50px" width="50px"></td>
+            <td> <img src="/images/gear.png" height="50px" width="50px"></td>
             <td>
-                <p> <strong>{{item.article.title}}</strong></p>
+                <p> <strong> <a ui-sref="article-detail({id:item.article.id})"> {{item.article.title}}</a> </strong></p>
                 <p> {{item.article.articleCategory.title}}</p>
             </td>
             <td class="text-right" title="Amount">{{item.quantity }}</td>
@@ -47,15 +47,44 @@
             <td class="text-right">{{bill.finalPrice}}</td>
         </tr>
     </table>
-    <div ng-repeat="it in bill.items">
-        <div ng-repeat="dis in it.itemDiscounts">
-            <span> Item discount: {{dis.discount}}, type: {{dis.type}} </span>
-        </div>
-    </div>
+    <!--<div ng-repeat="it in bill.items">-->
+        <!--<div ng-repeat="dis in it.itemDiscounts">-->
+            <!--<span> Item discount: {{dis.discount}}, type: {{dis.type}} </span>-->
+        <!--</div>-->
+    <!--</div>-->
 
-    <div ng-repeat="d in bill.billDiscounts">
-        <span> Bill discount: {{d.discount}}, type: {{d.type}} </span>
-    </div>
+    <!--<div ng-repeat="d in bill.billDiscounts">-->
+        <!--<span> Bill discount: {{d.discount}}, type: {{d.type}} </span>-->
+    <!--</div>-->
+
+    <table class="table table-xs">
+        <tr>
+            <th></th>
+            <th></th>
+            <th class="text-right">Discount</th>
+            <th class="text-right">Description</th>
+            <th class="text-right">Type</th>
+        </tr>
+
+        <tr class="item-row" ng-repeat="discount in bill.billDiscounts">
+            <td> <img src="../images/money.png" height="30px" width="30px"></td>
+            <td><p> <strong> BILL </strong></p></td>
+            <td class="text-right" title="Discount"> {{ discount.discount }}%</td>
+            <td class="text-right" title="Description">{{discount.description}}</td>
+            <td class="text-right" title="Type">{{discount.type}}</td>
+        </tr>
+
+        <tbody ng-repeat="item in bill.items">
+        <tr class="item-row" ng-repeat="dis in item.itemDiscounts">
+            <td> <img src="../images/money.png" height="30px" width="30px"></td>
+            <td><p> <strong> ITEM - {{item.article.title}}</strong></p></td>
+            <td class="text-right" title="Discount"> {{ dis.discount }}%</td>
+            <td class="text-right" title="Description">{{dis.description}}</td>
+            <td class="text-right" title="Type">{{dis.type}}</td>
+        </tr>
+        </tbody>
+    </table>
+
     <hr>
 
 </div>

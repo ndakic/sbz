@@ -14,9 +14,8 @@
             function account() {
                 var promise = $http.get("/api/user/" + vm.user.username);
                 promise.then(function (response) {
-                    console.log("SRBIJA!");
                     $scope.account = response.data;
-                    console.log($scope.account);
+                    //console.log($scope.account);
                 });
             };
 

@@ -1,5 +1,6 @@
 package uns.ac.rs.service;
 
+import io.jsonwebtoken.Claims;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import uns.ac.rs.model.enums.BillStatus;
 import uns.ac.rs.repository.ArticleRepository;
 import uns.ac.rs.repository.BillRepository;
 import uns.ac.rs.repository.UserRepository;
+import uns.ac.rs.security.TokenUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +36,12 @@ public class BillService {
 
     @Autowired
     private KieContainer kieContainer;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private TokenUtils tokenUtils;
 
     public List<Bill> getAllBills(){
         return billRepository.findAll();
@@ -102,6 +111,22 @@ public class BillService {
     }
 
     public Bill getBillById(Long id) throws Exception{
+
+        String authToken = request.getHeader("authorization");
+        String username = tokenUtils.getUsernameFromToken(authToken);
+
+        Bill bill = billRepository.findOne(id);
+
+        Claims claims = tokenUtils.getClaimsFromToken(authToken);
+
+        String role = claims.get("role").toString();
+
+        // proverava se pripadnost racuna samo ako je korisnik = customer
+        if(role.equalsIgnoreCase("customer")){
+            if(!(bill.getBuyer().getUsername().equalsIgnoreCase(username)))
+                throw new Exception("Not Allowed!");
+        }
+
 
         return billRepository.findOne(id);
 

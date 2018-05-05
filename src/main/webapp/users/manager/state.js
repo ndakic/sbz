@@ -15,7 +15,7 @@
             parent: 'app',
             url: '/article_category',
             data: {
-                authorities: []
+                authorities: ['manager']
             },
             views: {
                 'content@': {
@@ -28,7 +28,7 @@
             parent: 'app',
             url: '/user_category',
             data: {
-                authorities: []
+                authorities: ['manager']
             },
             views: {
                 'content@': {
@@ -41,7 +41,7 @@
             parent: 'app',
             url: '/events',
             data: {
-                authorities: []
+                authorities: ['manager']
             },
             views: {
                 'content@': {

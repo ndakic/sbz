@@ -52,7 +52,7 @@ public class BillController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public Bill getAll(@PathVariable Long id) throws Exception{
+    public Bill getBill(@PathVariable Long id) throws Exception{
         return billService.getBillById(id);
     }
 

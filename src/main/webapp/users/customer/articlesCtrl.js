@@ -11,7 +11,11 @@
 
         articleCtrl.$inject = ['$scope', '$http', '$state', 'AuthenticationService', 'Alertify', 'ShoppingCartService'];
 
-        function articleCtrl ($scope, $http, $state, AuthenticationService, Alertify, ShoppingCartService) {
+        function articleCtrl ($scope, $http, $state, AuthenticationService, Alertify, ShoppingCartService ) {
+
+
+
+
 
             var vm = this;
             vm.addToShoppingCart = addToShoppingCart;

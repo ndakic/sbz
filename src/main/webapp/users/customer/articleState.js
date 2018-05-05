@@ -15,7 +15,7 @@
             parent: 'app',
             url: '/articles',
             data: {
-                authorities: []
+                authorities: ['customer', 'seller', 'manager']
             },
             views: {
                 'content@': {
@@ -28,7 +28,7 @@
             parent: 'app',
             url: '/article_new',
             data: {
-                authorities: []
+                authorities: ['customer', 'seller', 'manager']
             },
             views: {
                 'content@': {
@@ -41,7 +41,7 @@
             parent: 'app',
             url: '/articles/{id}',
             data: {
-                authorities: [],
+                authorities: ['customer', 'seller', 'manager'],
                 pageTitle: 'Article'
             },
             views: {
@@ -68,7 +68,7 @@
             parent: 'app',
             url: '/404',
             data: {
-                authorities: []
+                authorities: ['customer', 'seller', 'manager']
             },
             views: {
                 'content@': {

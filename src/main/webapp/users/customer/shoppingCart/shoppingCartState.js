@@ -15,7 +15,7 @@
             parent: 'app',
             url: '/shoppingCart',
             data: {
-                authorities: []
+                authorities: ['customer']
             },
             views: {
                 'content@': {

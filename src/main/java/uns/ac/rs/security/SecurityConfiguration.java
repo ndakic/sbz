@@ -61,12 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.authorizeRequests()
 				.antMatchers("/**").permitAll()
-//				.antMatchers("/api/user/**").permitAll()
-//				.antMatchers("/api/article/**", "/api/event/**", "/api/category/**", "/api/bill/**").permitAll()
-//				.antMatchers("/bower_components/**", "/css/**", "/images/**", "/index.js", "/users/**", "/layouts/**",  "/utils/**").permitAll()
-				//.antMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_USER") //only administrator can add and edit data
-				//.antMatchers("/api/article/bill").hasAuthority("manager")
+				.antMatchers("/api/bill/all").hasAuthority("seller")
+				.antMatchers("/api/category/users").hasAuthority("manager")
+				.antMatchers("/api/event/add", "/api/event/delete/**").hasAuthority("manager")
 				.anyRequest().authenticated();
+
 
 
 		// Custom JWT based authentication

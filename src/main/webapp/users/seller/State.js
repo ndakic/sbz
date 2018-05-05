@@ -15,7 +15,7 @@
             parent: 'app',
             url: '/bills',
             data: {
-                authorities: []
+                authorities: ['seller', 'manager']
             },
             views: {
                 'content@': {
@@ -28,7 +28,7 @@
             parent: 'app',
             url: '/bill/history',
             data: {
-                authorities: []
+                authorities: ['customer', 'seller', 'manager']
             },
             views: {
                 'content@': {
@@ -41,7 +41,7 @@
             parent: 'app',
             url: '/bill/{id}',
             data: {
-                authorities: [],
+                authorities: ['customer', 'seller', 'manager'],
                 pageTitle: 'Article'
             },
             views: {
@@ -69,7 +69,7 @@
             parent: 'app',
             url: '/orders',
             data: {
-                authorities: []
+                authorities: ['seller', 'manager']
             },
             views: {
                 'content@': {

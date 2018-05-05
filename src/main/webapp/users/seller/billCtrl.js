@@ -19,10 +19,6 @@
 
                     var bill = $scope.bills[10];
 
-                    console.log(bill);
-
-
-                    console.log("Done!");
                 });
             };
 

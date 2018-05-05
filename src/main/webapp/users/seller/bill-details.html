@@ -18,7 +18,7 @@
         <tr class="item-row" ng-repeat="item in vm.bill.items">
             <td> <img src="../images/gear.png" height="50px" width="50px"></td>
             <td>
-                <p> <strong>{{item.article.title}}</strong></p>
+                <p> <strong> <a ui-sref="article-detail({id:item.article.id})">{{item.article.title}}</a></strong></p>
                 <p> {{item.article.articleCategory.title}}</p>
             </td>
             <td class="text-right" title="Amount">{{item.quantity }}</td>

@@ -40,7 +40,7 @@
             parent: 'app',
             url: '/account',
             data: {
-                authorities: []
+                authorities: ['customer', 'seller', 'manager']
             },
             views: {
                 'content@': {

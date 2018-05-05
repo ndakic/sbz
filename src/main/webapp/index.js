@@ -55,7 +55,33 @@
             //provera ako je ulogovan
             if($localStorage.currentUser && toState.name === "login"){
                 $state.go('articles');
-            }
+            };
+
+        });
+
+        // url
+        $rootScope.$on('$stateChangeStart', function(e, next, current) {
+
+            //console.log("===========" + next.url + " ==============");
+
+            if(next.url != '/login' && next.url != '/registration' &&  next.url != "/articles"){
+
+                if(next.data.authorities.length == 0){
+                    window.location.assign("/articles");
+                };
+
+
+                var status = checkAuth(next.data.authorities);
+
+                console.log("status", status);
+
+                if(status === false){
+                    //$location.path("/articles"); OVAKO i sa $state.go() NE RADI!
+                    window.location.assign("/articles");
+                };
+            };
+
+            //console.log("=========== END ==============");
 
         });
 
@@ -91,6 +117,20 @@
                 return AuthenticationService.getCurrentUser().username;
             }
         };
+
+
+        function checkAuth(authorities) {
+
+            var status = false;
+
+            for(var aut in authorities){
+                if(authorities[aut] == $localStorage.currentUser.role){
+                    status = true;
+                };
+            };
+
+            return status;
+        }
 
     }
 

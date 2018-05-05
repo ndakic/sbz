@@ -8,9 +8,9 @@
         .module('SBZApp')
         .factory('Bill', Bill);
 
-    Bill.$inject = ['$resource'];
+    Bill.$inject = ['$resource', '$state'];
 
-    function Bill ($resource) {
+    function Bill ($resource, $state) {
         var resourceUrl =  'api/bill/:id';
 
         return $resource(resourceUrl, {}, {
@@ -19,7 +19,12 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     if (data) {
+
                         data = angular.fromJson(data);
+
+                        if(data.status == 500){
+                            $state.go("404");
+                        }
                     }
                     return data;
                 }
