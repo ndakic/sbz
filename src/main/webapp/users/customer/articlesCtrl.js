@@ -143,7 +143,13 @@
                 promise.then(function (response) {
 
                     Alertify.success("Bill successfully created!");
-                    $scope.shoppingCart = response.data;
+                    ShoppingCartService.shoppingCartCount = 0;
+                    ShoppingCartService.shoppingCart = {
+                        items:[],
+                        receivedPoints: 0.0,
+                        spentPoints:0.0
+                    };
+                    ShoppingCartService.shoppingBillStatus = false;
                     $state.go("billHistory");
                 });
 
