@@ -1,5 +1,9 @@
 package uns.ac.rs.controller;
 
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -33,12 +37,20 @@ public class ArticleController {
     @Autowired
     private BillService billService;
 
+    private static final Logger logger = LogManager.getLogger(ArticleController.class);
+
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Article> getArticleByID(@PathVariable Long id) throws Exception{
         Article art =  articleService.getArticle(id);
 
         if(art == null){
+
+            logger.debug("Debugging log");
+            logger.info("Info log");
+            logger.warn("Hey, This is a warning!");
+            logger.error("Oops! We have an Error. OK");
+            logger.fatal("Damn! Fatal error. Please fix me.");
 
             Article art_empty = new Article();
             art_empty.setId(-1L);
