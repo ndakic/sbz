@@ -12,8 +12,34 @@
         </Console>
 
         <!-- Rolling File Appender -->
-        <RollingFile name="FileAppender" fileName="logs/log4j2-demo.log"
-                     filePattern="logs/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="FileAppender-Article" fileName="logs/articles.log"
+                     filePattern="logs/articles-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <!-- Rolling File Appender -->
+        <RollingFile name="FileAppender-Bill" fileName="logs/bills.log"
+                     filePattern="logs/bills-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <!-- Rolling File Appender -->
+        <RollingFile name="FileAppender-User" fileName="logs/users.log"
+                     filePattern="logs/users-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
@@ -28,7 +54,16 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="FileAppender" />
         </Root>
+
+        <logger name="uns.ac.rs.controller.ArticleController">
+            <appender-ref ref="FileAppender-Article" />
+        </logger>
+        <logger name="uns.ac.rs.controller.BillController">
+            <appender-ref ref="FileAppender-Bill" />
+        </logger>
+        <logger name="uns.ac.rs.controller.UserController">
+            <appender-ref ref="FileAppender-User" />
+        </logger>
     </Loggers>
 </Configuration>

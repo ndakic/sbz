@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
 import uns.ac.rs.model.enums.BillStatus;
+import uns.ac.rs.security.TokenUtils;
 import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.BillService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
@@ -37,6 +39,12 @@ public class ArticleController {
     @Autowired
     private BillService billService;
 
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
     private static final Logger logger = LogManager.getLogger(ArticleController.class);
 
 
@@ -46,18 +54,16 @@ public class ArticleController {
 
         if(art == null){
 
-            logger.debug("Debugging log");
-            logger.info("Info log");
-            logger.warn("Hey, This is a warning!");
-            logger.error("Oops! We have an Error. OK");
-            logger.fatal("Damn! Fatal error. Please fix me.");
+            String authToken = request.getHeader("authorization");
+            String username = tokenUtils.getUsernameFromToken(authToken);
+
+            logger.warn("WARNING! Article doesn't exist but still searched by user: " + username);
 
             Article art_empty = new Article();
             art_empty.setId(-1L);
             return new ResponseEntity<Article>(art_empty, HttpStatus.FORBIDDEN);
 
         }
-
 
         return new ResponseEntity<Article>(art, HttpStatus.OK);
     }

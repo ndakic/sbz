@@ -1,0 +1,3 @@
+2018-05-12 19:08:57.660  WARN daka-To-be-filled-by-O-E-M --- [nio-8080-exec-6] u.a.r.c.ArticleController                : Hey, This is a warning!
+2018-05-12 19:13:37.873  WARN daka-To-be-filled-by-O-E-M --- [io-8080-exec-10] u.a.r.c.ArticleController                : WARNING! Article doesn't exist but still searched by user: daka1
+2018-05-12 22:30:31.143  WARN daka-To-be-filled-by-O-E-M --- [nio-8080-exec-6] u.a.r.c.ArticleController                : WARNING! Article doesn't exist but still searched by user: daka1

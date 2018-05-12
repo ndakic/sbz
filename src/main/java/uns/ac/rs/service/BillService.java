@@ -127,7 +127,6 @@ public class BillService {
                 throw new Exception("Not Allowed!");
         }
 
-
         return billRepository.findOne(id);
 
     }

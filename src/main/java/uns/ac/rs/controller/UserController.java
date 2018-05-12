@@ -1,6 +1,8 @@
 package uns.ac.rs.controller;
 
 import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,6 +56,8 @@ public class UserController {
 
     @Autowired
     TokenUtils tokenUtils;
+
+    private static final Logger logger = LogManager.getLogger(UserController.class);
 
 
     @GetMapping(value = "/all", produces = "application/json")
@@ -143,7 +147,7 @@ public class UserController {
             Authentication authentication = authenticationManager.authenticate(token);
             CustomUserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 
-            //System.out.println(details.toString());
+            logger.info("LOGIN DETAILS: " + details.toString());
 
             return tokenUtils.generateToken(details).toString();
         } catch (Exception ex) {
