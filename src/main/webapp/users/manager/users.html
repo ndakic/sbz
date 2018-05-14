@@ -1,44 +1,74 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <table>
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>Title</th>
-                    <th>Discount</th>
-                    <th>Super Category</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Category</th>
+                    <th>Points</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="category in articleCategories">
-                    <td>{{category.id}}</td>
-                    <td>{{category.title}}</td>
-                    <td>{{category.discount}}</td>
-                    <span ng-if="category.articleCategory">
-                        <td>{{category.articleCategory.title}}</td>
-                    </span>
-                    <td><button class="btn btn-danger" ng-click="vm.deleteArtCat(category)" type="submit">delete</button></td>
+                <tr ng-repeat="user in users">
+                    <td>{{user.username}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{user.userProfile.userCategory.title}}</td>
+                    <td>{{user.userProfile.points}}</td>
+
+                    <td><button class="btn btn-danger" ng-click="vm.deleteUser(user)" type="submit">delete</button></td>
                 </tr>
 
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-6">
-
+        <div class="col-lg-4">
             <div class="wrapper">
-                <form class="form-signin" ng-submit="vm.newArtCategory()">
-                    <h2 class="form-signin-heading">Add Category</h2>
-                    <input type="text" class="form-control" ng-model="artCategory.title" name="title" placeholder="title" required="" autofocus="" />
-                    <input type="number" class="form-control" ng-model="artCategory.discount" name="discount" placeholder="discount" required=""/>
-                    <label class="checkbox">
-                        <input type="checkbox" value="broad_consumption" ng-model="artCategory.articleCategory.title" id="broad_consumption" name="broad_consumption"> broad consumption
-                    </label>
-                    <button class="btn btn-lg btn-primary btn-block" ng-submit="vm.newArtCategory()" type="submit">Add</button>
+                <form class="form-signin" ng-submit="vm.newUser()" name="form">
+                    <h2 class="form-signin-heading">Add User</h2>
+                    <input type="text" class="form-control" ng-model="user.username" name="username" placeholder="Username" required="" autofocus="" /><br>
+
+                    <input class="form-control" name="password" type="password" required ng-model="user.password" placeholder="Password">
+                    <input class="form-control" name="confirm_password" type="password" required ng-model="confirm_password" ui-validate=" '$value==user.password' "
+                           ui-validate-watch=" 'password' " placeholder="Confirm password">
+
+                    <span ng-show='form.confirm_password.$error.validator'>Password must match!</span>
+                    <br>
+                    <br>
+
+                    <input type="number" class="form-control" ng-model="user.userProfile.points" name="points" placeholder="Points" required=""/>
+                    <br>
+
+                    <div class="form-group">
+                        <label class="control-label">Authority</label>
+                        <div class="selectContainer">
+                            <select class="form-control" ng-model = "selected_authority" name="size" ng-options="authority.name for authority in authorities">
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Category</label>
+                        <div class="selectContainer">
+                            <select class="form-control" ng-model = "selected_category" name="size" ng-options="cat.title for cat in userCategories">
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+                    <button class="btn btn-lg btn-primary btn-block" ng-submit="vm.newUser()" type="submit">Add</button>
                 </form>
             </div>
-
         </div>
 
     </div>

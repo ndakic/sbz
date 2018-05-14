@@ -52,7 +52,7 @@
             resolve: {
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'event',
+                        name: $state.current.name || 'account',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };

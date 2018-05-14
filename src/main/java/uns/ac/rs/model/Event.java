@@ -92,4 +92,16 @@ public class Event implements Serializable {
     public void setCategories(List<ArticleCategory> categories) {
         this.categories = categories;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", starts=" + starts +
+                ", ends=" + ends +
+                ", discount=" + discount +
+                ", categories=" + categories +
+                '}';
+    }
 }

@@ -122,7 +122,7 @@ public class User implements Serializable{
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + "[PROTECTED]" + '\'' +
                 ", role=" + role +
                 ", userProfile=" + userProfile +
                 ", firstName='" + firstName + '\'' +

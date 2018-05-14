@@ -11,7 +11,8 @@
         'ui.bootstrap',
         'Alertify',
         'authentication',
-        'shopService'
+        'shopService',
+        'registration'
     ]);
 
     app.config(['$qProvider', function ($qProvider) {
@@ -44,14 +45,12 @@
 
         // ukoliko pokušamo da odemo na stranicu za koju nemamo prava, redirektujemo se na login
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-            // lista javnih stanja
 
             var publicStates = ['login','registration', '404', /*'entry',*/''];
             var restrictedState = publicStates.indexOf(toState.name) === -1;
             if(restrictedState && !AuthenticationService.getCurrentUser()){
                 $state.go('login');
             }
-            // console.log(toState.name);
             //provera ako je ulogovan
             if($localStorage.currentUser && toState.name === "login"){
                 $state.go('articles');

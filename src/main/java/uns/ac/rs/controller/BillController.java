@@ -23,8 +23,6 @@ public class BillController {
     @Autowired
     BillService billService;
 
-    private static final Logger logger = LogManager.getLogger(BillController.class);
-
 
     @GetMapping(value = "/all", produces = "application/json")
     public List<Bill> getAll(){
@@ -57,7 +55,7 @@ public class BillController {
         if(bill == null){ return new ResponseEntity<Bill>(bill, HttpStatus.NO_CONTENT);}
 
         bill.getBuyer().setPassword("PROTECTED!");
-        logger.info(bill);
+
 
         return new ResponseEntity<Bill>(bill, HttpStatus.OK);
     }

@@ -61,9 +61,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.authorizeRequests()
 				.antMatchers("/**").permitAll()
-				.antMatchers("/api/bill/all").hasAuthority("seller")
-				.antMatchers("/api/category/users").hasAuthority("manager")
+
+				.antMatchers("/api/article/bill", "/api/article/submit_bill").hasAuthority("customer")
+
+				.antMatchers("/api/bill/all", "/api/bill/check_bill", "/api/bill/reject_bill").hasAuthority("seller")
+				.antMatchers("/api/article/orders", "/api/article/order_more").hasAuthority("seller")
+				.antMatchers("/api/article/add").hasAuthority("seller")
+
+				.antMatchers("/api/category/users","/api/category/articles", "/api/category/article/add",
+						                 "/api/category/article/delete/**", "/api/category/user/update" ).hasAuthority("manager")
 				.antMatchers("/api/event/add", "/api/event/delete/**").hasAuthority("manager")
+				.antMatchers("/api/user/delete/**").hasAuthority("manager")
+
 				.anyRequest().authenticated();
 
 

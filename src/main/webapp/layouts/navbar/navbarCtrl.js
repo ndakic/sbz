@@ -17,14 +17,6 @@
 
         $scope.ShoppingCartService = ShoppingCartService;
 
-        // $scope.$watch('ShoppingCartService.shoppingCart.items.length', function() {
-        //     alert('hey, myVar has changed!');
-        // }, true);
-
-        //console.log("Navbar shopping cart count:", $scope.shoppingCartCount);
-
-        //vm.$state = $state;
-
         vm.login = login;
         vm.registration = registration;
         vm.account = account;
@@ -37,6 +29,7 @@
         vm.orders = orders;
         vm.events = events;
         vm.shoppingCart = shoppingCart;
+        vm.users = users;
 
 
         function login() {
@@ -85,6 +78,10 @@
 
         function shoppingCart() {
             $state.go("shoppingCart");
+        }
+
+        function users() {
+            $state.go("users");
         }
 
     }

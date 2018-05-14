@@ -41,7 +41,7 @@ public class TestBills {
     @Test
     public void testUserBillsHistory() throws Exception{
 
-        String validUsername = "daka";
+        String validUsername = "daka1";
         String invalidUsername = "blabla";
 
         List<Bill> userBillsValid = billRepository.findAllByBuyerUsername(validUsername);
@@ -58,9 +58,9 @@ public class TestBills {
     public void testAcceptBill() throws Exception{
 
         Article art = articleRepository.findOne(3L);
-        User user = userService.findUser("daka");
+        User user = userService.findUser("daka1");
 
-        System.out.println("articles: " + art.getAmount());
+        //System.out.println("user: " + user.toString());
 
         Item item = new Item();
         item.setArticle(art);

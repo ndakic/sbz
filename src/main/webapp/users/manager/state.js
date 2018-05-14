@@ -50,6 +50,19 @@
                     controllerAs: 'vm'
                 }
             }
+        }).state('users', {
+            parent: 'app',
+            url: '/users',
+            data: {
+                authorities: ['manager']
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'users/manager/users.html',
+                    controller: 'categoryCtrl',
+                    controllerAs: 'vm'
+                }
+            }
         });
     }
 })();

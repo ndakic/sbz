@@ -1,10 +1,13 @@
 package uns.ac.rs.service;
 
 import io.jsonwebtoken.Claims;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uns.ac.rs.controller.ArticleController;
 import uns.ac.rs.model.Article;
 import uns.ac.rs.model.Bill;
 import uns.ac.rs.model.Item;
@@ -42,6 +45,8 @@ public class BillService {
 
     @Autowired
     private TokenUtils tokenUtils;
+
+    private static final Logger logger = LogManager.getLogger(BillService.class);
 
     public List<Bill> getAllBills(){
         return billRepository.findAll();
@@ -94,6 +99,13 @@ public class BillService {
 
         billRepository.save(bill);
 
+        bill.getBuyer().setPassword("[PROTECTED]");
+
+        String authToken = request.getHeader("authorization");
+        String seller = tokenUtils.getUsernameFromToken(authToken);
+
+        logger.info("Seller: " + seller + "has accepted bill: " + bill.toString());
+
         return bill;
 
     }
@@ -102,6 +114,11 @@ public class BillService {
 
         bill.setStatus(BillStatus.CANCELED);
         billRepository.save(bill);
+
+        String authToken = request.getHeader("authorization");
+        String seller = tokenUtils.getUsernameFromToken(authToken);
+
+        logger.info("Seller: " + seller + "has rejected bill: " + bill.toString());
 
         return bill;
     }
@@ -121,10 +138,18 @@ public class BillService {
 
         String role = claims.get("role").toString();
 
+        if(bill == null){
+            logger.warn("WARNING! User: " + username + " tried to access non-existent bill with id:" + id);
+            throw new Exception("Bill don't exist!");
+        }
+
         // proverava se pripadnost racuna samo ako je korisnik = customer
         if(role.equalsIgnoreCase("customer")){
-            if(!(bill.getBuyer().getUsername().equalsIgnoreCase(username)))
+            if(!(bill.getBuyer().getUsername().equalsIgnoreCase(username))){
+                logger.warn("WARNING! BILL doesn't belong to user: " + username + " BILL " + bill.toString());
                 throw new Exception("Not Allowed!");
+            }
+
         }
 
         return billRepository.findOne(id);

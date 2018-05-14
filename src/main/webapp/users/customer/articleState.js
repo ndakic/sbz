@@ -28,7 +28,7 @@
             parent: 'app',
             url: '/article_new',
             data: {
-                authorities: ['customer', 'seller', 'manager']
+                authorities: ['seller']
             },
             views: {
                 'content@': {
@@ -57,7 +57,7 @@
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'article',
+                        name: $state.current.name || 'article-detail',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };

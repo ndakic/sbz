@@ -21,7 +21,7 @@ public class UserProfile implements Serializable {
 
     private Double points;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     private UserCategory userCategory;
 
     public UserProfile() {

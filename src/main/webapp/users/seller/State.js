@@ -64,12 +64,11 @@
                     return currentStateData;
                 }]
             }
-        })
-            .state('orders', {
+        }).state('orders', {
             parent: 'app',
             url: '/orders',
             data: {
-                authorities: ['seller', 'manager']
+                authorities: ['seller']
             },
             views: {
                 'content@': {
@@ -78,6 +77,6 @@
                     controllerAs: 'vm'
                 }
             }
-        });;
+        });
     }
 })();

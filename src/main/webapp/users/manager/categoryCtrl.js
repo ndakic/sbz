@@ -11,6 +11,8 @@
             vm.addUserLimit = addUserLimit;
             vm.deleteLimit = deleteLimit;
             vm.updateCategory = updateCategory;
+            vm.newUser = newUser;
+            vm.deleteUser = deleteUser;
 
             $scope.artCategory = {};
 
@@ -20,7 +22,7 @@
             var loadArticleCategories = function () {
                 var promise = $http.get("/api/category/articles");
                 promise.then(function (response) {
-                    $scope.articleCategories = response.data.slice(1,response.data.length);
+                    $scope.articleCategories = response.data;
                 });
             };
 
@@ -38,7 +40,7 @@
             var loadUserCategories = function () {
                 var promise = $http.get("/api/category/users");
                 promise.then(function (response) {
-                    $scope.userCategories = response.data.slice(1,response.data.length);;
+                    $scope.userCategories = response.data;
                 });
             };
 
@@ -48,7 +50,6 @@
             function newArtCategory() {
                 var promise = $http.post("/api/category/article/add", $scope.artCategory);
                 promise.then(function (response) {
-                    console.log(response);
                     if(response.status == '200'){
                         loadArticleCategories();
                         Alertify.success("Category successfully added.");
@@ -83,7 +84,6 @@
                 var indexLim = $scope.userCategories[indexCat].limits.indexOf(limit);
                 $scope.userCategories[indexCat].limits.splice(indexLim, 1);
 
-                console.log("limit index " + indexLim);
             };
 
             function updateCategory(category){
@@ -121,6 +121,76 @@
                     });
                 };
             };
+
+
+            // ===================== Users ========================
+
+            var loadUsers = function () {
+                var promise = $http.get("/api/user/all");
+                promise.then(function (response) {
+                    $scope.users = response.data;
+                });
+            };
+
+            loadUsers();
+
+            var loadAuthorities = function () {
+                var promise = $http.get("/api/user/authorities");
+                promise.then(function (response) {
+                    $scope.authorities = response.data;
+                });
+            };
+
+            loadAuthorities();
+
+            $scope.user = {
+                userProfile: {
+                    userCategory: {}
+                }
+
+            };
+            $scope.confirm_password = '';
+            $scope.selected_authority = {};
+            $scope.selected_category = {};
+
+
+            function newUser() {
+                if($scope.user.password == $scope.confirm_password && $scope.user.password != ''){
+
+                    $scope.user.role = $scope.selected_authority.name;
+                    $scope.user.userProfile.userCategory.title = $scope.selected_category.title;
+
+                    console.log($scope.user);
+
+                    var promise = $http.post("/api/user/registration", $scope.user);
+                    promise.then(function (response) {
+                        if(response.status == "200"){
+                            Alertify.success('User created!');
+                            loadUsers();
+                        }
+
+                        else{
+                            Alertify.error('Username already exist!');
+                        }
+                    });
+
+                };
+            };
+
+
+            function deleteUser(user) {
+
+                console.log(user.username);
+
+                var promise = $http.post("/api/user/delete/" + user.username);
+                promise.then(function (response) {
+                    if(response.status == '200'){
+                        loadUsers();
+                        Alertify.success("User successfully deleted.");
+                    };
+                });
+
+            }
 
         });
 }(angular));

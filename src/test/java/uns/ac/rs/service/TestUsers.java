@@ -25,17 +25,6 @@ public class TestUsers {
     @Autowired
     UserService userService;
 
-    @Test
-    public void testLogin(){
-
-//        String test1 = userService.login("daka1", "1234");
-//        String test2 = userService.login("daka1", "123");
-
-
-//        assertThat(test1).isNull();
-//        assertThat(test2).isNotNull();
-
-    }
 
     @Test
     @Transactional

@@ -1,5 +1,6 @@
 package uns.ac.rs.service;
 
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uns.ac.rs.model.User;
@@ -7,7 +8,9 @@ import uns.ac.rs.model.UserProfile;
 import uns.ac.rs.model.enums.Role;
 import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.security.JWT;
+import uns.ac.rs.security.TokenUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,12 @@ public class UserService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    TokenUtils tokenUtils;
+
+    @Autowired
+    private HttpServletRequest request;
 
 
     public List<User> findAll(){
@@ -45,37 +54,30 @@ public class UserService {
         return user;
     }
 
-//    public String login(String username, String password){
-//
-//        String response = null;
-//        User user = userRepository.findOneByUsernameAndPassword(username, password);
-//
-//        if(!(user == null)){
-//            String token = JWT.createJWT(user.getUsername(), user.getRole().toString());
-//            response = token;
-//        }
-//
-//        return response;
-//    }
-
     public User registration(User user) throws Exception{
 
         User alreadyExist = userRepository.findOneByUsername(user.getUsername());
 
         if(alreadyExist != null){ return null;}
 
-        if(user.getRole() == Role.customer){
-            if(user.getUserProfile() == null){
-                user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatByTitle("basic")));
-            }else{
-                user.getUserProfile().setPoints(0.0);
-            }
+        String authToken = request.getHeader("authorization");
+        Claims claims = tokenUtils.getClaimsFromToken(authToken);
+
+        String role = claims.get("role").toString();
+
+        if(!role.equalsIgnoreCase("manager")){
+            user.setRole(Role.customer);
+            user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatByTitle("basic")));
+        }else{
+            user.setRole(user.getRole());
+            user.setUserProfile(new UserProfile("",user.getUserProfile().getPoints(), categoryService.getUserCatByTitle(user.getUserProfile().getUserCategory().getTitle())));
         }
+
 
         user.setDate(new Date());
 
         User new_user = userRepository.save(user);
-        new_user.setPassword("sensitive-data");
+        new_user.setPassword("[PROTECTED]");
 
         return user;
 
@@ -104,6 +106,13 @@ public class UserService {
 
     public User saveUser(User user) throws Exception{
         return userRepository.save(user);
+    }
+
+    public void deleteUser(String username) throws Exception{
+
+        User user =  userRepository.findOneByUsername(username);
+        userRepository.delete(user);
+
     }
 
 }

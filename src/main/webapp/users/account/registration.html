@@ -4,27 +4,15 @@
 
         <div ng-submit="registration()">
             <h1>Registration</h1>
-            <form method="post">
+            <form method="post" name="form">
                 <input type="text" name="u" placeholder="Username" ng-model="new_user.username" required="required"/>
-                <input type="password" name="p" placeholder="Password" ng-model="new_user.password" required="required" />
+                <!--<input type="password" name="p" placeholder="Password" ng-model="new_user.password" required="required" />-->
 
-                <div class="form-group">
-                    <label class="control-label">Role</label>
-                    <div class="selectContainer">
-                        <select class="form-control" ng-model = "new_user.role" name="size" ng-options="role for role in roles">
+                <input class="form-control" name="password" type="password" required ng-model="password" placeholder="Password">
+                <input class="form-control" name="confirm_password" type="password" required ng-model="confirm_password" ui-validate=" '$value==password' "
+                       ui-validate-watch=" 'password' " placeholder="Confirm password">
 
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label">Category</label>
-                    <div class="selectContainer">
-                        <select class="form-control" ng-model = "new_user.userProfile.userCategory" name="size" ng-options="cat.title for cat in categories">
-
-                        </select>
-                    </div>
-                </div>
+                <span ng-show='form.confirm_password.$error.validator'>Passwords do not match!</span>
 
                 <button type="submit" class="btn btn-primary btn-block btn-large">Confirm.</button>
             </form>

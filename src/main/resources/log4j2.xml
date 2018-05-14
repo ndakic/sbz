@@ -49,6 +49,18 @@
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+        <!-- Rolling File Appender -->
+        <RollingFile name="FileAppender-Event" fileName="logs/event.log"
+                     filePattern="logs/event-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
@@ -59,11 +71,14 @@
         <logger name="uns.ac.rs.controller.ArticleController">
             <appender-ref ref="FileAppender-Article" />
         </logger>
-        <logger name="uns.ac.rs.controller.BillController">
+        <logger name="uns.ac.rs.service.BillService">
             <appender-ref ref="FileAppender-Bill" />
         </logger>
         <logger name="uns.ac.rs.controller.UserController">
             <appender-ref ref="FileAppender-User" />
+        </logger>
+        <logger name="uns.ac.rs.controller.EventController">
+            <appender-ref ref="FileAppender-Event" />
         </logger>
     </Loggers>
 </Configuration>

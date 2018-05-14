@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <p class="download-card__content-box__description">Price: {{article.price}} $</p>
-                            <a href="" class="btn btn-info" ng-click="vm.addToShoppingCart(article)"><i class="fa fa-share"></i> Buy</a>
+                            <a href="" ng-if="getCurrentUserRole() == 'customer'" class="btn btn-info" ng-click="vm.addToShoppingCart(article)"><i class="fa fa-share"></i> Buy</a>
                         </div>
                     </div>
                 </article>
