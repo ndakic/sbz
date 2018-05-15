@@ -14,10 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.config.Data;
 import uns.ac.rs.model.*;
 import uns.ac.rs.model.dto.LoginDTO;
+import uns.ac.rs.model.dto.RegistDTO;
 import uns.ac.rs.repository.AuthorityRepository;
 import uns.ac.rs.security.TokenUtils;
 import uns.ac.rs.service.ArticleService;
@@ -26,6 +29,7 @@ import uns.ac.rs.service.UserDetailsServiceImpl;
 import uns.ac.rs.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -86,18 +90,24 @@ public class UserController {
 
 
     @PostMapping(value = "/registration", consumes = "application/json", produces = "application/json")
-    public ResponseEntity registration(@RequestBody User user) throws Exception{
-        System.out.println(user.toString());
+    public ResponseEntity registration(@RequestBody @Valid RegistDTO user, BindingResult result) throws Exception{
+
+        if(result.getErrorCount() > 0)
+            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
         String password = encoder.encode(user.getPassword());
 
-
         user.setPassword(password);
 
-        User checkUser = userService.registration(user);
+        User new_user = new User();
+        new_user.setUsername(user.getUsername());
+        new_user.setPassword(user.getPassword());
 
-        if(checkUser == null){ return new ResponseEntity<User>(new User(), HttpStatus.NO_CONTENT); }
+
+        User checkUser = userService.registration(new_user);
+
+        if(checkUser == null){ return new ResponseEntity<>(null, HttpStatus.NO_CONTENT); }
 
         String authToken = request.getHeader("authorization");
 
@@ -109,8 +119,6 @@ public class UserController {
             if(role.equalsIgnoreCase("manager"))
                 logger.info("Manager: " + username + " added new user: " + user.toString());
         }
-
-
 
 
         return new ResponseEntity<User>(checkUser, HttpStatus.OK);

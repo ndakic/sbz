@@ -3,3 +3,4 @@
 2018-05-15 11:03:39.247  INFO daka-To-be-filled-by-O-E-M --- [nio-8443-exec-4] u.a.r.c.UserController                   : Manager: daka3 has deleted user: dzedaj
 2018-05-15 11:03:41.263  INFO daka-To-be-filled-by-O-E-M --- [io-8443-exec-10] u.a.r.c.UserController                   : Manager: daka3 has deleted user: dzedaj2
 2018-05-15 11:03:43.164  INFO daka-To-be-filled-by-O-E-M --- [nio-8443-exec-6] u.a.r.c.UserController                   : Manager: daka3 has deleted user: Perabre
+2018-05-15 14:48:25.452  INFO daka-To-be-filled-by-O-E-M --- [nio-8443-exec-4] u.a.r.c.UserController                   : LOGIN DETAILS: uns.ac.rs.model.CustomUserDetails@cab1ea9d: Username: srbija; Password: [PROTECTED]; Role: customer; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Not granted any authorities

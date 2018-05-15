@@ -16,7 +16,11 @@
                 <div class="form-group">
                     <label for="password">Password</label>
 
-                    <div class="form-hint">To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must be more than 7 characters.</div>
+                    <div class="form-hint"><p> To conform with our Strong Password policy, you are required to use a sufficiently strong password. </p>
+                        <p> Password must be more than 7 characters.</p>
+                        <p> Must contain 1 Uppercase Character.</p>
+                        <p> Must contain 1 Digit Character. </p>
+                    </div>
 
                     <input type="password" class="form-control ok-password" ng-class="(joinTeamForm.password.$dirty && joinTeamForm.password.$invalid) ? 'error' : ''" id="password" name="password" placeholder="Enter Password" ng-required="true" ng-model="password1" > <br>
                     <input type="password" class="form-control ok-password" ng-class="(joinTeamForm.confirm_password.$dirty && joinTeamForm.confirm_password.$invalid) ? 'error' : ''" id="password2" name="confirm_password" placeholder="Enter Password Again" ng-required="true" ng-model="confirm_password" ui-validate=" '$value==password1' "
@@ -32,7 +36,8 @@
 
                 <p><span ng-show='joinTeamForm.confirm_password.$error.validator && password1.length > 0'>Passwords do not match!</span></p>
 
-                <button type="submit" class="btn btn-primary" ng-disabled="joinTeamForm.$invalid" ng-submit="registration()">Submit</button>
+                <button type="submit" class="btn btn-primary"  ng-disabled="joinTeamForm.$invalid" ng-submit="registration()">Submit</button>
+
             </form>
 
         </div>
@@ -65,7 +70,9 @@
         font-size: 7pt;
         line-height: 9pt;
         margin: -5px auto 5px;
-        color: #999;
+        /*color: #999;*/
+        margin: 0;
+        padding: 0;
     }
 
     .form-hint.error {

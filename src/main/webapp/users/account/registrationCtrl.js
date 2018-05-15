@@ -21,14 +21,20 @@
 
                     var promise = $http.post("/api/user/registration", $scope.new_user);
                     promise.then(function (response) {
+                        console.log(response);
                         if(response.status == "200"){
                             Alertify.success('User created!');
                             $state.go('login');
-                        }
+                        };
 
-                        else{
+                        if(response.status == "202"){
+                            Alertify.error('Password is not valid!');
+                        };
+
+                        if(response.status == "204"){
                             Alertify.error('Username already exist!');
                         };
+
                     });
                 };
             };
