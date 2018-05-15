@@ -1,4 +1,4 @@
-package uns.ac.rs.service.securityService;
+package uns.ac.rs.security;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

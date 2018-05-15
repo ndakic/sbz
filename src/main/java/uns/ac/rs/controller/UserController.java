@@ -1,21 +1,16 @@
 package uns.ac.rs.controller;
 
-import com.google.gson.JsonObject;
 import io.jsonwebtoken.Claims;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import uns.ac.rs.config.Data;
 import uns.ac.rs.model.*;
@@ -27,7 +22,7 @@ import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.CategoryService;
 import uns.ac.rs.service.UserDetailsServiceImpl;
 import uns.ac.rs.service.UserService;
-import uns.ac.rs.service.securityService.LoginAttemptService;
+import uns.ac.rs.security.LoginAttemptService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -98,7 +93,7 @@ public class UserController {
         if(result.getErrorCount() > 0)
             return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
         String password = encoder.encode(user.getPassword());
 
         user.setPassword(password);
@@ -114,7 +109,7 @@ public class UserController {
         String authToken = request.getHeader("authorization");
 
         // for logging purpose - Manager
-        if(authToken != null){
+        if(authToken != ""){
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             String username = tokenUtils.getUsernameFromToken(authToken);
             String role = claims.get("role").toString();
@@ -126,15 +121,6 @@ public class UserController {
         return new ResponseEntity<User>(checkUser, HttpStatus.OK);
 
     }
-
-//    @PostMapping(value = "/update", consumes = "application/json")
-//    public ResponseEntity updateUser(@RequestBody User user) throws Exception{
-//
-//        User new_user = userService.updateUser(user);
-//
-//        return new ResponseEntity<User>(new_user, HttpStatus.OK);
-//
-//    }
 
     @GetMapping(value = "/categories", produces = "application/json")
     public List<UserCategory> allCategories(){
@@ -158,7 +144,7 @@ public class UserController {
             data.populateArticleData();
             System.out.println("Populate article data!");
         }
-
+        System.out.println(loginDTO.toString());
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     loginDTO.getUsername(), loginDTO.getPassword());

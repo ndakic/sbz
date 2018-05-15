@@ -1,5 +1,6 @@
 package uns.ac.rs.model;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import uns.ac.rs.model.enums.StatusOfArticle;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Article implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @SafeHtml
     private String title;
 
     @ManyToOne(cascade = {CascadeType.REFRESH})

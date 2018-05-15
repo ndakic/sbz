@@ -87,10 +87,8 @@ public class Data {
 
         UserCategory noCategory = new UserCategory("-", null);
 
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
         String password = encoder.encode("123");
-
 
         User user1 = new User("daka1", password, Role.customer);
         user1.setDate(new Date());

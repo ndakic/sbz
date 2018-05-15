@@ -61,8 +61,8 @@ public class UserService {
 
         String authToken = request.getHeader("authorization");
         String role = "";
-
-        if(authToken != null){
+        System.out.println("alo:" + authToken);
+        if(authToken != ""){
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             role = claims.get("role").toString();
         }else

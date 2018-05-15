@@ -54,22 +54,4 @@ public class ProjectApplication {
 		return connector;
 	}
 
-	@Bean
-	public LocaleResolver localeResolver() {
-		final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		cookieLocaleResolver.setDefaultLocale(Locale.ENGLISH);
-		return cookieLocaleResolver;
-	}
-
-//	@Bean
-//	public RequestContextListener requestContextListener() {
-//		return new RequestContextListener();
-//	}
-
-	@Bean
-	@ConditionalOnMissingBean(RequestContextListener.class)
-	public RequestContextListener requestContextListener() {
-		return new RequestContextListener();
-	}
-
 }

@@ -18,6 +18,7 @@ import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.BillService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
@@ -69,7 +70,7 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Article> add(@RequestBody Article article) throws Exception{
+    public ResponseEntity<Article> add(@Valid @RequestBody Article article) throws Exception{
         Article art = articleService.addArticle(article);
         return Optional.ofNullable(art)
                 .map(result -> new ResponseEntity<>(art, HttpStatus.OK))
@@ -121,10 +122,8 @@ public class ArticleController {
     public List<Article> search_articles(@PathVariable String title) throws Exception{
 
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
-
         Matcher matcher = pattern.matcher(title);
 
-        System.out.println(matcher.matches());
         if(!matcher.matches())
             throw new Exception("Not Allowed!");
 

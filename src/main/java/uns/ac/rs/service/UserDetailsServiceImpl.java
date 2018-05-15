@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import uns.ac.rs.model.CustomUserDetails;
 import uns.ac.rs.model.User;
 import uns.ac.rs.model.UserAuthority;
 import uns.ac.rs.repository.UserRepository;
-import uns.ac.rs.service.securityService.LoginAttemptService;
+import uns.ac.rs.security.LoginAttemptService;
 
 
 @Service
@@ -37,9 +36,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
       final String ip = getClientIP();
-      System.out.println("IP: " + ip);
-      System.out.println("status: " + loginAttemptService.isBlocked(ip));
-
       if (loginAttemptService.isBlocked(ip)) {
           throw new RuntimeException("blocked");
       }
