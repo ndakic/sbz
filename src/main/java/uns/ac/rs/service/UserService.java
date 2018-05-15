@@ -57,19 +57,17 @@ public class UserService {
     public User registration(User user) throws Exception{
 
         User alreadyExist = userRepository.findOneByUsername(user.getUsername());
-
         if(alreadyExist != null){ return null;}
 
         String authToken = request.getHeader("authorization");
-
         String role = "";
 
         if(authToken != null){
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             role = claims.get("role").toString();
-        }else{
+        }else
             role = "customer";
-        }
+
 
         if(!role.equalsIgnoreCase("manager")){
             user.setRole(Role.customer);

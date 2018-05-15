@@ -6,9 +6,15 @@ import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+
+import java.util.Locale;
 
 @SpringBootApplication
 public class ProjectApplication {
@@ -47,4 +53,23 @@ public class ProjectApplication {
 
 		return connector;
 	}
+
+	@Bean
+	public LocaleResolver localeResolver() {
+		final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+		cookieLocaleResolver.setDefaultLocale(Locale.ENGLISH);
+		return cookieLocaleResolver;
+	}
+
+//	@Bean
+//	public RequestContextListener requestContextListener() {
+//		return new RequestContextListener();
+//	}
+
+	@Bean
+	@ConditionalOnMissingBean(RequestContextListener.class)
+	public RequestContextListener requestContextListener() {
+		return new RequestContextListener();
+	}
+
 }

@@ -27,6 +27,7 @@ import uns.ac.rs.service.ArticleService;
 import uns.ac.rs.service.CategoryService;
 import uns.ac.rs.service.UserDetailsServiceImpl;
 import uns.ac.rs.service.UserService;
+import uns.ac.rs.service.securityService.LoginAttemptService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -67,6 +68,8 @@ public class UserController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
@@ -104,13 +107,13 @@ public class UserController {
         new_user.setUsername(user.getUsername());
         new_user.setPassword(user.getPassword());
 
-
+        // check if already exist
         User checkUser = userService.registration(new_user);
-
         if(checkUser == null){ return new ResponseEntity<>(null, HttpStatus.NO_CONTENT); }
 
         String authToken = request.getHeader("authorization");
 
+        // for logging purpose - Manager
         if(authToken != null){
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             String username = tokenUtils.getUsernameFromToken(authToken);
@@ -120,19 +123,18 @@ public class UserController {
                 logger.info("Manager: " + username + " added new user: " + user.toString());
         }
 
-
         return new ResponseEntity<User>(checkUser, HttpStatus.OK);
 
     }
 
-    @PostMapping(value = "/update", consumes = "application/json")
-    public ResponseEntity updateUser(@RequestBody User user) throws Exception{
-
-        User new_user = userService.updateUser(user);
-
-        return new ResponseEntity<User>(new_user, HttpStatus.OK);
-
-    }
+//    @PostMapping(value = "/update", consumes = "application/json")
+//    public ResponseEntity updateUser(@RequestBody User user) throws Exception{
+//
+//        User new_user = userService.updateUser(user);
+//
+//        return new ResponseEntity<User>(new_user, HttpStatus.OK);
+//
+//    }
 
     @GetMapping(value = "/categories", produces = "application/json")
     public List<UserCategory> allCategories(){
@@ -160,13 +162,30 @@ public class UserController {
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     loginDTO.getUsername(), loginDTO.getPassword());
+
             Authentication authentication = authenticationManager.authenticate(token);
             CustomUserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
+
+            // LOGIN SUCCEED
+            String xfHeader = request.getHeader("X-Forwarded-For");
+            if (xfHeader == null) {
+                loginAttemptService.loginSucceeded(request.getRemoteAddr());
+            } else {
+                loginAttemptService.loginSucceeded(xfHeader.split(",")[0]);
+            }
 
             logger.info("LOGIN DETAILS: " + details.toString());
 
             return tokenUtils.generateToken(details).toString();
         } catch (Exception ex) {
+
+            // LOGIN FAILED
+            String xfHeader = request.getHeader("X-Forwarded-For");
+            if (xfHeader == null) {
+                loginAttemptService.loginFailed(request.getRemoteAddr());
+            } else {
+                loginAttemptService.loginFailed(xfHeader.split(",")[0]);
+            }
             return "Error!";
         }
     }

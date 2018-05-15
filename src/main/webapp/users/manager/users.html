@@ -38,7 +38,7 @@
                     <input class="form-control" name="confirm_password" type="password" required ng-model="confirm_password" ui-validate=" '$value==user.password' "
                            ui-validate-watch=" 'password' " placeholder="Confirm password">
 
-                    <span ng-show='form.confirm_password.$error.validator'>Password must match!</span>
+                    <span ng-show='form.confirm_password.$error.validator && user.password.length > 0'>Password must match!</span>
                     <br>
                     <br>
 
