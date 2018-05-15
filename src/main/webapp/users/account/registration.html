@@ -1,192 +1,148 @@
 <div class="container">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
 
-        <div ng-submit="registration()">
-            <h1>Registration</h1>
-            <form method="post" name="form">
-                <input type="text" name="u" placeholder="Username" ng-model="new_user.username" required="required"/>
-                <!--<input type="password" name="p" placeholder="Password" ng-model="new_user.password" required="required" />-->
+            <form method="POST" name="joinTeamForm" role="form" ng-submit="registration()">
+                <legend class="form-label">Registration</legend>
 
-                <input class="form-control" name="password" type="password" required ng-model="password" placeholder="Password">
-                <input class="form-control" name="confirm_password" type="password" required ng-model="confirm_password" ui-validate=" '$value==password' "
-                       ui-validate-watch=" 'password' " placeholder="Confirm password">
+                <div class="form-group">
+                    <label for="fullname">Username</label>
 
-                <span ng-show='form.confirm_password.$error.validator'>Passwords do not match!</span>
+                    <div class="error form-hint" ng-show="joinTeamForm.fullname.$dirty && joinTeamForm.fullname.$error.required" ng-cloak>{{"This field is required."}}</div>
 
-                <button type="submit" class="btn btn-primary btn-block btn-large">Confirm.</button>
+                    <input type="text" class="form-control" ng-class="(joinTeamForm.fullname.$dirty && joinTeamForm.fullname.$invalid) ? 'error' : ''" id="fullname" name="fullname" placeholder="Enter Username" ng-required="true" ng-model="new_user.username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <div class="form-hint">To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must be more than 7 characters.</div>
+
+                    <input type="password" class="form-control ok-password" ng-class="(joinTeamForm.password.$dirty && joinTeamForm.password.$invalid) ? 'error' : ''" id="password" name="password" placeholder="Enter Password" ng-required="true" ng-model="password1" > <br>
+                    <input type="password" class="form-control ok-password" ng-class="(joinTeamForm.confirm_password.$dirty && joinTeamForm.confirm_password.$invalid) ? 'error' : ''" id="password2" name="confirm_password" placeholder="Enter Password Again" ng-required="true" ng-model="confirm_password" ui-validate=" '$value==password1' "
+                           ui-validate-watch=" 'password' ">
+
+
+                    <div class="label password-count" ng-class="password.length > 7 ? 'label-success' : 'label-danger'" ng-cloak>{{ password | passwordCount:7 }}</div>
+
+                    <div class="strength-meter">
+                        <div class="strength-meter-fill" data-strength="{{passwordStrength}}"></div>
+                    </div>
+                </div>
+
+                <p><span ng-show='joinTeamForm.confirm_password.$error.validator && password1.length > 0'>Passwords do not match!</span></p>
+
+                <button type="submit" class="btn btn-primary" ng-disabled="joinTeamForm.$invalid" ng-submit="registration()">Submit</button>
             </form>
+
         </div>
 
     </div>
-    <div class="col-sm-4"></div>
 
 </div>
 
 
-<style type="text/css">
+<style>
 
-    @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-    .btn {
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
-        padding: 4px 10px 4px;
-        margin-bottom: 0;
-        font-size: 13px;
-        line-height: 18px;
-        color: #333333;
-        text-align: center;
-        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-        vertical-align: middle;
-        background-color: #f5f5f5;
-        background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
-        background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
-        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
-        background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-        background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
-        background-image: linear-gradient(top, #ffffff, #e6e6e6);
-        background-repeat: repeat-x;
-        filter: progid: dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0);
-        border-color: #e6e6e6 #e6e6e6 #e6e6e6;
-        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-        border: 1px solid #e6e6e6;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-        cursor: pointer;
-        *margin-left: .3em;
+    .form-container form > div {
+        padding: 0 15px;
     }
 
-    .btn:hover,
-    .btn:active,
-    .btn.active,
-    .btn.disabled,
-    .btn[disabled] {
-        background-color: #e6e6e6;
+    .form-container form > button {
+        margin-left: 15px;
     }
 
-    .btn-large {
-        padding: 9px 14px;
-        font-size: 15px;
-        line-height: normal;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
+    legend.form-label {
+        font-size: 24pt;
+        padding: 0 15px;
     }
 
-    .btn:hover {
-        color: #333333;
-        text-decoration: none;
-        background-color: #e6e6e6;
-        background-position: 0 -15px;
-        -webkit-transition: background-position 0.1s linear;
-        -moz-transition: background-position 0.1s linear;
-        -ms-transition: background-position 0.1s linear;
-        -o-transition: background-position 0.1s linear;
-        transition: background-position 0.1s linear;
+    .form-control.error {
+        border-color: red;
     }
 
-    .btn-primary,
-    .btn-primary:hover {
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-        color: #ffffff;
+    .form-hint {
+        font-size: 7pt;
+        line-height: 9pt;
+        margin: -5px auto 5px;
+        color: #999;
     }
 
-    .btn-primary.active {
-        color: rgba(255, 255, 255, 0.75);
+    .form-hint.error {
+        color: #C00;
+        font-weight: bold;
+        font-size: 8pt;
     }
 
-    .btn-primary {
-        background-color: #4a77d4;
-        background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4);
-        background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4);
-        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4));
-        background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4);
-        background-image: -o-linear-gradient(top, #6eb6de, #4a77d4);
-        background-image: linear-gradient(top, #6eb6de, #4a77d4);
-        background-repeat: repeat-x;
-        filter: progid: dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);
-        border: 1px solid #3762bc;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5);
+    .password-count {
+        float: right;
+        position: relative;
+        bottom: 24px;
+        right: 10px;
     }
 
-    .btn-primary:hover,
-    .btn-primary:active,
-    .btn-primary.active,
-    .btn-primary.disabled,
-    .btn-primary[disabled] {
-        filter: none;
-        background-color: #4a77d4;
+    .strength-meter {
+        position: relative;
+        height: 3px;
+        background: #DDD;
+        margin: 10px auto 20px;
+        border-radius: 3px;
     }
 
-    .btn-block {
-        width: 100%;
+    .strength-meter:before, .strength-meter:after {
+        content: '';
+        height: inherit;
+        background: transparent;
         display: block;
-    }
-
-    * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        -o-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
-    html {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    body {
-        width: 100%;
-        height: 100%;
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    .login {
+        border-color: #FFF;
+        border-style: solid;
+        border-width: 0 5px 0 5px;
         position: absolute;
-        top: 50%;
-        left: 50%;
-        margin: -150px 0 0 -150px;
-        width: 300px;
-        height: 300px;
+        width: 80px;
+        z-index: 10;
     }
 
-    .login h1 {
-        color: #fff;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        letter-spacing: 1px;
-        text-align: center;
+    .strength-meter:before {
+        left: 70px;
     }
 
-    input {
+    .strength-meter:after {
+        right: 70px;
+    }
+
+    .strength-meter-fill {
+        background: transparent;
+        height: inherit;
+        position: absolute;
+        width: 0;
+        border-radius: inherit;
+        transition: width 0.5s ease-in-out, background 0.25s;
+    }
+
+    .strength-meter-fill[data-strength='0'] {
+        background: darkred;
+        width: 20%;
+    }
+
+    .strength-meter-fill[data-strength='1'] {
+        background: orangered;
+        width: 40%;
+    }
+
+    .strength-meter-fill[data-strength='2'] {
+        background: orange;
+        width: 60%;
+    }
+
+    .strength-meter-fill[data-strength='3'] {
+        background: yellowgreen;
+        width: 80%;
+    }
+
+    .strength-meter-fill[data-strength='4'] {
+        background: green;
         width: 100%;
-        margin-bottom: 10px;
-        /*background: rgba(0, 0, 0, 0.3);*/
-        border: none;
-        outline: none;
-        padding: 10px;
-        /*font-size: 13px;*/
-        /*color: #fff;*/
-        /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);*/
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
-        /*box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);*/
-        /*-webkit-transition: box-shadow .5s ease;*/
-        /*-moz-transition: box-shadow .5s ease;*/
-        /*-o-transition: box-shadow .5s ease;*/
-        /*-ms-transition: box-shadow .5s ease;*/
-        /*transition: box-shadow .5s ease;*/
     }
-
-    /*input:focus {*/
-        /*box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);*/
-    /*}*/
 
 </style>
+

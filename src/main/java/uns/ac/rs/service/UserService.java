@@ -61,9 +61,15 @@ public class UserService {
         if(alreadyExist != null){ return null;}
 
         String authToken = request.getHeader("authorization");
-        Claims claims = tokenUtils.getClaimsFromToken(authToken);
 
-        String role = claims.get("role").toString();
+        String role = "";
+
+        if(authToken != null){
+            Claims claims = tokenUtils.getClaimsFromToken(authToken);
+            role = claims.get("role").toString();
+        }else{
+            role = "customer";
+        }
 
         if(!role.equalsIgnoreCase("manager")){
             user.setRole(Role.customer);

@@ -100,12 +100,17 @@ public class UserController {
         if(checkUser == null){ return new ResponseEntity<User>(new User(), HttpStatus.NO_CONTENT); }
 
         String authToken = request.getHeader("authorization");
-        Claims claims = tokenUtils.getClaimsFromToken(authToken);
-        String username = tokenUtils.getUsernameFromToken(authToken);
-        String role = claims.get("role").toString();
 
-        if(role.equalsIgnoreCase("manager"))
-            logger.info("Manager: " + username + " added new user: " + user.toString());
+        if(authToken != null){
+            Claims claims = tokenUtils.getClaimsFromToken(authToken);
+            String username = tokenUtils.getUsernameFromToken(authToken);
+            String role = claims.get("role").toString();
+
+            if(role.equalsIgnoreCase("manager"))
+                logger.info("Manager: " + username + " added new user: " + user.toString());
+        }
+
+
 
 
         return new ResponseEntity<User>(checkUser, HttpStatus.OK);

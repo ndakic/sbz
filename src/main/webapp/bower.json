@@ -12,7 +12,8 @@
     "angular-bootstrap": "^2.4.0",
     "angular-animate": "^1.6.1",
     "ng-alertify": "^1.0.2",
-    "angular-ui-validate": "latest"
+    "angular-ui-validate": "latest",
+    "zxcvbn": "latest"
   },
   "devDependencies": {},
   "appPath": "client"
