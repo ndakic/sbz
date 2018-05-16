@@ -26,7 +26,7 @@ public class Article implements Serializable {
     @SafeHtml
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private ArticleCategory articleCategory;
 
     @NotNull
