@@ -36,7 +36,7 @@
 
                         // prijavljenog korisnika cuva u lokalnom skladistu
                         $localStorage.currentUser = currentUser;
-                        console.log($localStorage.currentUser);
+                        //console.log($localStorage.currentUser);
                         // jwt token dodajemo u to auth header za sve $http zahteve
                         $http.defaults.headers.common.Authorization = response.data;
                         // callback za uspesan login

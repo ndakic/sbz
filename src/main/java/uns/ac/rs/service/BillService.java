@@ -54,6 +54,8 @@ public class BillService {
 
     public List<Bill> userHistory(String username) throws Exception{
 
+
+
         return billRepository.findAllByBuyerUsername(username);
     }
 

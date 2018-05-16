@@ -117,17 +117,17 @@ public class User implements Serializable{
     }
 
 
-
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + "[PROTECTED]" + '\'' +
+                ", password='" + password + '\'' +
                 ", role=" + role +
                 ", userProfile=" + userProfile +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", date=" + date +
+                ", userAuthorities=" + userAuthorities +
                 '}';
     }
 }
