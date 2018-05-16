@@ -145,7 +145,9 @@ public class UserController {
             System.out.println("Populate article data!");
         }
         System.out.println(loginDTO.toString());
+
         try {
+
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     loginDTO.getUsername(), loginDTO.getPassword());
 

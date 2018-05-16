@@ -4,6 +4,7 @@ package uns.ac.rs.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -79,6 +80,7 @@ public class ArticleController {
 
     @GetMapping(value = "/all")
     public List<Article> getAll() throws Exception{
+
         return articleService.getArticles();
     }
 

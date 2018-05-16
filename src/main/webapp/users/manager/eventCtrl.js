@@ -12,6 +12,8 @@
             vm.deleteCat = deleteCat;
             vm.deleteEvent = deleteEvent;
 
+            console.log("Event Controller");
+
             $scope.category = {};
 
             $scope.event = {

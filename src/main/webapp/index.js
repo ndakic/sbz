@@ -66,7 +66,7 @@
             if(next.url != '/login' && next.url != '/registration' &&  next.url != "/articles"){
 
                 if(next.data.authorities.length == 0){
-                    window.location.assign("/articles");
+                    window.location.assign("/#/articles");
                 };
 
 
@@ -76,7 +76,7 @@
 
                 if(status === false){
                     //$location.path("/articles"); OVAKO i sa $state.go() NE RADI!
-                    window.location.assign("/articles");
+                    window.location.assign("/#/articles");
                 };
             };
 
