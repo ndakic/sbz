@@ -108,22 +108,82 @@ public class Data {
         userService.saveUser(user3);
 
 
-        Authority customer = new Authority("customer");
-        Authority seller = new Authority("seller");
-        Authority manager = new Authority("manager");
+        // customer
 
-        authorityRepository.save(customer);
-        authorityRepository.save(seller);
-        authorityRepository.save(manager);
+        Authority create_bill = new Authority("create_bill");
+        Authority submit_bill = new Authority("submit_bill");
 
-        UserAuthority userAuthority1 = new UserAuthority(user1, customer);
-        UserAuthority userAuthority2 = new UserAuthority(user2, seller);
-        UserAuthority userAuthority3 = new UserAuthority(user3, manager);
+        // seller
+        Authority all_bills = new Authority("all_bills");
+        Authority check_bill = new Authority("check_bill");
+        Authority reject_bill = new Authority("reject_bill");
+        Authority orders_article = new Authority("orders_article");
+        Authority order_more_article = new Authority("order_more_article");
+        Authority add_article = new Authority("add_article");
+
+        // manager
+        Authority category = new Authority("category");
+        Authority event = new Authority("event");
+        Authority user = new Authority("user");
+        // + seller + customer
 
 
-        userAuthorityRepository.save(userAuthority1);
-        userAuthorityRepository.save(userAuthority2);
-        userAuthorityRepository.save(userAuthority3);
+        authorityRepository.save(create_bill);
+        authorityRepository.save(submit_bill);
+        authorityRepository.save(all_bills);
+        authorityRepository.save(check_bill);
+        authorityRepository.save(reject_bill);
+        authorityRepository.save(orders_article);
+        authorityRepository.save(order_more_article);
+        authorityRepository.save(add_article);
+        authorityRepository.save(category);
+        authorityRepository.save(event);
+        authorityRepository.save(user);
+
+        UserAuthority customerAuthority1 = new UserAuthority(user1, create_bill);
+        UserAuthority customerAuthority2 = new UserAuthority(user1, submit_bill);
+
+        UserAuthority sellerAuthority1 = new UserAuthority(user2, all_bills);
+        UserAuthority sellerAuthority2 = new UserAuthority(user2, check_bill);
+        UserAuthority sellerAuthority3 = new UserAuthority(user2, reject_bill);
+        UserAuthority sellerAuthority4 = new UserAuthority(user2, orders_article);
+        UserAuthority sellerAuthority5 = new UserAuthority(user2, order_more_article);
+        UserAuthority sellerAuthority6 = new UserAuthority(user2, add_article);
+
+
+        UserAuthority managerAuthority1 = new UserAuthority(user3, category);
+        UserAuthority managerAuthority2 = new UserAuthority(user3, event);
+        UserAuthority managerAuthority3 = new UserAuthority(user3, user);
+
+        UserAuthority managerAuthority4 = new UserAuthority(user3, create_bill);
+        UserAuthority managerAuthority5 = new UserAuthority(user3, submit_bill);
+        UserAuthority managerAuthority6 = new UserAuthority(user3, all_bills);
+        UserAuthority managerAuthority7 = new UserAuthority(user3, check_bill);
+        UserAuthority managerAuthority8 = new UserAuthority(user3, reject_bill);
+        UserAuthority managerAuthority9 = new UserAuthority(user3, orders_article);
+        UserAuthority managerAuthority10 = new UserAuthority(user3, order_more_article);
+        UserAuthority managerAuthority11 = new UserAuthority(user3, add_article);
+
+
+        userAuthorityRepository.save(customerAuthority1);
+        userAuthorityRepository.save(customerAuthority2);
+        userAuthorityRepository.save(sellerAuthority1);
+        userAuthorityRepository.save(sellerAuthority2);
+        userAuthorityRepository.save(sellerAuthority3);
+        userAuthorityRepository.save(sellerAuthority4);
+        userAuthorityRepository.save(sellerAuthority5);
+        userAuthorityRepository.save(sellerAuthority6);
+        userAuthorityRepository.save(managerAuthority1);
+        userAuthorityRepository.save(managerAuthority2);
+        userAuthorityRepository.save(managerAuthority3);
+        userAuthorityRepository.save(managerAuthority4);
+        userAuthorityRepository.save(managerAuthority5);
+        userAuthorityRepository.save(managerAuthority6);
+        userAuthorityRepository.save(managerAuthority7);
+        userAuthorityRepository.save(managerAuthority8);
+        userAuthorityRepository.save(managerAuthority9);
+        userAuthorityRepository.save(managerAuthority10);
+        userAuthorityRepository.save(managerAuthority11);
 
 
     }

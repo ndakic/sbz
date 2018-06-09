@@ -60,18 +60,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers("/**").permitAll()
+				.antMatchers("/", "/index.html", "/index.js").permitAll()
+				.antMatchers("/bower_components/**").permitAll()
+				.antMatchers("/css/**").permitAll()
+				.antMatchers("/errors/**").permitAll()
+				.antMatchers("/images/**").permitAll()
+				.antMatchers("/layouts/**").permitAll()
+				.antMatchers("/utils/**").permitAll()
+				.antMatchers("/users/**").permitAll()
 
-				.antMatchers("/api/article/bill", "/api/article/submit_bill").hasAuthority("customer")
+				.antMatchers("/api/user/login/**").permitAll()
+				.antMatchers("/api/user/registration/**").permitAll()
 
-				.antMatchers("/api/bill/all", "/api/bill/check_bill", "/api/bill/reject_bill").hasAuthority("seller")
-				.antMatchers("/api/article/orders", "/api/article/order_more").hasAuthority("seller")
-				.antMatchers("/api/article/add").hasAuthority("seller")
+				.antMatchers("/api/article/bill").hasAuthority("create_bill")
+				.antMatchers("/api/article/submit_bill").hasAuthority("submit_bill")
+
+				.antMatchers("/api/bill/all").hasAuthority("all_bills")
+				.antMatchers("/api/bill/check_bill").hasAuthority("check_bill")
+				.antMatchers("/api/bill/reject_bill").hasAuthority("reject_bill")
+				.antMatchers("/api/article/orders").hasAuthority("orders_article")
+				.antMatchers("/api/article/order_more").hasAuthority("order_more_article")
+				.antMatchers("/api/article/add").hasAuthority("add_article")
 
 				.antMatchers("/api/category/users","/api/category/articles", "/api/category/article/add",
-						                 "/api/category/article/delete/**", "/api/category/user/update" ).hasAuthority("manager")
-				.antMatchers("/api/event/add", "/api/event/delete/**").hasAuthority("manager")
-				.antMatchers("/api/user/delete/**").hasAuthority("manager")
+						                 "/api/category/article/delete/**", "/api/category/user/update" ).hasAuthority("category")
+				.antMatchers("/api/event/add", "/api/event/delete/**").hasAuthority("event")
+				.antMatchers("/api/user/delete/**").hasAuthority("user")
 
 				.anyRequest().authenticated();
 
