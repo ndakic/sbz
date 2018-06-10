@@ -101,6 +101,8 @@ public class UserController {
         User new_user = new User();
         new_user.setUsername(user.getUsername());
         new_user.setPassword(user.getPassword());
+        new_user.setRole(user.getRole());
+        new_user.setUserProfile(user.getUserProfile());
 
         // check if already exist
         User checkUser = userService.registration(new_user);
@@ -109,7 +111,7 @@ public class UserController {
         String authToken = request.getHeader("authorization");
 
         // for logging purpose - Manager
-        if(authToken != ""){
+        if(!(authToken == null || authToken == "")){
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             String username = tokenUtils.getUsernameFromToken(authToken);
             String role = claims.get("role").toString();
@@ -137,6 +139,9 @@ public class UserController {
             data.populateUserData();
             System.out.println("Populate user data!");
         }
+
+        if(!users.isEmpty())
+            System.out.println("id:  " + users.get(0).toString());
 
         List<Article> articles = articleService.getArticles();
 

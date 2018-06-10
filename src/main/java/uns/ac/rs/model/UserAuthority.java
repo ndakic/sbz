@@ -1,5 +1,7 @@
 package uns.ac.rs.model;
 
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,55 +14,32 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
+@Data
 public class UserAuthority {
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	private User user_id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Authority authority_id;
+
+
 	public UserAuthority() {
 	}
 
-	public UserAuthority(User user, Authority authority) {
-		this.user = user;
-		this.authority = authority;
-	}
-
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private User user;
-	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private Authority authority;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Authority getAuthority() {
-		return authority;
-	}
-
-	public void setAuthority(Authority authority) {
-		this.authority = authority;
+	public UserAuthority(User user_id, Authority authority_id) {
+		this.user_id = user_id;
+		this.authority_id = authority_id;
 	}
 
 	@Override
 	public String toString() {
 		return "UserAuthority{" +
-				"id=" + id +
-				", user=" + user +
-				", authority=" + authority +
+				", authority=" + authority_id.getName() +
+				"user_id=" + user_id.getUsername()+
 				'}';
 	}
 }

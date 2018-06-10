@@ -1,16 +1,25 @@
 package uns.ac.rs.model.dto;
 
+import lombok.Data;
+import uns.ac.rs.model.UserProfile;
 import uns.ac.rs.model.ValidPassword;
+import uns.ac.rs.model.enums.Role;
 
 /**
  * Created by daka on 5/15/18.
  */
+
+@Data
 public class RegistDTO {
 
     private String username;
 
     @ValidPassword
     private String password;
+
+    private Role role;
+
+    private UserProfile userProfile;
 
     public RegistDTO() {
     }
@@ -20,27 +29,5 @@ public class RegistDTO {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "RegistDTO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

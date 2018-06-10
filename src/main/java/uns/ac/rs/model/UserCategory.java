@@ -1,5 +1,7 @@
 package uns.ac.rs.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
  */
 
 @Entity
+@Data
 @Table(name = "user_category")
 public class UserCategory implements Serializable {
 
@@ -33,42 +36,5 @@ public class UserCategory implements Serializable {
         this.limits = limits;
     }
 
-    // getters and setters
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<SpendingLimit> getLimits() {
-        return limits;
-    }
-
-    public void setLimits(List<SpendingLimit> limits) {
-        this.limits = limits;
-    }
-
-    @Override
-    public String toString() {
-        return "UserCategory{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", limits=" + limits +
-                '}';
-    }
 }

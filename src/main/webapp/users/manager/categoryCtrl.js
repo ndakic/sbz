@@ -18,6 +18,7 @@
 
             $scope.limit = {};
             $scope.userCategory = {};
+            $scope.roles = ['customer', 'seller', 'manager'];
 
             var loadArticleCategories = function () {
                 var promise = $http.get("/api/category/articles");
@@ -134,14 +135,14 @@
 
             loadUsers();
 
-            var loadAuthorities = function () {
-                var promise = $http.get("/api/user/authorities");
-                promise.then(function (response) {
-                    $scope.authorities = response.data;
-                });
-            };
-
-            loadAuthorities();
+            // var loadAuthorities = function () {
+            //     var promise = $http.get("/api/user/authorities");
+            //     promise.then(function (response) {
+            //         $scope.authorities = response.data;
+            //     });
+            // };
+            //
+            // loadAuthorities();
 
             $scope.user = {
                 userProfile: {
@@ -157,7 +158,6 @@
             function newUser() {
                 if($scope.user.password == $scope.confirm_password && $scope.user.password != ''){
 
-                    $scope.user.role = $scope.selected_authority.name;
                     $scope.user.userProfile.userCategory.title = $scope.selected_category.title;
 
                     console.log($scope.user);
@@ -166,7 +166,7 @@
                     promise.then(function (response) {
                         if(response.status == "200"){
                             Alertify.success('User created!');
-                            $state.go('login');
+                            loadUsers();
                         };
 
                         if(response.status == "202"){

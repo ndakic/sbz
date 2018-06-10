@@ -1,5 +1,7 @@
 package uns.ac.rs.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
  */
 
 @Entity
+@Data
 @Table(name = "user_profile")
 public class UserProfile implements Serializable {
 
@@ -33,59 +36,4 @@ public class UserProfile implements Serializable {
         this.userCategory = userCategory;
     }
 
-    public void addPoints(Double p){
-        this.points = this.points + p;
-    }
-
-    public void minusPoints(Double p){
-        this.points = this.points - p;
-    }
-
-    // getters and setters
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Double getPoints() {
-        return points;
-    }
-
-    public void setPoints(Double points) {
-        this.points = points;
-    }
-
-    public UserCategory getUserCategory() {
-        return userCategory;
-    }
-
-    public void setUserCategory(UserCategory userCategory) {
-        this.userCategory = userCategory;
-    }
-
-    @Override
-    public String toString() {
-        return "UserProfile{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", points=" + points +
-                ", userCategory=" + userCategory +
-                '}';
-    }
 }

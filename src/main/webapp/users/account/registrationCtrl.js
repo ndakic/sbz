@@ -39,14 +39,14 @@
                 };
             };
 
-            var loadCategories = function () {
-                var promise = $http.get("/api/user/categories");
-                promise.then(function (response) {
-                    $scope.categories = response.data;
-                });
-            };
-
-            loadCategories();
+            // var loadCategories = function () {
+            //     var promise = $http.get("/api/user/categories");
+            //     promise.then(function (response) {
+            //         $scope.categories = response.data;
+            //     });
+            // };
+            //
+            // loadCategories();
 
         })
         .filter('passwordCount', [function() {

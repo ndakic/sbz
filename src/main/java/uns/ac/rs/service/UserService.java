@@ -4,15 +4,20 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uns.ac.rs.model.User;
+import uns.ac.rs.model.UserAuthority;
 import uns.ac.rs.model.UserProfile;
 import uns.ac.rs.model.enums.Role;
+import uns.ac.rs.repository.AuthorityRepository;
+import uns.ac.rs.repository.UserAuthorityRepository;
 import uns.ac.rs.repository.UserRepository;
 import uns.ac.rs.security.JWT;
 import uns.ac.rs.security.TokenUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nikola Dakic on 7/6/17.
@@ -26,6 +31,12 @@ public class UserService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private UserAuthorityRepository userAuthorityRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @Autowired
     TokenUtils tokenUtils;
@@ -62,26 +73,51 @@ public class UserService {
         String authToken = request.getHeader("authorization");
         String role = "";
         System.out.println("alo:" + authToken);
-        if(authToken != ""){
+        if(authToken == null || authToken == "")
+            role = "customer";
+        else{
             Claims claims = tokenUtils.getClaimsFromToken(authToken);
             role = claims.get("role").toString();
-        }else
-            role = "customer";
+        }
 
+        List<Long> authorities = new ArrayList<>();
 
         if(!role.equalsIgnoreCase("manager")){
             user.setRole(Role.customer);
             user.setUserProfile(new UserProfile("",0.0, categoryService.getUserCatByTitle("basic")));
+
+            User customer = userRepository.findOneByUsername("daka1");
+            for(UserAuthority userAuthority: customer.getUserAuthorities())
+                authorities.add(userAuthority.getAuthority_id().getId());
         }else{
             user.setRole(user.getRole());
-            user.setUserProfile(new UserProfile("",user.getUserProfile().getPoints(), categoryService.getUserCatByTitle(user.getUserProfile().getUserCategory().getTitle())));
+            user.setUserProfile(new UserProfile("", user.getUserProfile().getPoints(), categoryService.getUserCatByTitle(user.getUserProfile().getUserCategory().getTitle())));
+
+            if(user.getRole() == Role.seller){
+                User customer = userRepository.findOneByUsername("daka2");
+
+                for(UserAuthority userAuthority: customer.getUserAuthorities())
+                    authorities.add(userAuthority.getAuthority_id().getId());
+            }
+
+            if(user.getRole() == Role.manager){
+                User customer = userRepository.findOneByUsername("daka3");
+
+                for(UserAuthority userAuthority: customer.getUserAuthorities())
+                    authorities.add(userAuthority.getAuthority_id().getId());
+            }
+
         }
 
 
         user.setDate(new Date());
 
+        System.out.println("user: " + user.toString());
         User new_user = userRepository.save(user);
         new_user.setPassword("[PROTECTED]");
+
+        for(Long id: authorities)
+            userAuthorityRepository.save(new UserAuthority(new_user, authorityRepository.getOne(id)));
 
         return user;
 
