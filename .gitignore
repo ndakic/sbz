@@ -25,4 +25,4 @@ nbdist/
 
 # bower ignore
 src/main/webapp/bower_components
-logs
+logs/

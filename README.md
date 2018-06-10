@@ -20,19 +20,21 @@
   
 ### Technologies:
 
-  - Java 7
+  - Java
   - Spring
   - Drools
   - AngularJS
   - Bootstrap
-  - JPA
+  - JPA/Hibernate
  
 
 #### IDE:
   - IntelliJ IDEA 
   
   
-### Security OWASP TOP 10 – 2017
+  
+    
+### Security - OWASP TOP 10 - 2017
 - A1 Injection                                     
 - A2 Broken Authentication						 
 - A3 Sensitive Data Exposure						 
