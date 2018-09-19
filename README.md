@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/nikoladakic/sbz.svg?branch=master)](https://travis-ci.org/nikoladakic/sbz)
+[![Build Status](https://travis-ci.org/ndakic/sbz.svg?branch=master)](https://travis-ci.org/ndakic/sbz)
 
 # Knowledge-based system for selling articles
 
